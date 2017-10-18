@@ -1,0 +1,19 @@
+{
+  "name": "select-the-dress",
+  "version": "1.0.0",
+  "description": "app to help user select the perfect dress for an occasion",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "pug": "^2.0.0-rc.4",
+    "uuid": "^3.1.0"
+  }
+}
