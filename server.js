@@ -1,5 +1,4 @@
-// setup environment variables, looks for .env file and loads the env variables
-require('dotenv').config()
+// setup environment variables, looks for .env file and loads the env variables require('dotenv').config()
 
 const express = require('express')
 const morgan = require('morgan')
@@ -14,7 +13,7 @@ const {DATABASE_URL, PORT} = require('./config')
 const app = express()
 
 // require routes
-const homeRouter = require('./routes/home')
+const router = require('./routes')
 
 // log the http layer
 app.use(morgan('common'))
@@ -25,8 +24,8 @@ app.set('view engine', 'pug')
 // load static resources from butlic folder - images, js and css files
 app.use(express.static('public'))
 
-// routes for url endpoints
-app.use('/', homeRouter)
+// setup routes
+app.use('/', router)
 
 // catch-all endpoint if client makes request to non-existent endpoint
 app.use('*', function (req, res) {
@@ -41,12 +40,12 @@ let server
 // this function connects to our database, then starts the server
 function runServer (databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    mongoose.connect(databaseUrl, {useMongoClient: true}, err => {
       if (err) {
         return reject(err)
       }
       server = app.listen(port, () => {
-        console.log(`Your app is listening on port ${port}`)
+        // console.log(`Your app is listening on port ${port}`)
         resolve()
       })
       .on('error', err => {
@@ -62,7 +61,7 @@ function runServer (databaseUrl = DATABASE_URL, port = PORT) {
 function closeServer () {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
-      console.log('Closing server')
+      // console.log('Closing server')
       server.close(err => {
         if (err) {
           return reject(err)
