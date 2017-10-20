@@ -1,7 +1,7 @@
 
 exports.signUpPage = function (req, res) {
   // show the sign up page
-  res.render('sign-up')
+  res.render('sign-up', res.locals)
 }
 
 exports.signUpSubmit = function (req, res) {
@@ -13,7 +13,7 @@ exports.signUpSubmit = function (req, res) {
 
 exports.logInPage = function (req, res) {
   // show the log in page
-  res.render('log-in')
+  res.render('log-in', res.locals)
 }
 
 exports.logInSubmit = function (req, res) {

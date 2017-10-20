@@ -1,0 +1,106 @@
+extends layout.pug
+
+block content
+  section#compare.row.content(role="region")
+    .col-12
+      h2 Compare Dresses
+      .col-2.labels
+        p front
+      .col-5.dressA
+        img.dress-img(src=dressA.imgFront.src, alt=dressA.imgFront.alt)
+      .col-5.dressB
+        img.dress-img(src=dressB.imgFront.src, alt=dressB.imgFront.alt)
+
+      .col-2.labels
+        p back
+      .col-5.dressA
+        img.dress-img(src=dressA.imgBack.src, alt=dressA.imgBack.alt)
+      .col-5.dressB
+        img.dress-img(src=dressB.imgBack.src, alt=dressB.imgBack.alt)
+
+      .col-2.labels
+        p side
+      .col-5.dressA
+        img.dress-img(src=dressA.imgSide.src, alt=dressA.imgSide.alt)
+      .col-5.dressB
+        img.dress-img(src=dressB.imgSide.src, alt=dressB.imgSide.alt)
+
+      .col-2.labels.fixed-height
+        p rating
+      .col-5.dressA.fixed-height
+        if dressA.rating === 4
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+        else if dressA.rating === 3
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+        else if dressA.rating === 2
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+        else if dressA.rating === 1
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+      .col-5.dressB.fixed-height
+        if dressB.rating === 4
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+        else if dressB.rating === 3
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+        else if dressB.rating === 2
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+        else if dressB.rating === 1
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+
+      .col-2.labels.fixed-height
+        p designer
+      .col-5.dressA.fixed-height
+        p=dressA.designer
+      .col-5.dressB.fixed-height
+        p=dressB.designer
+
+      .col-2.labels.fixed-height
+        p style
+      .col-5.dressA.fixed-height
+        p=dressA.style
+      .col-5.dressB.fixed-height
+        p=dressB.style
+
+      .col-2.labels.fixed-height
+        p price
+      .col-5.dressA.fixed-height
+        p=dressA.price
+      .col-5.dressB.fixed-height
+        p=dressB.price
+
+      .col-2.labels.fixed-height
+        p store
+      .col-5.dressA.fixed-height
+        p=dressA.store
+      .col-5.dressB.fixed-height
+        p=dressB.store
+
+      .col-2.labels.fixed-height
+        p notes
+      .col-5.dressA.fixed-height
+        p=dressA.notes
+      .col-5.dressB.fixed-height
+        p=dressB.notes

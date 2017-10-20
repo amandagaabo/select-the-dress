@@ -3,8 +3,8 @@ extends layout.pug
 block content
   section#sign-up.row.content(role="region")
     .col-12
-      h2 Log In
-      form#sign-up-form.small-form(role="form", action="/sign-up", method="post")
+      h2 Sign Up
+      form#sign-up-form(role="form", action="/sign-up", method="post")
         label(for="firstName") first name:
         input#first-name.form-input(type="text", name="first name", placeholder="first name")
         label(for="lastName") last name:
@@ -15,8 +15,8 @@ block content
         input#password.form-input(type="password", name="password", placeholder="password")
         label(for='password-confirm') confirm password:
         input#password-confirm.form-input(type="password", name="password confirm", placeholder="password")
-        input.button(type="submit", value="sign up")
+        input(type="submit", value="sign up")
       p.error-message
       p
-        | already have an account:  
+        | already have an account:
         a.link.underline(href="/log-in") log in

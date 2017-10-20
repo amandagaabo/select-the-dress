@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content
+  section#add-dress.row.content(role="region")
+    .col-12
+      h2 Add Dress
+
+      form#dress-form(role="form", action="/dresses/add", method="post")
+        label(for="imgFront") front of dress:
+        input#imgFront(type="file", name="front image", accept='image/*', required="true")
+        label(for="imgBack") back of dress:
+        input#imgBack(type="file", name="back image", accept='image/*')
+        label(for="imgSide") side of dress:
+        input#imgSide(type="file", name="side image", accept='image/*')
+        label(for="rating") rating:
+        select#rating.select-dropdown
+          option(value="4") love it
+          option(value="3") like it
+          option(value="2") it's ok
+          option(value="1") don't like it
+
+        label(for="designer") designer:
+        input#designer.form-input(type="text", name="designer", placeholder="designer")
+        label(for='style') style:
+        input#style.form-input(type="text", name="style", placeholder="style")
+        label(for="price") price:
+        input#price.form-input(type="text", name="price", placeholder="price")
+        label(for="store") price:
+        input#store.form-input(type="text", name="store", placeholder="store")
+        label(for="notes") notes:
+        textarea#notes.form-input(type="text", name="notes", placeholder="notes")
+        input(type="submit", value="add")

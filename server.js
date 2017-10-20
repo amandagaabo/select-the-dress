@@ -15,14 +15,29 @@ const app = express()
 // require routes
 const router = require('./routes')
 
-// log the http layer
-app.use(morgan('common'))
-
 // setup pug for html templates
 app.set('view engine', 'pug')
 
 // load static resources from butlic folder - images, js and css files
 app.use(express.static('public'))
+
+// log the http layer
+app.use(morgan('common'))
+
+// middleware function to setup state variables, mock data used here
+app.use(function (req, res, next) {
+  res.locals = {}
+  res.locals.user = {
+    isLoggedIn: true,
+    firstName: 'jane'
+  }
+  res.locals.sorting = {
+    sort: 'rating',
+    view: 'front'
+  }
+
+  next()
+})
 
 // setup routes
 app.use('/', router)

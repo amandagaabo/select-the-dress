@@ -11,6 +11,8 @@ html(lang="en")
 
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Bad+Script")
     link(rel="stylesheet", href="/css/float-grid.css")
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet",
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
     link(rel="stylesheet", href="/css/styles.css")
 
   body
@@ -20,10 +22,18 @@ html(lang="en")
           a#logo(href="/") Select the Dress
         .col-6
           ul.header-links
-            li
-              a.link(href='/sign-up') Sign Up
-            li
-              a.link(href='/log-in') Log In
+            if user.isLoggedIn
+              li
+                a.link(href='/dresses') Dresses
+              li
+                a.link(href='/account') My Account
+              li
+                a.link(href='/log-out') Log Out
+            else
+              li
+                a.link(href='/sign-up') Sign Up
+              li
+                a.link(href='/log-in') Log In
 
     main(role="main")
 

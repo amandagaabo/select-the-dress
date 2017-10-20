@@ -37,7 +37,7 @@ describe('dresses routes', function () {
       .then(res => {
         res.should.have.status(200)
         res.should.be.html
-        res.text.should.include('dress-form')
+        res.text.should.include('add-dress')
         return Promise.resolve()
       })
     })
@@ -64,7 +64,7 @@ describe('dresses routes', function () {
         .then(res => {
           res.should.have.status(200)
           res.should.be.html
-          res.text.should.include('comparison')
+          res.text.should.include('compare')
           return Promise.resolve()
         })
       })
@@ -73,7 +73,8 @@ describe('dresses routes', function () {
     describe('GET request to /dresses/:dress ', function () {
       it('should return dress page html', function () {
         return chai.request(app)
-        .get('/dresses/:dress')
+        // test id is used, defined in dresses.js development data
+        .get('/dresses/1575875a')
         .then(res => {
           res.should.have.status(200)
           res.should.be.html
@@ -86,11 +87,12 @@ describe('dresses routes', function () {
     describe('GET request to /dresses/:dress/edit ', function () {
       it('should return dress form html', function () {
         return chai.request(app)
-        .get('/dresses/:dress/edit')
+        // test id is used, defined in dresses.js development data
+        .get('/dresses/1575875a/edit')
         .then(res => {
           res.should.have.status(200)
           res.should.be.html
-          res.text.should.include('dress-form')
+          res.text.should.include('dress-edit')
           return Promise.resolve()
         })
       })
@@ -99,7 +101,8 @@ describe('dresses routes', function () {
     describe('POST request to /dresses/:dress/edit ', function () {
       it('should redirect to /:dress if dress update was successful', function () {
         return chai.request(app)
-        .post('/dresses/:dress/edit')
+        // test id is used, defined in dresses.js development data
+        .post('/dresses/1575875a/edit')
         .then(res => {
           res.should.redirect
           res.should.have.status(200)
@@ -113,7 +116,8 @@ describe('dresses routes', function () {
     describe('POST request to /dresses/:dress/delete ', function () {
       it('should redirect to /dresses if dress deletion was successful', function () {
         return chai.request(app)
-        .post('/dresses/:dress/delete')
+        // test id is used, defined in dresses.js development data
+        .post('/dresses/1575875a/delete')
         .then(res => {
           res.should.redirect
           res.should.have.status(200)

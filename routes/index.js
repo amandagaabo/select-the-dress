@@ -6,7 +6,7 @@ const accounts = require('./accounts')
 const dresses = require('./dresses')
 
 router.get('/', function (req, res) {
-  res.render('home')
+  res.render('home', res.locals)
 })
 
 // session related routes

@@ -1,5 +1,75 @@
 extends layout.pug
 
 block content
-  #dresses.content
-    p dress grid with ratings will go here
+  section#dresses.row.content(role="region")
+    .col-12
+      h2 Dresses
+
+      .sort
+        label(for="sort-by") sort by
+        select#sort-by.select-dropdown
+          if sorting.sort === "rating"
+            option(value="rating", selected="true") rating high to low
+            option(value="price") price low to high
+            option(value="designer") designer a to z
+          if sorting.sort === "price"
+            option(value="rating") rating high to low
+            option(value="price", selected="true") price low to high
+            option(value="designer") designer a to z
+          if sorting.sort === "designer"
+            option(value="rating") rating high to low
+            option(value="price") price low to high
+            option(value="designer", selected="true") designer a to z
+      .sort
+        label(for="view") view
+        select#view.select-dropdown
+          if sorting.view === "front" | !sorting.view
+            option(value="front", selected="true") front
+            option(value="back") back
+            option(value="side") side
+          if sorting.view === "back"
+            option(value="front") front
+            option(value="back", selected="true") back
+            option(value="side") side
+          if sorting.view === "side"
+            option(value="front") front
+            option(value="back") back
+            option(value="side", selected="true") side
+      .buttons
+        a.button#add-btn(href="/dresses/add") add dress
+        -let compareURL = `/dresses/compare?dressA=1575875a&dressB=3575875c`
+        a.button#compare-btn(href=compareURL) compare
+
+      each dress in dresses
+        .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
+        data-store=dress.store, data-rating=dress.rating)
+          if sorting.view === 'front'
+            img.dress-img.front(src=dress.imgFront.src, alt=dress.imgFront.alt)
+
+          if sorting.view === 'back'
+            img.dress-img(src=dress.imgBack.src, alt=dress.imgBack.alt)
+
+          if sorting.view === 'side'
+            img.dress-img(src=dress.imgSide.src, alt=dress.imgSide.alt)
+
+          .heart-rating
+            if dress.rating === 4
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+            else if dress.rating === 3
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart
+            else if dress.rating === 2
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart
+            else if dress.rating === 1
+              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart

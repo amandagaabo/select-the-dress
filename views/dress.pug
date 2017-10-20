@@ -1,5 +1,49 @@
 extends layout.pug
 
 block content
-  #dress.content
-    p dress details for one dress will go here
+  section#dress.row.content(role="region")
+    .col-12
+      h2 Dress Details
+      #gallery
+        #panel
+          img#large-img(src=dress.imgFront.src, alt=dress.imgFront.alt)
+        #thumbs
+          img(src=dress.imgFront.src, alt=dress.imgFront.alt)
+          img(src=dress.imgBack.src, alt=dress.imgBack.alt)
+          img(src=dress.imgSide.src, alt=dress.imgSide.alt)
+
+      .heart-rating
+        if dress.rating === 4
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+        else if dress.rating === 3
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+        else if dress.rating === 2
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+        else if dress.rating === 1
+          span.rating.fa.fa-heart.checked
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+          span.rating.fa.fa-heart
+
+        -let editURL = `/dresses/${dress.id}/edit`
+        form#dress-form(role="form", action=editURL, method="get")
+          label(for="designer") designer:
+          input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, placeholder="designer", disabled="true")
+          label(for='style') style:
+          input#style.form-input-disabled(type="text", name="style", value=dress.style, placeholder="style", disabled="true")
+          label(for="price") price:
+          input#price.form-input-disabled(type="text", name="price", value=dress.price, placeholder="price", disabled="true")
+          label(for="store") price:
+          input#store.form-input-disabled(type="text", name="store", value=dress.store, placeholder="store", disabled="true")
+          label(for="notes") notes:
+          textarea#notes.form-input-disabled(type="text", name="notes", placeholder="notes", disabled="true")= dress.notes
+          input(type="submit", value="edit")

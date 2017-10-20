@@ -52,12 +52,12 @@ The form will have the following:
 * password
 * submit
 
-### User account - /users/:user
+### User account - /account
 User may view their account info by clicking the My Account button at the top of the page.  The account page will display user information and allow the user to:
 * Update contact info
 * Change password
 
-### Update user account - /users/:user/update
+### Update user account - /account/edit
 When user wants to update contact info or change password they will click edit on the user account page then be taken to the edit page.  The user can update their name, email and password.
 
 ### Dresses - /dresses
@@ -90,7 +90,7 @@ The dresses page will have the following:
     * List all stores added
 * Compare this dress checkbox (select up to 2)
 
-## Add Dress Form - /dresses/add-dress
+## Add Dress Form - /dresses/add
 The add dress form will allow the user to add a dress.  The user can upload photos of them wearing the dress.  The photos will be tagged with a photo type for display purposes.  The user will be required to add a rating to document how much they like each dress.  Upon successful submission the user will be taken to the dresses page and the new dress will be added.  If there are errors, a message will be displayed.
 
 The form will include:
@@ -121,7 +121,7 @@ The following information will be displayed for the dress:
 ### Dress Details - /dresses/:dress/edit
 When the user wants to edit details about a specific dress, a pre-filled in version of the add dress form will be shown with editable fields.  The user can update any of the fields then will be returned to the dress details page on submit.
 
-### Compare Dresses - /dresses/comparison?dress1&dress2
+### Compare Dresses - /dresses/compare?dress1&dress2
 If the user selects 2 dresses and clicks compare, they will be taken to the comparison page where the two dresses and all of their details will be displayed side by side.
 
 Each dress will have:
@@ -168,7 +168,7 @@ dressSchema
     scr: {type: String, required: true},
     alt: {type: String, required: true},
     type: {type: String, required: true}
-  }
+  },
   rating: {type: Number, required: true},
   designer: String,
   styleNum: String,
@@ -252,7 +252,7 @@ const occasion = {
         src: 'https://www.cloudinary/dress1-front-view.jpg',
         alt: 'dress 1 front',
         type: 'front'
-      }
+      },
       rating: 4,
       designer: 'maggie sottero',
       styleNum: 'saige',
@@ -266,7 +266,7 @@ const occasion = {
         src: 'https://www.cloudinary/dress2-front-view.jpg',
         alt: 'dress 2 front',
         type: 'front'
-      }
+      },
       rating: 2,
       designer: 'sottero and midgley',
       styleNum: 'elliott',

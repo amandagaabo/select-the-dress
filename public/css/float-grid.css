@@ -29,7 +29,7 @@
   clear: both;
 }
 
-.col-3, .col-4, .col-6, .col-9, .col-12 {
+.col-2, .col-3, .col-4, .col-5, .col-6, .col-9, .col-12 {
   float: left;
 
   /* Gutters:
@@ -41,12 +41,16 @@
 }
 
 /* Mobile defaults */
-.col-3, .col-4, .col-6, .col-9, .col-12 {
+.col-2, .col-3, .col-4, .col-5, .col-6, .col-9, .col-12 {
   width: 100%;
 }
 
 /* Non-mobile, grid and other settings */
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 500px) {
+  /* 2 columns, 2/12 in % */
+  .col-2 {
+    width: 16.66666%;
+  }
   /* 3 columns, 3/12 in % */
   .col-3 {
     width: 25%;
@@ -55,6 +59,11 @@
   /* 4 columns 4/12 */
   .col-4 {
     width:33.33333%;
+  }
+
+  /* 5 columns, 5/12 in % */
+  .col-5 {
+    width: 41.66666%;
   }
 
   /* 6 columns 6/12 */
@@ -73,8 +82,10 @@
   }
 
   #logo {
-    text-align: left;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    float: left;
+  }
+
+  .header-links {
+    float: right;
   }
 }

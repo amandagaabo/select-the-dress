@@ -8,11 +8,6 @@ h1 {
   margin-bottom: 0;
 }
 
-ul {
-  list-style: none;
-  margin-left: 0;
-}
-
 a {
   text-decoration: none;
   color: black;
@@ -22,19 +17,24 @@ a {
   color: red;
 }
 
+.hidden {
+  display: none;
+}
+
 /* home */
 #logo {
   font-size: 30px;
-  float: left;
+}
+
+.header-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .header-links li {
-  float: right;
-}
-
-.header-links li a {
-  display: block;
-  padding: 0 8px;
+  display: inline-block;
+  padding: 10px;
 }
 
 .link:hover {
@@ -46,20 +46,32 @@ a {
   text-decoration: underline;
 }
 
+
 /* forms */
-label {
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+form label {
   text-align: right;
   padding: 0 15px;
+  width: 35%;
+  vertical-align: top;
 }
 
-label, input[type=text], input[type=email], input[type=password] {
+input[type=text], input[type=email], input[type=password], textarea, input[type="file"], form #rating {
+  width: 65%
+}
+
+form label, input[type=text], input[type=email], input[type=password], input[type="file"], form #rating {
   display: inline-block;
-  width: 50%;
   margin-bottom: 10px;
+  height: 35px;
 }
 
-input[type=submit] {
-  display: block;
+input[type=submit], .button {
+  display: inline-block;
   margin: 10px auto;
   padding: 0 20px;
   border: 1px solid black;
@@ -69,7 +81,12 @@ input[type=submit] {
   font-size: 18px;
 }
 
-input[type=submit]:hover {
+#add-btn, #compare-btn {
+  display: inline-block;
+  margin: 10px;
+}
+
+input[type=submit]:hover, .button:hover {
   background-color: #202226;
   color: white;
   cursor: pointer;
@@ -87,6 +104,63 @@ input[type=submit]:hover {
   border-style: none;
 }
 
-.small-form {
-  margin: 10px 200px;
+/* dresses */
+.select-dropdown {
+  font-family: 'Bad Script', cursive;
+  background-color: white;
+  font-size: 18px;
+}
+
+.sort {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sort label {
+  margin-right: 15px;
+}
+
+.dress-box {
+  display: inline-block;
+  padding: 0 10px;
+  margin-bottom: 15px;
+}
+
+.dress-img {
+  width: 100%
+
+}
+.rating {
+  margin: 0 2px;
+}
+.checked {
+  color: red;
+}
+
+/* dress */
+.main-dress {
+  width: 300px;
+}
+
+#large-img {
+  width: 300px
+}
+
+#thumbs img {
+  width: 94px;
+  margin: 0 3px;
+}
+
+#delete-btn {
+  display: block;
+  width: 80px;
+}
+
+/* compare */
+.dressA p, .dressB p, .labels p {
+  margin: 0;
+}
+
+.fixed-height {
+  height: 50px;
 }

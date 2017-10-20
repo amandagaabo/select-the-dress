@@ -6,9 +6,9 @@ block content
       h2 Edit Account Info
       form#account-form(role="form", action="/account/edit", method="post")
         label(for="first-name") first name:
-        input#first-name.form-input(type="text", name="first name", value=user.firstName, placeholder="first name")
+        input#first-name.form-input(type="text", name="first name", value=account.firstName, placeholder="first name")
         label(for='last-name') last name:
-        input#last-name.form-input(type="text", name="last name", value=user.lastName, placeholder="last name")
+        input#last-name.form-input(type="text", name="last name", value=account.lastName, placeholder="last name")
         label(for="email") email:
-        input#email.form-input(type="email", name="email", value=user.email, placeholder="email")
-        input.button(type="submit", value="save")
+        input#email.form-input(type="email", name="email", value=account.email, placeholder="email")
+        input(type="submit", value="save")

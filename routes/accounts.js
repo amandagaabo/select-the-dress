@@ -1,5 +1,5 @@
 // mock data for development:
-const user = {
+const userAccount = {
   id: '123456a',
   email: 'jane.smith@gmail.com',
   password: 'hash',
@@ -9,12 +9,14 @@ const user = {
 
 exports.readPage = function (req, res) {
   // show the account page
-  res.render('account', {user: user})
+  res.locals.account = userAccount
+  res.render('account', res.locals)
 }
 
 exports.editPage = function (req, res) {
   // show the update dress form page
-  res.render('account-edit', {user: user})
+  res.locals.account = userAccount
+  res.render('account-edit', res.locals)
 }
 
 exports.update = function (req, res) {
