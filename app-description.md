@@ -162,7 +162,8 @@ const user = {
 dressSchema
 ```
 {
-  id: {type: number, required: true, unique: true},
+  id: {type: String, required: true, unique: true},
+  user: {type: String, required: true},
   img: {
     scr: {type: String, required: true},
     alt: {type: String, required: true},

@@ -1,7 +1,80 @@
 body {
   font-family: 'Bad Script', cursive;
+  text-align: center;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 0;
 }
 
 ul {
-  list-style-type: none;
+  list-style: none;
+  margin-left: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* home */
+#logo {
+  font-size: 30px;
+  float: left;
+}
+
+.header-links li {
+  float: right;
+}
+
+.header-links li a {
+  display: block;
+  padding: 0 8px;
+}
+
+.header-links li a:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* /account */
+label {
+  text-align: right;
+  padding: 0 15px;
+}
+
+label, input[type=text], input[type=email] {
+  display: inline-block;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+input[type=submit] {
+  display: block;
+  margin: 10px auto;
+  padding: 0 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  font-family: 'Bad Script', cursive;
+  font-size: 18px;
+}
+
+input[type=submit]:hover {
+  background-color: #202226;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.form-input-disabled, .form-input {
+  padding-left: 15px;
+  font-family: 'Bad Script', cursive;
+  font-size: 20px;
+  color: black;
+}
+
+.form-input-disabled {
+  border-style: none;
 }

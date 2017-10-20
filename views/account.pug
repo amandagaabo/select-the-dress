@@ -1,5 +1,14 @@
 extends layout.pug
 
 block content
-  #account.content
-    p user account info will go here
+  section#account.row.content(role='region')
+    .col-12
+      h2 Account Info
+      form#account-form(role='form', action='/account/edit', method='get')
+        label(for='first-name') first name:
+        input#first-name.form-input-disabled(type='text', name='first name', value=user.firstName, disabled='true')
+        label(for='last-name') last name:
+        input#last-name.form-input-disabled(type='text', name='last name', value=user.lastName, disabled='true')
+        label(for='email') email:
+        input#email.form-input-disabled(type='email', name='email', value=user.email, disabled='true')
+        input.button(type='submit', value='edit')

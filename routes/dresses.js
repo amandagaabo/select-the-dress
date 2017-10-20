@@ -1,7 +1,34 @@
+// mock data for development:
+const faker = require('faker')
+const dresses = []
+
+function createDresses (num) {
+  for (let i = 0; i < num; i++) {
+    let rating = Math.ceil(Math.random() * 4)
+    let newDress = {
+      id: faker.random.uuid(),
+      user: '123456a',
+      img: {
+        src: faker.random.image(),
+        alt: faker.lorem.words(),
+        type: 'front'
+      },
+      rating: rating,
+      designer: faker.lorem.words(),
+      styleNum: faker.lorem.words(),
+      price: faker.commerce.price(),
+      store: 'boulder bridal',
+      notes: faker.lorem.sentences()
+    }
+    dresses.push(newDress)
+  }
+}
+
+let userDresses = createDresses(10)
 
 exports.listPage = function (req, res) {
   // show the list of dresses page
-  res.render('dresses')
+  res.render('dresses', {dresses: userDresses})
 }
 
 exports.addPage = function (req, res) {
