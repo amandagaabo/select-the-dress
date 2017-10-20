@@ -1,5 +1,22 @@
 extends layout.pug
 
 block content
-  #sign-up-form.content
-    p sign up form will go here
+  section#sign-up.row.content(role="region")
+    .col-12
+      h2 Log In
+      form#sign-up-form.small-form(role="form", action="/sign-up", method="post")
+        label(for="firstName") first name:
+        input#first-name.form-input(type="text", name="first name", placeholder="first name")
+        label(for="lastName") last name:
+        input#last-name.form-input(type="text", name="last name", placeholder="last name")
+        label(for="email") email:
+        input#email.form-input(type="email", name="email", placeholder="example@gmail.com")
+        label(for='password') password:
+        input#password.form-input(type="password", name="password", placeholder="password")
+        label(for='password-confirm') confirm password:
+        input#password-confirm.form-input(type="password", name="password confirm", placeholder="password")
+        input.button(type="submit", value="sign up")
+      p.error-message
+      p
+        | already have an account:  
+        a.link.underline(href="/log-in") log in

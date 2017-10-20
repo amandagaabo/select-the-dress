@@ -18,6 +18,10 @@ a {
   color: black;
 }
 
+.error-messsage {
+  color: red;
+}
+
 /* home */
 #logo {
   font-size: 30px;
@@ -33,18 +37,22 @@ a {
   padding: 0 8px;
 }
 
-.header-links li a:hover {
+.link:hover {
   text-decoration: underline;
   font-weight: bold;
 }
 
-/* /account */
+.underline {
+  text-decoration: underline;
+}
+
+/* forms */
 label {
   text-align: right;
   padding: 0 15px;
 }
 
-label, input[type=text], input[type=email] {
+label, input[type=text], input[type=email], input[type=password] {
   display: inline-block;
   width: 50%;
   margin-bottom: 10px;
@@ -77,4 +85,8 @@ input[type=submit]:hover {
 
 .form-input-disabled {
   border-style: none;
+}
+
+.small-form {
+  margin: 10px 200px;
 }

@@ -1,5 +1,16 @@
 extends layout.pug
 
 block content
-  #log-in-form.content
-    p log in form will go here
+  section#log-in.row.content(role="region")
+    .col-12
+      h2 Log In
+      form#log-in-form.small-form(role="form", action="/log-in", method="post")
+        label(for="email") email:
+        input#email.form-input(type="email", name="email", placeholder="example@gmail.com")
+        label(for='password') password:
+        input#password.form-input(type="password", name="password", placeholder="password")
+        input.button(type="submit", value="log in")
+      p.error-message
+      p
+        | don't have an account:
+        a.link.underline(href="/sign-up") sign up
