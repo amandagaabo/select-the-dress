@@ -71,23 +71,6 @@ The dresses page will have the following:
   * Rating high to low
   * Price low to high
   * Designer a to z
-* Filters side bar
-  * Rating
-    * love it
-    * like it
-    * ok
-    * no
-  * Price
-    * Under $250
-    * $251 - $500
-    * $500 - $1000
-    * $1001 - $1500
-    * $1501 - $2000
-    * Over $2000
-  * Designer
-    * List all designers added
-  * Store
-    * List all stores added
 * Compare this dress checkbox (select up to 2)
 
 ## Add Dress Form - /dresses/add
@@ -140,7 +123,6 @@ mLab is used to host the database for this app. There will be two models: user a
 userSchema
 ```
 {
-  id: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   firstName: {type: String, default: ''},
@@ -151,7 +133,7 @@ userSchema
 Sample user (note: email will always be lower case in the database):
 ```
 const user = {
-  id: '2575875c-711d-4670-a2a2-8f1f9ccc8d8b',
+  _id: '2575875c-711d-4670-a2a2-8f1f9ccc8d8b',
   email: 'john.smith@gmail.com',
   password: 'hash',
   firstName: 'john',
@@ -164,14 +146,21 @@ dressSchema
 {
   id: {type: String, required: true, unique: true},
   user: {type: String, required: true},
-  img: {
+  imgFront: {
     scr: {type: String, required: true},
-    alt: {type: String, required: true},
-    type: {type: String, required: true}
+    alt: {type: String, required: true}
+  },
+  imgBack: {
+    scr: {type: String, required: true},
+    alt: {type: String, required: true}
+  },
+  imgSide: {
+    scr: {type: String, required: true},
+    alt: {type: String, required: true}
   },
   rating: {type: Number, required: true},
   designer: String,
-  styleNum: String,
+  style: String,
   price: Number,
   store: String,
   notes: String
@@ -180,11 +169,19 @@ dressSchema
 Sample dress:
 ```
 const dress = {
-  id: '1575875c-711d-4670-a2a2-8f1f9ccc7d7b',
-  img: {
+  _id: '1575875c-711d-4670-a2a2-8f1f9ccc7d7b',
+  user: '2575875c-711d-4670-a2a2-8f1f9ccc8d8b',
+  imgFront: {
     src: 'https://www.cloudinary/dress1-front-view.jpg',
-    alt: 'dress 1 front',
-    type: 'front'
+    alt: 'dress 1 front'
+  },
+  imgBack: {
+    src: 'https://www.cloudinary/dress1-front-view.jpg',
+    alt: 'dress 1 back'
+  },
+  imgSide: {
+    src: 'https://www.cloudinary/dress1-front-view.jpg',
+    alt: 'dress 1 side'
   }
   rating: 4,
   designer: 'maggie sottero',
@@ -196,7 +193,23 @@ const dress = {
 ```
 
 ## Features to add if there is time
-Allow different photo size upload.
+Filters side bar
+* Rating
+  * love it
+  * like it
+  * ok
+  * no
+* Price
+  * Under $250
+  * $251 - $500
+  * $500 - $1000
+  * $1001 - $1500
+  * $1501 - $2000
+  * Over $2000
+* Designer
+  * List all designers added
+* Store
+  * List all stores added
 
 Allow user's friends to rate dresses so user can sort by rating including how other's rated the dresses.
 

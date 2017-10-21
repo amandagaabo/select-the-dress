@@ -48,15 +48,15 @@ const userDresses = [
     id: '3575875c',
     user: '123456a',
     imgFront: {
-      src: 'http://via.placeholder.com/200x300',
+      src: 'http://via.placeholder.com/200x300?text=dress 3 front',
       alt: 'dress front'
     },
     imgBack: {
-      src: 'http://via.placeholder.com/200x300',
+      src: 'http://via.placeholder.com/200x300?text=dress 3 back',
       alt: 'dress back'
     },
     imgSide: {
-      src: 'http://via.placeholder.com/200x300',
+      src: 'http://via.placeholder.com/200x300?text=dress 3 side',
       alt: 'dress side'
     },
     rating: 1,
@@ -105,7 +105,7 @@ exports.addPage = function (req, res) {
 
 exports.create = function (req, res) {
   // create the new dress, redirect to dresses page if successful & show message
-  console.log(req)
+  // console.log(req.body)
   // res.send('OK')
   res.redirect('/dresses')
 }
@@ -150,6 +150,6 @@ exports.update = function (req, res) {
 
 exports.delete = function (req, res) {
   // confirm delete, delete the dress, then rediect to dresses page if successful
-  // res.send('OK')
-  res.redirect('/dresses')
+  console.log('dress deleted')
+  res.send('OK')
 }

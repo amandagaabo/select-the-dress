@@ -1,8 +1,9 @@
-// setup environment variables, looks for .env file and loads the env variables require('dotenv').config()
-
+// setup environment variables, looks for .env file and loads the env variables
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+//const bodyParser = require('body-parser')
 
 // Mongoose internally uses a promise-like object,
 // but its better to make Mongoose use built in es6 promises
@@ -24,6 +25,9 @@ app.use(express.static('public'))
 // log the http layer
 app.use(morgan('common'))
 
+// use body parser middleware
+// app.use(bodyParser())
+
 // middleware function to setup state variables, mock data used here
 app.use(function (req, res, next) {
   res.locals = {}
@@ -33,7 +37,7 @@ app.use(function (req, res, next) {
   }
   res.locals.sorting = {
     sort: 'rating',
-    view: 'front'
+    view: 'back'
   }
 
   next()

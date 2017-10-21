@@ -18,7 +18,25 @@ function app () {
   }
 
 
-
+  // handle delete dress button click
+  $('#delete-btn').click(function (event) {
+    event.preventDefault()
+    let confirmDelete = confirm('Are you sure you want to delete this dress?')
+      if (confirmDelete) {
+        let deleteID = $(this).attr('data-dress-id')
+        let reqURL = `/dresses/${deleteID}/delete`
+        $.ajax({
+          url: reqURL,
+          type: 'POST',
+          success: function(res) {
+           window.location.href = '/dresses'
+          },
+          error: function(res, err) {
+            console.log(err)
+          }
+        })
+      }
+  })
 
   // go to dress page using dress id
   $('.dress-box').click(function () {

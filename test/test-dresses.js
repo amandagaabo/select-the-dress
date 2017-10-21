@@ -60,7 +60,8 @@ describe('dresses routes', function () {
     describe('GET request to /dresses/compare ', function () {
       it('should return comparison page html', function () {
         return chai.request(app)
-        .get('/dresses/compare')
+        // test comparision ids are used, defined in dresses.js development data
+        .get(`/dresses/compare?dressA=1575875a&dressB=3575875c`)
         .then(res => {
           res.should.have.status(200)
           res.should.be.html
