@@ -34,11 +34,6 @@ app.use(function (req, res, next) {
   res.locals.user = {
     isLoggedIn: true
   }
-  res.locals.sorting = {
-    sort: 'rating',
-    view: 'front'
-  }
-
   next()
 })
 

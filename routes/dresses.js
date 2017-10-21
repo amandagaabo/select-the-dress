@@ -16,9 +16,30 @@ exports.loadDress = function (req, res, next) {
 }
 
 exports.listPage = function (req, res) {
+  // setup sort
+  let sort = {rating: -1}
+  res.locals.sort = 'rating'
+  if(req.query.sort === 'price') {
+    sort = {price: 1}
+    res.locals.sort = 'price'
+  }
+  if(req.query.sort === 'designer') {
+    sort = {designer: 1}
+    res.locals.sort = 'designer'
+  }
+  
+  // setup view
+  res.locals.view = 'front'
+  if (req.query.view === 'back') {
+    res.locals.view = 'back'
+  }
+  if (req.query.view === 'side') {
+    res.locals.view = 'side'
+  }
+
   // get all dresses for the user
   Dress.find({user:req.user._id})
-    .sort({rating: -1})
+    .sort(sort)
     .then(dresses => {
       if(dresses.length === 0) {
         res.redirect('/dresses/add')

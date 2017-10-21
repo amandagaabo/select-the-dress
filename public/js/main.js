@@ -51,6 +51,25 @@ function app () {
     $('#large-img').attr('alt', $(this).attr('alt').replace('thumb', 'large'))
   })
 
+  function selectHandler(type, value) {
+    let query = $.deserialize(window.location.search.substr(1))
+    query[type] = value
+    let urlQuery = $.param(query)
+    let pathname = window.location.pathname
+    window.location.href = `${pathname}?${urlQuery}`
+  }
+  // sort
+  $('#sort-by').change(function() {
+    let value = $(this).val()
+    selectHandler('sort', value)
+  })
+
+  // view
+  $('#view').change(function() {
+    let value = $(this).val()
+    selectHandler('view', value)
+  })
+
 }
 
 $(app)

@@ -8,30 +8,30 @@ block content
       .sort
         label(for="sort-by") sort by
         select#sort-by.select-dropdown
-          if sorting.sort === "rating"
+          if sort === "rating"
             option(value="rating", selected="true") rating high to low
             option(value="price") price low to high
             option(value="designer") designer a to z
-          if sorting.sort === "price"
+          if sort === "price"
             option(value="rating") rating high to low
             option(value="price", selected="true") price low to high
             option(value="designer") designer a to z
-          if sorting.sort === "designer"
+          if sort === "designer"
             option(value="rating") rating high to low
             option(value="price") price low to high
             option(value="designer", selected="true") designer a to z
       .sort
         label(for="view") view
         select#view.select-dropdown
-          if sorting.view === "front" | !sorting.view
+          if view === "front"
             option(value="front", selected="true") front
             option(value="back") back
             option(value="side") side
-          if sorting.view === "back"
+          if view === "back"
             option(value="front") front
             option(value="back", selected="true") back
             option(value="side") side
-          if sorting.view === "side"
+          if view === "side"
             option(value="front") front
             option(value="back") back
             option(value="side", selected="true") side
@@ -43,13 +43,13 @@ block content
       each dress in dresses
         .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
         data-store=dress.store, data-rating=dress.rating)
-          if sorting.view === 'front'
+          if view === 'front'
             img.dress-img.front(src=dress.imgFront, alt='dress front')
 
-          if sorting.view === 'back'
+          if view === 'back'
             img.dress-img(src=dress.imgBack, alt='dress back')
 
-          if sorting.view === 'side'
+          if view === 'side'
             img.dress-img(src=dress.imgSide, alt='dress side')
 
           .heart-rating
@@ -73,3 +73,6 @@ block content
               span.rating.fa.fa-heart
               span.rating.fa.fa-heart
               span.rating.fa.fa-heart
+          
+          p= dress.price
+          p= dress.designer
