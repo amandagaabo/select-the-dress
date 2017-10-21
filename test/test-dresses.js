@@ -120,10 +120,8 @@ describe('dresses routes', function () {
         // test id is used, defined in dresses.js development data
         .post('/dresses/1575875a/delete')
         .then(res => {
-          res.should.redirect
           res.should.have.status(200)
-          res.should.be.html
-          res.text.should.include('dresses')
+          res.text.should.include('OK')
           return Promise.resolve()
         })
       })

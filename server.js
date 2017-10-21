@@ -3,13 +3,13 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-//const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 // Mongoose internally uses a promise-like object,
 // but its better to make Mongoose use built in es6 promises
 mongoose.Promise = global.Promise
 
-const {DATABASE_URL, PORT} = require('./config')
+const {TEST_DATABASE_URL, PORT} = require('./config')
 
 const app = express()
 
@@ -26,20 +26,27 @@ app.use(express.static('public'))
 app.use(morgan('common'))
 
 // use body parser middleware
-// app.use(bodyParser())
+app.use(bodyParser.urlencoded({extended: true}))
 
 // middleware function to setup state variables, mock data used here
 app.use(function (req, res, next) {
   res.locals = {}
   res.locals.user = {
-    isLoggedIn: true,
-    firstName: 'jane'
+    isLoggedIn: true
   }
   res.locals.sorting = {
     sort: 'rating',
     view: 'back'
   }
 
+  next()
+})
+
+// fake passport user id
+app.use(function(req, res, next) {
+  req.user = {
+    _id: new mongoose.mongo.ObjectId('59eb8790a6315943bafd5cfb')
+  }
   next()
 })
 
@@ -57,7 +64,7 @@ app.use('*', function (req, res) {
 let server
 
 // this function connects to our database, then starts the server
-function runServer (databaseUrl = DATABASE_URL, port = PORT) {
+function runServer (databaseUrl = TEST_DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, {useMongoClient: true}, err => {
       if (err) {

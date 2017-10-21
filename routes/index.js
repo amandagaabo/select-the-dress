@@ -17,9 +17,9 @@ router.post('/log-in', sessions.logInSubmit)
 router.get('/log-out', sessions.logOut)
 
 // account related routes
-router.get('/account', accounts.readPage)
-router.get('/account/edit', accounts.editPage)
-router.post('/account/edit', accounts.update)
+router.get('/account', accounts.loadUser, accounts.readPage)
+router.get('/account/edit', accounts.loadUser, accounts.editPage)
+router.post('/account/edit', accounts.loadUser, accounts.update)
 
 // dress related routes
 router.get('/dresses', dresses.listPage)

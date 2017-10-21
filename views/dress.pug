@@ -34,8 +34,7 @@ block content
           span.rating.fa.fa-heart
           span.rating.fa.fa-heart
 
-        -let editURL = `/dresses/${dress.id}/edit`
-        form#dress-form(role="form", action=editURL, method="get")
+        form#dress-form(role="form")
           label(for="designer") designer:
           input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, placeholder="designer", disabled="true")
           label(for='style') style:
@@ -46,4 +45,4 @@ block content
           input#store.form-input-disabled(type="text", name="store", value=dress.store, placeholder="store", disabled="true")
           label(for="notes") notes:
           textarea#notes.form-input-disabled(type="text", name="notes", placeholder="notes", disabled="true")= dress.notes
-          input(type="submit", value="edit")
+          a.button(href=`/dresses/${dress.id}/edit`) edit

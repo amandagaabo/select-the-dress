@@ -4,11 +4,11 @@ block content
   section#account.row.content(role='region')
     .col-12
       h2 Account Info
-      form#account-form(role='form', action='/account/edit', method='get')
+      form#account-form(role='form')
         label(for='first-name') first name:
-        input#first-name.form-input-disabled(type='text', name='first name', value=account.firstName, disabled='true')
+        input#first-name.form-input-disabled(type='text', name='firstName', value=account.firstName, disabled='true')
         label(for='last-name') last name:
-        input#last-name.form-input-disabled(type='text', name='last name', value=account.lastName, disabled='true')
+        input#last-name.form-input-disabled(type='text', name='lastName', value=account.lastName, disabled='true')
         label(for='email') email:
         input#email.form-input-disabled(type='email', name='email', value=account.email, disabled='true')
-        input(type='submit', value='edit')
+        a.button(href='/account/edit') edit
