@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
   }
   res.locals.sorting = {
     sort: 'rating',
-    view: 'back'
+    view: 'front'
   }
 
   next()
@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
 // fake passport user id
 app.use(function(req, res, next) {
   req.user = {
-    _id: new mongoose.mongo.ObjectId('59eb8790a6315943bafd5cfb')
+    _id: new mongoose.mongo.ObjectId('59ebab3dce5ff3460dd4f321')
   }
   next()
 })

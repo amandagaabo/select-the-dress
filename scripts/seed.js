@@ -32,18 +32,9 @@ mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
 
   const dresses = [
     {
-      imgFront: {
-        src: 'http://via.placeholder.com/200x300?text=dress 1 front',
-        alt: 'dress front'
-      },
-      imgBack: {
-        src: 'http://via.placeholder.com/200x300?text=dress 1 back',
-        alt: 'dress back'
-      },
-      imgSide: {
-        src: 'http://via.placeholder.com/200x300?text=dress 1 side',
-        alt: 'dress side'
-      },
+      imgFront: 'http://via.placeholder.com/200x300?text=dress 1 front',
+      imgBack: 'http://via.placeholder.com/200x300?text=dress 1 back',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 1 side',
       rating: 4,
       designer: 'maggie sottero',
       style: 'saige',
@@ -52,18 +43,9 @@ mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
       notes: 'love the neckline, lots of lace, beautiful dress'
     },
     {
-      imgFront: {
-        src: 'http://via.placeholder.com/200x300?text=dress 2 front',
-        alt: 'dress front'
-      },
-      imgBack: {
-        src: 'http://via.placeholder.com/200x300?text=dress 2 back',
-        alt: 'dress back'
-      },
-      imgSide: {
-        src: 'http://via.placeholder.com/200x300?text=dress 2 side',
-        alt: 'dress side'
-      },
+      imgFront: 'http://via.placeholder.com/200x300?text=dress 2 front',
+      imgBack: 'http://via.placeholder.com/200x300?text=dress 2 back',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 2 side',
       rating: 2,
       designer: 'sottero and midgley',
       style: 'elliott',
@@ -72,18 +54,9 @@ mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
       notes: 'the front is too plain, needs more lace and sparkles'
     },
     {
-      imgFront: {
-        src: 'http://via.placeholder.com/200x300?text=dress 3 front',
-        alt: 'dress front'
-      },
-      imgBack: {
-        src: 'http://via.placeholder.com/200x300?text=dress 3 back',
-        alt: 'dress back'
-      },
-      imgSide: {
-        src: 'http://via.placeholder.com/200x300?text=dress 3 side',
-        alt: 'dress side'
-      },
+      imgFront: 'http://via.placeholder.com/200x300?text=dress 3 front',
+      imgBack: 'http://via.placeholder.com/200x300?text=dress 3 back',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 3 side',
       rating: 1,
       designer: 'casablanca',
       style: 'jessica',
@@ -92,18 +65,9 @@ mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
       notes: 'not even close to what i want'
     },
     {
-      imgFront: {
-        src: 'http://via.placeholder.com/200x300?text=dress 4 front',
-        alt: 'dress front'
-      },
-      imgBack: {
-        src: 'http://via.placeholder.com/200x300?text=dress 4 back',
-        alt: 'dress back'
-      },
-      imgSide: {
-        src: 'http://via.placeholder.com/200x300?text=dress 4 side',
-        alt: 'dress side'
-      },
+      imgFront: 'http://via.placeholder.com/200x300?text=dress 4 front',
+      imgBack: 'http://via.placeholder.com/200x300?text=dress 4 back',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 4 side',
       rating: 3,
       designer: 'vera wang',
       style: 'jenny',
@@ -112,18 +76,9 @@ mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
       notes: 'very close, love the lacy train'
     },
     {
-      imgFront: {
-        src: 'http://via.placeholder.com/200x300?text=dress 5 front',
-        alt: 'dress front'
-      },
-      imgBack: {
-        src: 'http://via.placeholder.com/200x300?text=dress 5 back',
-        alt: 'dress back'
-      },
-      imgSide: {
-        src: 'http://via.placeholder.com/200x300?text=dress 5 side',
-        alt: 'dress side'
-      },
+      imgFront: 'http://via.placeholder.com/200x300?text=dress 5 front',
+      imgBack: 'http://via.placeholder.com/200x300?text=dress 5 back',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 5 side',
       rating: 2,
       designer: 'vera wang',
       style: 'sophia',

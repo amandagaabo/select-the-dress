@@ -3,18 +3,9 @@ const mongoose = require('mongoose')
 // setup schema for posts
 const dressSchema = mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true, required: true},
-    imgFront: {
-      src: {type: String, required: true},
-      alt: {type: String, required: true}
-    },
-    imgBack: {
-      src: String,
-      alt: String
-    },
-    imgSide: {
-      src: String,
-      alt: String
-    },
+    imgFront: {type: String, required: true},
+    imgBack: String,
+    imgSide: String,
     rating: {type: Number, required: true},
     designer: String,
     style: String,

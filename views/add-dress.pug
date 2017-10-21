@@ -7,13 +7,13 @@ block content
 
       form#dress-form(role="form", action="/dresses/add", method="post")
         label(for="imgFront") front of dress:
-        input#imgFront(type="file", name="front image", accept='image/*', required="true")
+        input#imgFront(type="file", name="imgFront", accept='image/*', required="true")
         label(for="imgBack") back of dress:
-        input#imgBack(type="file", name="back image", accept='image/*')
+        input#imgBack(type="file", name="imgBack", accept='image/*')
         label(for="imgSide") side of dress:
-        input#imgSide(type="file", name="side image", accept='image/*')
+        input#imgSide(type="file", name="imgSide", accept='image/*')
         label(for="rating") rating:
-        select#rating.select-dropdown
+        select#rating.select-dropdown(name="rating")
           option(value="4") love it
           option(value="3") like it
           option(value="2") it's ok
@@ -25,7 +25,7 @@ block content
         input#style.form-input(type="text", name="style", placeholder="style")
         label(for="price") price:
         input#price.form-input(type="text", name="price", placeholder="price")
-        label(for="store") price:
+        label(for="store") store:
         input#store.form-input(type="text", name="store", placeholder="store")
         label(for="notes") notes:
         textarea#notes.form-input(type="text", name="notes", placeholder="notes")

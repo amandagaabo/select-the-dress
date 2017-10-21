@@ -26,11 +26,11 @@ router.get('/dresses', dresses.listPage)
 router.get('/dresses/add', dresses.addPage)
 router.post('/dresses/add', dresses.create)
 router.get('/dresses/compare', dresses.comparePage)
-router.get('/dresses/:dress', dresses.readPage)
-router.get('/dresses/:dress/edit', dresses.editPage)
+router.get('/dresses/:dress', dresses.loadDress, dresses.readPage)
+router.get('/dresses/:dress/edit', dresses.loadDress, dresses.editPage)
 // form submit can only handle get and post so setup update and delete like this:
-router.post('/dresses/:dress/edit', dresses.update)
-router.post('/dresses/:dress/delete', dresses.delete)
+router.post('/dresses/:dress/edit', dresses.loadDress, dresses.update)
+router.post('/dresses/:dress/delete', dresses.loadDress, dresses.delete)
 
 // not using these, alternate way to request update and delete requests, would require AJAX requests
 // router.put('/dresses/:dress', dresses.update)

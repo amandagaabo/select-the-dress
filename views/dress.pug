@@ -6,11 +6,11 @@ block content
       h2 Dress Details
       #gallery
         #panel
-          img#large-img(src=dress.imgFront.src, alt=dress.imgFront.alt)
+          img#large-img(src=dress.imgFront, alt='dress front')
         #thumbs
-          img(src=dress.imgFront.src, alt=dress.imgFront.alt)
-          img(src=dress.imgBack.src, alt=dress.imgBack.alt)
-          img(src=dress.imgSide.src, alt=dress.imgSide.alt)
+          img(src=dress.imgFront, alt='dress front')
+          img(src=dress.imgBack, alt='dress back')
+          img(src=dress.imgSide, alt='dress side')
 
       .heart-rating
         if dress.rating === 4

@@ -37,20 +37,20 @@ block content
             option(value="side", selected="true") side
       .buttons
         a.button#add-btn(href="/dresses/add") add dress
-        -let compareURL = `/dresses/compare?dressA=1575875a&dressB=3575875c`
+        -let compareURL = `/dresses/compare?dressA=59ebab3dce5ff3460dd4f323&dressB=59ebab3dce5ff3460dd4f324`
         a.button#compare-btn(href=compareURL) compare
 
       each dress in dresses
         .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
         data-store=dress.store, data-rating=dress.rating)
           if sorting.view === 'front'
-            img.dress-img.front(src=dress.imgFront.src, alt=dress.imgFront.alt)
+            img.dress-img.front(src=dress.imgFront, alt='dress front')
 
           if sorting.view === 'back'
-            img.dress-img(src=dress.imgBack.src, alt=dress.imgBack.alt)
+            img.dress-img(src=dress.imgBack, alt='dress back')
 
           if sorting.view === 'side'
-            img.dress-img(src=dress.imgSide.src, alt=dress.imgSide.alt)
+            img.dress-img(src=dress.imgSide, alt='dress side')
 
           .heart-rating
             if dress.rating === 4
