@@ -5,44 +5,45 @@ block content
     .col-12
       h2 Dress Details
       #gallery
-        #panel
-          img#large-img(src=dress.imgFront, alt='dress front')
-        #thumbs
+        .col-2#thumbs
           img(src=dress.imgFront, alt='dress front')
           img(src=dress.imgBack, alt='dress back')
           img(src=dress.imgSide, alt='dress side')
+        .col-10#panel
+          img#large-img(src=dress.imgFront, alt='dress front')
 
-      .heart-rating
-        if dress.rating === 4
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-        else if dress.rating === 3
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-        else if dress.rating === 2
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-        else if dress.rating === 1
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
+      .col-12
+        .heart-rating
+          if dress.rating === 4
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+          else if dress.rating === 3
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart
+          else if dress.rating === 2
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart
+            span.rating.fa.fa-heart
+          else if dress.rating === 1
+            span.rating.fa.fa-heart.checked
+            span.rating.fa.fa-heart
+            span.rating.fa.fa-heart
+            span.rating.fa.fa-heart
 
-        form#dress-form(role="form")
-          label(for="designer") designer:
-          input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, placeholder="designer", disabled="true")
-          label(for='style') style:
-          input#style.form-input-disabled(type="text", name="style", value=dress.style, placeholder="style", disabled="true")
-          label(for="price") price:
-          input#price.form-input-disabled(type="text", name="price", value=dress.price, placeholder="price", disabled="true")
-          label(for="store") price:
-          input#store.form-input-disabled(type="text", name="store", value=dress.store, placeholder="store", disabled="true")
-          label(for="notes") notes:
-          textarea#notes.form-input-disabled(type="text", name="notes", placeholder="notes", disabled="true")= dress.notes
-          a.button(href=`/dresses/${dress.id}/edit`) edit
+          form#dress-form(role="form")
+            label(for="designer") designer:
+            input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, disabled="true")
+            label(for='style') style:
+            input#style.form-input-disabled(type="text", name="style", value=dress.style, disabled="true")
+            label(for="price") price:
+            input#price.form-input-disabled(type="text", name="price", value=dress.price, disabled="true")
+            label(for="store") price:
+            input#store.form-input-disabled(type="text", name="store", value=dress.store, disabled="true")
+            label(for="notes") notes:
+            textarea#notes.form-input-disabled(type="text", name="notes", disabled="true")= dress.notes
+            a.button(href=`/dresses/${dress.id}/edit`) edit

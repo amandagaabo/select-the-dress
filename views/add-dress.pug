@@ -5,7 +5,7 @@ block content
     .col-12
       h2 Add Dress
 
-      form#dress-form(role="form", action="/dresses/add", method="post")
+      form#dress-form(role="form", action="/dresses/add", method="post", enctype='multipart/form-data')
         label(for="imgFront") front of dress:
         input#imgFront(type="file", name="imgFront", accept='image/*', required="true")
         label(for="imgBack") back of dress:

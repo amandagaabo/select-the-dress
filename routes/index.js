@@ -1,5 +1,18 @@
 const express = require('express')
 const router = express.Router()
+const cloudinary = require('cloudinary')
+const cloudinaryStorage = require('multer-storage-cloudinary')
+const multer = require('multer')
+
+
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'dresses',
+  allowedFormats: ['jpg', 'png', 'jpeg'],
+  transformation: [{height: 1500, width: 1000}]
+})
+
+const upload = multer({storage})
 
 const sessions = require('./sessions')
 const accounts = require('./accounts')
@@ -22,9 +35,10 @@ router.get('/account/edit', accounts.loadUser, accounts.editPage)
 router.post('/account/edit', accounts.loadUser, accounts.update)
 
 // dress related routes
+const uploader = upload.fields([{ name: 'imgFront', maxCount: 1 }, { name: 'imgBack', maxCount: 1 }, { name: 'imgSide', maxCount: 1 }])
 router.get('/dresses', dresses.listPage)
 router.get('/dresses/add', dresses.addPage)
-router.post('/dresses/add', dresses.create)
+router.post('/dresses/add', uploader, dresses.create)
 router.get('/dresses/compare', dresses.comparePage)
 router.get('/dresses/:dress', dresses.loadDress, dresses.readPage)
 router.get('/dresses/:dress/edit', dresses.loadDress, dresses.editPage)

@@ -1,4 +1,5 @@
 const Dress = require('../models/dress')
+const _ = require('lodash')
 
 // middleware to find one dress
 exports.loadDress = function (req, res, next) {
@@ -27,7 +28,7 @@ exports.listPage = function (req, res) {
     sort = {designer: 1}
     res.locals.sort = 'designer'
   }
-  
+
   // setup view
   res.locals.view = 'front'
   if (req.query.view === 'back') {
@@ -58,12 +59,13 @@ exports.addPage = function (req, res) {
 }
 
 exports.create = function (req, res) {
+
   // create the new dress in database
   const data = {
     user: req.user._id,
-    imgFront: 'http://via.placeholder.com/200x300?text=new front',
-    imgBack: 'http://via.placeholder.com/200x300?text=new back',
-    imgSide: 'http://via.placeholder.com/200x300?text=new side',
+    imgFront: _.get(req.files, 'imgFront[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=front+of+dress+not+uploaded']) ,
+    imgBack: _.get(req.files, 'imgBack[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=back+of+dress+not+uploaded']),
+    imgSide: _.get(req.files, 'imgSide[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=side+of+dress+not+uploaded']),
     rating: req.body.rating,
     designer: req.body.designer,
     style: req.body.style,
