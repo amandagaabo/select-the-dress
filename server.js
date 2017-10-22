@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 // fake passport user id
 app.use(function(req, res, next) {
   req.user = {
-    _id: new mongoose.mongo.ObjectId('59ebab3dce5ff3460dd4f321')
+    _id: new mongoose.mongo.ObjectId('59ebf98874314249688ae2a1')
   }
   next()
 })

@@ -59,7 +59,6 @@ exports.addPage = function (req, res) {
 }
 
 exports.create = function (req, res) {
-
   // create the new dress in database
   const data = {
     user: req.user._id,

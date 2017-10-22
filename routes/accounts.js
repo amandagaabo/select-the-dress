@@ -1,6 +1,6 @@
 const User = require('../models/user')
 
-
+// Middleware function used to load one user
 exports.loadUser = function (req, res, next) {
   User.findOne({_id:req.user._id})
     .then(user => {
@@ -12,7 +12,6 @@ exports.loadUser = function (req, res, next) {
       }
     })
 }
-
 
 //WITH MIDDLEWARE
 exports.readPage = function (req, res) {
@@ -28,7 +27,6 @@ exports.editPage = function (req, res) {
   // show the account page
   res.render('account-edit', res.locals)
 }
-
 
 exports.update = function (req, res) {
   // update all parameters in database
@@ -75,9 +73,7 @@ exports.update = function (req, res) {
 //       }
 //     })
 // }
-
-
-
+//
 // exports.update = function (req, res) {
 //   console.log(req.body)
 //   User.findOne({_id:req.user._id})
@@ -98,5 +94,4 @@ exports.update = function (req, res) {
 //         })
 //       }
 //     })
-//
 // }
