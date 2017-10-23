@@ -5,16 +5,21 @@ block content
     .col-12
       h2 Sign Up
       form#sign-up-form(role="form", action="/sign-up", method="post")
-        label(for="firstName") first name:
-        input#first-name.form-input(type="text", name="firstName", placeholder="first name")
-        label(for="lastName") last name:
-        input#last-name.form-input(type="text", name="lastName", placeholder="last name")
-        label(for="email") email:
-        input#email.form-input(type="email", name="email", placeholder="example@gmail.com")
-        label(for='password') password:
-        input#password.form-input(type="password", name="password", placeholder="password")
-        label(for='password-confirm') confirm password:
-        input#password-confirm.form-input(type="password", name="passwordConfirm", placeholder="password")
+        label(for="firstName", class=messages.errorFields.includes('firstName') && 'error-text') first name:
+        input#first-name.form-input(type="text", name="firstName", placeholder="first name", value=data.firstName,  class=messages.errorFields.includes('firstName') && 'error')
+        
+        label(for="lastName", class=messages.errorFields.includes('lastName') && 'error-text')  last name:
+        input#last-name.form-input(type="text", name="lastName", placeholder="last name", value=data.lastName, class=messages.errorFields.includes('lastName') && 'error')
+        
+        label(for="email", class=messages.errorFields.includes('email') && 'error-text')  email:
+        input#email.form-input(type="text", name="email", placeholder="example@gmail.com", value=data.email, class=messages.errorFields.includes('email') && 'error')
+        
+        label(for='password', class=messages.errorFields.includes('password') && 'error-text')  password:
+        input#password.form-input(type="password", name="password", placeholder="password", class=messages.errorFields.includes('password') && 'error')
+        
+        label(for='password-confirm', class=messages.errorFields.includes('password') && 'error-text') confirm password:
+        input#password-confirm.form-input(type="password", name="passwordConfirm", placeholder="password", class=messages.errorFields.includes('password') && 'error')
+        
         input(type="submit", value="sign up")
       p.error-message
       p

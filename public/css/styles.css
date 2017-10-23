@@ -13,20 +13,26 @@ a {
   color: black;
 }
 
-.error-messsage {
-  color: red;
-}
-
 .hidden {
   display: none;
 }
 
+.error-text {
+  color: #D8000C;
+}
+
 .error {
-  color: red;
+  color: #D8000C;
+  background-color: #FFBABA;
 }
 
 .success {
-  color: green;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+
+.messageBox p {
+  margin: 5px 0;
 }
 
 /* home */

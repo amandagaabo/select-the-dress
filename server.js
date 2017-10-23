@@ -47,16 +47,22 @@ app.use(session({
   })
 }))
 
+// use flash messages, stored in session
+app.use(flash())
+
 const passportConfig = require('./config/passport')
 passportConfig(app, passport)
 
-// use flash messages, stored in session
-//app.use(flash())
+
 
 // middleware function to setup locals in response object
 app.use(function (req, res, next) {
   res.locals = {
-    messages: {},
+    messages: {
+      errors: req.flash('error'),
+      success: req.flash('success'),
+      errorFields: ''
+    },
     user: req.user
   }
 

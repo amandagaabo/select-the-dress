@@ -19,6 +19,7 @@ const dresses = require('./dresses')
 
 module.exports = function (passport) {
   router.get('/', function (req, res) {
+    console.log(res.locals.messages)
     res.render('home', res.locals)
   })
 
@@ -29,6 +30,7 @@ module.exports = function (passport) {
       return next()
     }
     // if user is not authenticated then redirect to login
+    req.flash('error', 'You must be logged in to access this page.')
     res.redirect('/log-in')
   }
 

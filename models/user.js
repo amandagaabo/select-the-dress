@@ -1,16 +1,47 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const SALT_WORK_FACTOR = 10;
+const SALT_WORK_FACTOR = 10
+const MIN_PASSWORD_LENGTH = 8
+const MAX_PASSWORD_LENGTH = 50
 
 // setup schema for posts
 const userSchema = mongoose.Schema({
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  firstName: {type: String, required: true},
-  lastName: {type: String, required: true}
+  email: {
+    type: String,
+    set: email => email.toLowerCase(),
+    required: [true, 'email is required'],
+    validate: [validator.isEmail, 'invalid email']
+  },
+  password: {
+    type: String,
+    required: [true, 'password is required'],
+    minlength: [MIN_PASSWORD_LENGTH, `password is too short, please use at least ${MIN_PASSWORD_LENGTH} characters`],
+    maxlength: [MAX_PASSWORD_LENGTH, `password is too long, please use less than ${MAX_PASSWORD_LENGTH} characters`]
+  },
+  firstName: {
+    type: String,
+    required: [true, 'first name is required']
+  },
+  lastName: {
+    type: String,
+    required: [true, 'last name is required']
+  }
 })
 
-// mongoose middleware that runs before save
+// validate password: make sure it has at least 1 number
+userSchema.path('password').validate(password => {
+  const hasNumber = /\d/
+  return hasNumber.test(password)
+}, 'password must contain at least 1 number')
+
+// validate password: make sure it has at least 1 letter
+userSchema.path('password').validate(password => {
+  const hasLetter = /[A-Za-z]/
+  return hasLetter.test(password)
+}, 'password must contain at least 1 letter')
+
+// mongoose middleware that runs before save to salt and hash the password
 userSchema.pre('save', function(next) {
   let user = this
 
@@ -27,8 +58,7 @@ userSchema.pre('save', function(next) {
   })
 })
 
-
-// setup apiRepr method
+// setup apiRepr method to be returned so password is never sent to front end
 userSchema.methods.apiRepr = function () {
   return {
     id: this._id,
@@ -38,9 +68,8 @@ userSchema.methods.apiRepr = function () {
   }
 }
 
-
-// check if password if valid
-userSchema.methods.validPassword = function(password) {
+// check if password if matches password in database for user email
+userSchema.methods.matchPassword = function(password) {
   return bcrypt.compare(password, this.password)
 }
 

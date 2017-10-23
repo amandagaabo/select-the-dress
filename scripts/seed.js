@@ -18,13 +18,13 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
   const users = [
     {
       email: 'jane.smith@gmail.com',
-      password: 'hash',
+      password: 'password1',
       firstName: 'jane',
       lastName: 'smith'
     },
     {
       email: 'amanda.herschleb@gmail.com',
-      password: 'hash',
+      password: 'password1',
       firstName: 'amanda',
       lastName: 'herschleb'
     }
