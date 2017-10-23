@@ -21,6 +21,14 @@ a {
   display: none;
 }
 
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
 /* home */
 #logo {
   font-size: 30px;

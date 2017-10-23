@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const SALT_WORK_FACTOR = 10;
 
 // setup schema for posts
 const userSchema = mongoose.Schema({
@@ -8,6 +10,24 @@ const userSchema = mongoose.Schema({
   lastName: {type: String, required: true}
 })
 
+// mongoose middleware
+userSchema.pre('save', function(next) {
+  let user = this;
+
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
+  // hash the password with auto-salter or something
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
+    if (err) return next(err);
+
+    // override the cleartext password with the hashed one
+    user.password = hash;
+    next();
+  });
+});
+
+
 // setup apiRepr method
 userSchema.methods.apiRepr = function () {
   return {
@@ -16,6 +36,12 @@ userSchema.methods.apiRepr = function () {
     firstName: this.firstName,
     lastName: this.lastName
   }
+}
+
+
+// check if password if valid
+userSchema.methods.validPassword = function(password) {
+  return bcrypt.compare(password, this.password)
 }
 
 // mongoose model for User

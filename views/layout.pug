@@ -22,7 +22,7 @@ html(lang="en")
           a#logo(href="/") Select the Dress
         .col-6
           ul.header-links
-            if user.isLoggedIn
+            if user
               li
                 a.link(href='/dresses') Dresses
               li
@@ -36,6 +36,13 @@ html(lang="en")
                 a.link(href='/log-in') Log In
 
     main(role="main")
+      if messages.error
+        .error.col-12
+          p= messages.error
+          
+      if messages.success
+        .success.col-12
+          p= messages.success
 
       block content
 

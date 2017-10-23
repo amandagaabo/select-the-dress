@@ -1,20 +1,27 @@
 // setup environment variables, looks for .env file and loads the env variables
 require('dotenv').config()
+
+// setup express app
 const express = require('express')
-const morgan = require('morgan')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-
-// Mongoose internally uses a promise-like object,
-// but its better to make Mongoose use built in es6 promises
-mongoose.Promise = global.Promise
-
-const {TEST_DATABASE_URL, PORT} = require('./config')
-
 const app = express()
 
-// require routes
-const router = require('./routes')
+// setup mongoose
+const mongoose = require('mongoose')
+// make Mongoose use built in es6 promises
+mongoose.Promise = global.Promise
+
+// setup config and routes
+const {TEST_DATABASE_URL, PORT} = require('./config')
+
+// require packages
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const passport = require('passport')
+const flash = require('connect-flash')
+const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
+
 
 // setup pug for html templates
 app.set('view engine', 'pug')
@@ -22,31 +29,52 @@ app.set('view engine', 'pug')
 // load static resources from butlic folder - images, js and css files
 app.use(express.static('public'))
 
-// log the http layer
+// log the http layer middleware
 app.use(morgan('common'))
-
-// use body parser middleware
+// read cookies middleware (auth)
+app.use(cookieParser())
+// use body parser middleware (urlencoded for form data)
 app.use(bodyParser.urlencoded({extended: true}))
 
-// middleware function to setup state variables, mock data used here
+app.use(session({
+  secret: process.env.PASSPORT_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoDBStore({
+    uri: TEST_DATABASE_URL,
+    collection: 'sessions'
+  })
+}))
+
+
+const passportConfig = require('./config/passport')
+passportConfig(app, passport)
+
+// flash messages stored in session
+//app.use(flash())
+
+
+// middleware function to setup locals in response object
 app.use(function (req, res, next) {
-  res.locals = {}
-  res.locals.user = {
-    isLoggedIn: true
+  res.locals = {
+    messages: {},
+    user: req.user
   }
+
   next()
 })
 
 // fake passport user id
-app.use(function(req, res, next) {
-  req.user = {
-    _id: new mongoose.mongo.ObjectId('59ebf98874314249688ae2a1')
-  }
-  next()
-})
+// app.use(function(req, res, next) {
+//   req.user = {
+//     _id: new mongoose.mongo.ObjectId('59ebf98874314249688ae2a1')
+//   }
+//   next()
+// })
 
 // setup routes
-app.use('/', router)
+const router = require('./routes')
+app.use('/', router(passport))
 
 // catch-all endpoint if client makes request to non-existent endpoint
 app.use('*', function (req, res) {
