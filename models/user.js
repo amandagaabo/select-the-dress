@@ -11,7 +11,11 @@ const userSchema = mongoose.Schema({
     type: String,
     set: email => email.toLowerCase(),
     required: [true, 'email is required'],
-    validate: [validator.isEmail, 'invalid email']
+    validate: {
+      isAsync: false,
+      validator: validator.isEmail,
+      message:'invalid email'
+    }
   },
   password: {
     type: String,

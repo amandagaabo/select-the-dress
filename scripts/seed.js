@@ -38,7 +38,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 4,
       designer: 'maggie sottero',
       style: 'saige',
-      price: 1700,
+      price: 170000,
       store: 'boulder bridal',
       notes: 'love the neckline, lots of lace, beautiful dress'
     },
@@ -49,7 +49,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 2,
       designer: 'sottero and midgley',
       style: 'elliott',
-      price: 1900,
+      price: 190000,
       store: 'boulder bridal',
       notes: 'the front is too plain, needs more lace and sparkles'
     },
@@ -60,7 +60,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 1,
       designer: 'casablanca',
       style: 'jessica',
-      price: 1300,
+      price: 130000,
       store: 'boulder bridal',
       notes: 'not even close to what i want'
     },
@@ -71,7 +71,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 3,
       designer: 'vera wang',
       style: 'jenny',
-      price: 1500,
+      price: 150000,
       store: 'boulder bridal',
       notes: 'very close, love the lacy train'
     },
@@ -82,7 +82,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 2,
       designer: 'vera wang',
       style: 'sophia',
-      price: 1000,
+      price: 100000,
       store: 'boulder bridal',
       notes: 'love it!'
     }

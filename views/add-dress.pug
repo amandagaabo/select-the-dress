@@ -7,26 +7,38 @@ block content
 
       form#dress-form(role="form", action="/dresses/add", method="post", enctype='multipart/form-data')
         label(for="imgFront") front of dress:
-        input#imgFront(type="file", name="imgFront", accept='image/*', required="true")
+        input#imgFront(type="file", name="imgFront", accept="image/*", required="true")
+        
         label(for="imgBack") back of dress:
-        input#imgBack(type="file", name="imgBack", accept='image/*')
+        input#imgBack(type="file", name="imgBack", accept="image/*")
+        
         label(for="imgSide") side of dress:
-        input#imgSide(type="file", name="imgSide", accept='image/*')
+        input#imgSide(type="file", name="imgSide", accept="image/*")
+        
         label(for="rating") rating:
-        select#rating.select-dropdown(name="rating")
-          option(value="4") love it
-          option(value="3") like it
-          option(value="2") it's ok
-          option(value="1") don't like it
+        select#rating.select-dropdown(name="rating", required="true")
+          mixin rating-option(number, name)
+            if (data.rating === number)
+              option(value=number, selected="selected")= name
+            else
+              option(value=number)= name
+          +rating-option('4', "love it")
+          +rating-option('3', "like it")
+          +rating-option('2', "it's ok")
+          +rating-option('1', "don't like it")
 
         label(for="designer") designer:
-        input#designer.form-input(type="text", name="designer", placeholder="designer")
+        input#designer.form-input(type="text", name="designer", value=data.designer, placeholder="designer")
+        
         label(for='style') style:
-        input#style.form-input(type="text", name="style", placeholder="style")
+        input#style.form-input(type="text", name="style", value=data.style, placeholder="style")
+        
         label(for="price") price:
-        input#price.form-input(type="text", name="price", placeholder="price")
+        input#price.form-input(type="text", name="price", value=data.price,placeholder="price")
+        
         label(for="store") store:
-        input#store.form-input(type="text", name="store", placeholder="store")
-        label(for="notes") notes:
-        textarea#notes.form-input(type="text", name="notes", placeholder="notes")
+        input#store.form-input(type="text", name="store", value=data.store, placeholder="store")
+        
+        label.top-label(for="notes") notes:
+        textarea#notes.form-input(type="text", name="notes", value=data.notes placeholder="notes")
         input(type="submit", value="add")

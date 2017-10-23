@@ -13,15 +13,21 @@ block content
           option(value="3") like it
           option(value="2") it's ok
           option(value="1") don't like it
+        
         label(for="designer") designer:
         input#designer.form-input(type="text", name="designer", value=dress.designer, placeholder="designer")
+        
         label(for='style') style:
         input#style.form-input(type="text", name="style", value=dress.style, placeholder="style")
+        
         label(for="price") price:
         input#price.form-input(type="text", name="price", value=dress.price, placeholder="price")
+        
         label(for="store") store:
         input#store.form-input(type="text", name="store", value=dress.store, placeholder="store")
-        label(for="notes") notes:
+        
+        label.top-label(for="notes") notes:
         textarea#notes.form-input(type="text", name="notes", placeholder="notes")= dress.notes
+        
         input(type="submit", value="save")
         input#delete-btn(type="submit", value="delete", data-dress-id=dress.id)

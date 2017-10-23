@@ -1,14 +1,14 @@
 const User = require('../models/user')
 
 exports.signUpPage = function (req, res) {
-  // show the sign up page
-  //res.locals.success = req.flash('signupPageMessage')
+  // set res.locals.data to empty on page render
   res.locals.data = {}
+  // show the sign up page
   res.render('sign-up', res.locals)
 }
 
 exports.signUpSubmit = function (req, res) {
-  // create the new user in database
+  // get data from requeast
   const data = {
     email: req.body.email,
     firstName: req.body.firstName,

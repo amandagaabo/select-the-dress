@@ -54,12 +54,14 @@ exports.listPage = function (req, res) {
 }
 
 exports.addPage = function (req, res) {
+  // set res.locals.data to empty on page render
+  res.locals.data = {}
   // show the add dress form
   res.render('add-dress', res.locals)
 }
 
 exports.create = function (req, res) {
-  // create the new dress in database
+  // get data from request
   const data = {
     user: req.user._id,
     imgFront: _.get(req.files, 'imgFront[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=front+of+dress+not+uploaded']) ,
@@ -72,11 +74,33 @@ exports.create = function (req, res) {
     store: req.body.store,
     notes: req.body.notes
   }
+  // save data to res.locals so info can be prefilled if there are errors
+  res.locals.data = req.body
+
+  // add dress to the database
   Dress.create(data)
   .then(() => {
+    req.flash('success', 'Dress added successfully')
     res.redirect('/dresses')
+  }).catch(err => {
+    console.log(err)
+    const errors = []
+    const fields = []
+
+    if (err.name == 'ValidationError') {
+      for (field in err.errors) {
+        errors.push(err.errors[field].message)
+        fields.push(field)
+      }
+      res.locals.messages.errors = errors
+      res.locals.messages.errorFields = fields
+    } else {
+      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+    }
+    res.render('add-dress', res.locals)
   })
 }
+
 
 exports.readPage = function (req, res) {
   // set locals.dress to dress data
@@ -104,7 +128,23 @@ exports.update = function (req, res) {
   req.dress.save()
   .then(() => {
     // redirect to dress page
+    req.flash('success', 'dress details saved')
     res.redirect(`/dresses/${req.dress._id}`)
+  }).catch(err => {
+    const errors = []
+    const fields = []
+
+    if (err.name == 'ValidationError') {
+      for (field in err.errors) {
+        errors.push(err.errors[field].message)
+        fields.push(field)
+      }
+      res.locals.messages.errors = errors
+      res.locals.messages.errorFields = fields
+    } else {
+      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+    }
+    res.render('add-dress', res.locals)
   })
 }
 

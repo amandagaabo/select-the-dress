@@ -20,6 +20,7 @@ block content
             option(value="rating") rating high to low
             option(value="price") price low to high
             option(value="designer", selected="true") designer a to z
+      
       .sort
         label(for="view") view
         select#view.select-dropdown
@@ -35,6 +36,7 @@ block content
             option(value="front") front
             option(value="back") back
             option(value="side", selected="true") side
+      
       .buttons
         a.button#add-btn(href="/dresses/add") add dress
         -let compareURL = `/dresses/compare?dressA=59ebab3dce5ff3460dd4f323&dressB=59ebab3dce5ff3460dd4f324`

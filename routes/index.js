@@ -19,7 +19,6 @@ const dresses = require('./dresses')
 
 module.exports = function (passport) {
   router.get('/', function (req, res) {
-    console.log(res.locals.messages)
     res.render('home', res.locals)
   })
 

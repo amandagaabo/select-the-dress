@@ -1,5 +1,5 @@
 body {
-  font-family: 'Bad Script', cursive;
+  font-family: 'Josefin Slab', serif;
   text-align: center;
   margin: 0 auto;
 }
@@ -71,11 +71,14 @@ form label {
   text-align: right;
   padding: 0 15px;
   width: 35%;
+}
+
+.top-label {
   vertical-align: top;
 }
 
 input[type=text], input[type=email], input[type=password], textarea, input[type="file"], form #rating {
-  width: 65%
+  width: 65%;
 }
 
 form label, input[type=text], input[type=email], input[type=password], input[type="file"], form #rating {

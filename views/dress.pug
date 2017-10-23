@@ -38,12 +38,17 @@ block content
           form#dress-form(role="form")
             label(for="designer") designer:
             input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, disabled="true")
+            
             label(for='style') style:
             input#style.form-input-disabled(type="text", name="style", value=dress.style, disabled="true")
+            
             label(for="price") price:
             input#price.form-input-disabled(type="text", name="price", value=dress.price, disabled="true")
-            label(for="store") price:
+            
+            label(for="store") store:
             input#store.form-input-disabled(type="text", name="store", value=dress.store, disabled="true")
-            label(for="notes") notes:
+            
+            label.top-label(for="notes") notes:
             textarea#notes.form-input-disabled(type="text", name="notes", disabled="true")= dress.notes
+            
             a.button(href=`/dresses/${dress.id}/edit`) edit
