@@ -17,11 +17,13 @@ exports.signUpSubmit = function (req, res) {
   // add user to database
   User.create(data)
   // redirect to add dresses since user is new and has no dresses to display
-  .then(() => {
-    //res.locals.success = req.flash('sighUpSuccessMessage')
-    req.login()
-    res.redirect('/dresses/add')
-  }).catch(err => console.log(err))
+    .then((user) => {
+      console.log(user)
+      //res.locals.success = req.flash('Welcome, add a dress to start comparing!')
+      req.login(user, function() {
+        return res.redirect('/dresses/add')
+      })
+    }).catch(err => console.log(err))
 }
 
 exports.logInPage = function (req, res) {

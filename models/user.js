@@ -10,22 +10,22 @@ const userSchema = mongoose.Schema({
   lastName: {type: String, required: true}
 })
 
-// mongoose middleware
+// mongoose middleware that runs before save
 userSchema.pre('save', function(next) {
-  let user = this;
+  let user = this
 
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
+  // only hash the password if it has been modified or is new
+  if (!user.isModified('password')) return next()
 
-  // hash the password with auto-salter or something
+  // hash the password with auto-salter
   bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
-    if (err) return next(err);
+    if (err) return next(err)
 
-    // override the cleartext password with the hashed one
-    user.password = hash;
-    next();
-  });
-});
+    // override the password with the hashed one
+    user.password = hash
+    next()
+  })
+})
 
 
 // setup apiRepr method

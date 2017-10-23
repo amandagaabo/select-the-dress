@@ -3,7 +3,7 @@ const chaiHttp = require('chai-http')
 
 const should = chai.should()
 const {app, runServer, closeServer} = require('../server')
-const {TEST_DATABASE_URL} = require('../config')
+const {TEST_DATABASE_URL} = require('../config/config')
 const Dress = require('../models/dress')
 const faker = require('faker')
 
@@ -105,7 +105,7 @@ describe('dresses routes', function () {
   //     })
   //   })
   // })
-  // 
+  //
   // describe('GET request to /dresses/compare ', function () {
   //   it('should return comparison page html', function () {
   //     return chai.request(app)

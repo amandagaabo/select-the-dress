@@ -2,7 +2,7 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const should = chai.should()
 const {app, runServer, closeServer} = require('../server')
-const {TEST_DATABASE_URL} = require('../config')
+const {TEST_DATABASE_URL} = require('../config/config')
 const User = require('../models/user')
 const faker = require('faker')
 

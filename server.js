@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 // setup config and routes
-const {TEST_DATABASE_URL, PORT} = require('./config')
+const {DATABASE_URL, PORT} = require('./config/config')
 
 // require packages
 const morgan = require('morgan')
@@ -36,23 +36,22 @@ app.use(cookieParser())
 // use body parser middleware (urlencoded for form data)
 app.use(bodyParser.urlencoded({extended: true}))
 
+// setup session, store data in database
 app.use(session({
   secret: process.env.PASSPORT_SECRET,
   resave: true,
   saveUninitialized: true,
   store: new MongoDBStore({
-    uri: TEST_DATABASE_URL,
+    uri: DATABASE_URL,
     collection: 'sessions'
   })
 }))
 
-
 const passportConfig = require('./config/passport')
 passportConfig(app, passport)
 
-// flash messages stored in session
+// use flash messages, stored in session
 //app.use(flash())
-
 
 // middleware function to setup locals in response object
 app.use(function (req, res, next) {
@@ -63,14 +62,6 @@ app.use(function (req, res, next) {
 
   next()
 })
-
-// fake passport user id
-// app.use(function(req, res, next) {
-//   req.user = {
-//     _id: new mongoose.mongo.ObjectId('59ebf98874314249688ae2a1')
-//   }
-//   next()
-// })
 
 // setup routes
 const router = require('./routes')
@@ -87,7 +78,7 @@ app.use('*', function (req, res) {
 let server
 
 // this function connects to our database, then starts the server
-function runServer (databaseUrl = TEST_DATABASE_URL, port = PORT) {
+function runServer (databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, {useMongoClient: true}, err => {
       if (err) {

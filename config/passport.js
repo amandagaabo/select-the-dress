@@ -2,19 +2,19 @@ const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
 
 // expose this function to the app using module.exports
-
 module.exports = function(app, passport) {
   app.use(passport.initialize())
   // persistent login sessions
   app.use(passport.session())
 
-  // used to serialize the user for the session
+  // used to serialize the user for the session -- tells it what to save in the session, id is saved here
     passport.serializeUser(function(user, done) {
       done(null, user._id)
     })
 
-    // used to deserialize the user
+    // used to deserialize the user -- on each request user is added to req.user here
     passport.deserializeUser(function(_id, done) {
+
       User.findById(_id, function(err, user) {
         done(err, user)
       })
@@ -28,13 +28,13 @@ module.exports = function(app, passport) {
         User.findOne({ email: email })
           .then(user => {
             if (!user) {
-              return done(null, false, { message: 'Incorrect username.' });
+              return done(null, false, { message: 'Incorrect username or password.' });
             }
 
             user.validPassword(password)
               .then(success => {
                 if (!success) {
-                  done(null, false, { message: 'Incorrect password.' });
+                  done(null, false, { message: 'Incorrect username or password.' });
                 } else {
                   done(null, user);
                 }
@@ -42,5 +42,5 @@ module.exports = function(app, passport) {
           })
           .catch(err => done(err))
       }
-    ));
+    ))
 }
