@@ -29,7 +29,7 @@ module.exports = function (passport) {
       return next()
     }
     // if user is not authenticated then redirect to login
-    req.flash('error', 'You must be logged in to access this page.')
+    req.flash('error', 'you need to be logged in to access this page')
     res.redirect('/log-in')
   }
 
@@ -40,7 +40,8 @@ module.exports = function (passport) {
   router.post('/log-in',  passport.authenticate('local', {
     successRedirect: '/dresses',
     failureRedirect: '/log-in',
-    failureFlash: false }))
+    failureFlash: true
+  }))
   router.get('/log-out', sessions.logOut)
 
   // account related routes
@@ -49,10 +50,10 @@ module.exports = function (passport) {
   router.post('/account/edit', isLoggedIn, accounts.loadUser, accounts.update)
 
   // dress related routes
-  // image uploader
-  const uploader = upload.fields([{ name: 'imgFront', maxCount: 1 }, { name: 'imgBack', maxCount: 1 }, { name: 'imgSide', maxCount: 1 }])
   router.get('/dresses', isLoggedIn, dresses.listPage)
   router.get('/dresses/add', isLoggedIn, dresses.addPage)
+  // image uploader middleware
+  const uploader = upload.fields([{ name: 'imgFront', maxCount: 1 }, { name: 'imgBack', maxCount: 1 }, { name: 'imgSide', maxCount: 1 }])
   router.post('/dresses/add', isLoggedIn, uploader, dresses.create)
   router.get('/dresses/compare', isLoggedIn, dresses.comparePage)
   router.get('/dresses/:dress', isLoggedIn, dresses.loadDress, dresses.readPage)
@@ -65,5 +66,5 @@ module.exports = function (passport) {
   // router.put('/dresses/:dress', dresses.update)
   // router.delete('/dresses/:dress', dresses.delete)
 
-  return router;
+  return router
 }

@@ -36,14 +36,15 @@ html(lang="en")
                 a.link(href='/log-in') Log In
 
     main(role="main")
-      if messages.errors.length > 0
-        .error.col-12.messageBox
-          each error in messages.errors
-            p= error
-          
-      if messages.success.length > 0
-        .success.col-12.messageBox
-          p= messages.success
+      .row
+        if messages.errors.length > 0
+          .error.messageBox
+            each error in messages.errors
+              p= error
+            
+        if messages.success.length > 0
+          .success.messageBox
+            p= messages.success
 
       block content
 

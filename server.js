@@ -53,8 +53,6 @@ app.use(flash())
 const passportConfig = require('./config/passport')
 passportConfig(app, passport)
 
-
-
 // middleware function to setup locals in response object
 app.use(function (req, res, next) {
   res.locals = {
@@ -107,7 +105,7 @@ function runServer (databaseUrl = DATABASE_URL, port = PORT) {
 function closeServer () {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
-      // console.log('Closing server')
+      // console.log('closing server')
       server.close(err => {
         if (err) {
           return reject(err)

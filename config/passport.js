@@ -28,15 +28,15 @@ module.exports = function(app, passport) {
         User.findOne({ email: email.toLowerCase() })
           .then(user => {
             if (!user) {
-              return done(null, false, { message: 'Incorrect username or password.' });
+              return done(null, false, { message: 'incorrect username or password' })
             }
 
             user.matchPassword(password)
               .then(success => {
                 if (!success) {
-                  done(null, false, { message: 'Incorrect username or password.' });
+                  done(null, false, { message: 'incorrect username or password' })
                 } else {
-                  done(null, user);
+                  done(null, user)
                 }
               })
           })

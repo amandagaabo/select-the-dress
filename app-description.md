@@ -13,7 +13,9 @@ Select the Dress is an app that will allow users to store and compare dresses t
 * jQuery
 * Node & Express
 * Mongo & Mongoose
-* JWT & Passport
+* Validator
+* Passport
+* Sessions & Flash Messages
 
 
 ## App Layout

@@ -74,6 +74,7 @@ userSchema.methods.apiRepr = function () {
 
 // check if password if matches password in database for user email
 userSchema.methods.matchPassword = function(password) {
+  console.log('match password function ran')
   return bcrypt.compare(password, this.password)
 }
 
