@@ -39,8 +39,7 @@ block content
       
       .buttons
         a.button#add-btn(href="/dresses/add") add dress
-        -let compareURL = `/dresses/compare?dressA=59ebab3dce5ff3460dd4f323&dressB=59ebab3dce5ff3460dd4f324`
-        a.button#compare-btn(href=compareURL) compare
+        a.button#compare-btn(href="") compare
 
       each dress in dresses
         .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
@@ -78,3 +77,6 @@ block content
           
           p= dress.price
           p= dress.designer
+          
+          a.add-compare.link(href="") add to compare
+          a.remove-compare.link.hidden(href="") remove from compare

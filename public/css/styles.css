@@ -2,6 +2,7 @@ body {
   font-family: 'Josefin Slab', serif;
   text-align: center;
   margin: 0 auto;
+  padding: 0;
 }
 
 h1 {
@@ -160,6 +161,10 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
 }
 .checked {
   color: red;
+}
+
+.selected-compare {
+  color: green;
 }
 
 /* dress */

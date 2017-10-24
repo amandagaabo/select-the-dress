@@ -25,30 +25,26 @@ const dressSchema = mongoose.Schema({
     designer: String,
     style: String,
     price: {
-      type: String,
-      set: toNumber,
-      get: num => (num/100).toFixed(2)
+      type: Number,
+      set: toNumber
     },
     store: String,
     notes: String
 })
 
-// validate price: make sure it does not have letters ($ . and , are allowed but not requred)
-dressSchema.path('price').validate(price => {
-  const isCurrency = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/i
-  return isCurrency.test(price)
-}, 'price cannot contain letters')
-
 // price: convert user input to number including decimals
 function toNumber (price) {
-  // remove $ and ,
-  let cleanedPrice = price.replace('$', '').replace(',', '')
+  console.log('price input:', price)
+  // remove $ , and letters
+  let cleanedPrice = price.replace(/[^\d.-]/g, '')
   // convert to integer with 2 decimal places
-  let priceFloat = parseFloat(cleanedPrice).toFixed(2)
-  // move decimal and return
-  return priceFloat*100
-}
+  console.log('cleaned price', cleanedPrice)
+  let priceFloat = parseFloat(cleanedPrice)
 
+  console.log('stored in db', priceFloat)
+  // move decimal and return
+  return priceFloat || undefined
+}
 
 // mongoose model for Dress
 const Dress = mongoose.model('Dress', dressSchema)

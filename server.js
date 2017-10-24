@@ -55,6 +55,8 @@ passportConfig(app, passport)
 
 // middleware function to setup locals in response object
 app.use(function (req, res, next) {
+  console.log(req.flash('error'))
+
   res.locals = {
     messages: {
       errors: req.flash('error'),

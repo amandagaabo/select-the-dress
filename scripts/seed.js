@@ -38,7 +38,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
       rating: 4,
       designer: 'maggie sottero',
       style: 'saige',
-      price: '$1,700',
+      price: '$1700',
       store: 'boulder bridal',
       notes: 'love the neckline, lots of lace, beautiful dress'
     },
