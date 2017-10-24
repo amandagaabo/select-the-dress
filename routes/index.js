@@ -46,8 +46,7 @@ module.exports = function (passport) {
 
   // account related routes
   router.get('/account', isLoggedIn, accounts.loadUser, accounts.readPage)
-  router.get('/account/edit', isLoggedIn, accounts.loadUser, accounts.editPage)
-  router.post('/account/edit', isLoggedIn, accounts.loadUser, accounts.update)
+  router.post('/account', isLoggedIn, accounts.loadUser, accounts.update)
 
   // dress related routes
   router.get('/dresses', isLoggedIn, dresses.listPage)

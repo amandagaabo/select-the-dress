@@ -1,14 +1,20 @@
 extends layout.pug
 
 block content
-  section#account.row.content(role='region')
+  section#account-edit.row.content(role="region")
     .col-12
-      h2 Account Info
-      form#account-form(role='form')
-        label(for='first-name') first name:
-        input#first-name.form-input-disabled(type='text', name='firstName', value=account.firstName, disabled='true')
-        label(for='last-name') last name:
-        input#last-name.form-input-disabled(type='text', name='lastName', value=account.lastName, disabled='true')
-        label(for='email') email:
-        input#email.form-input-disabled(type='email', name='email', value=account.email, disabled='true')
-        a.button(href='/account/edit') edit
+      h2 Edit Account Info
+      form#account-form(role="form", action="/account", method="post")
+        label(for="first-name", class=messages.errorFields.includes('firstName') && 'error-text') first name:
+        input#first-name.form-input(type="text", name="firstName", value=account.firstName, placeholder="first name", 
+        class=messages.errorFields.includes('firstName') && 'error')
+        
+        label(for='last-name', class=messages.errorFields.includes('lastName') && 'error-text') last name:
+        input#last-name.form-input(type="text", name="lastName", value=account.lastName, placeholder="last name", 
+        class=messages.errorFields.includes('lastName') && 'error')
+        
+        label(for="email") email:
+        input#email.form-input(type="email", name="email", value=account.email, placeholder="email", 
+        class=messages.errorFields.includes('email') && 'error')
+        
+        input(type="submit", value="save")

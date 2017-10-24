@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const SALT_WORK_FACTOR = 10
 const MIN_PASSWORD_LENGTH = 8
-const MAX_PASSWORD_LENGTH = 50
+const MAX_PASSWORD_LENGTH = 65
 
 // setup schema for posts
 const userSchema = mongoose.Schema({
