@@ -7,8 +7,8 @@ exports.loadUser = function (req, res, next) {
       if(!user) {
         res.send('error, no user found')
       } else {
-        req.account = user;
-        next();
+        req.account = user
+        next()
       }
     })
 }

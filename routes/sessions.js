@@ -8,7 +8,7 @@ exports.signUpPage = function (req, res) {
 }
 
 exports.signUpSubmit = function (req, res) {
-  // get data from requeast
+  // get data from request
   const data = {
     email: req.body.email,
     firstName: req.body.firstName,
