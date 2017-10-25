@@ -1,7 +1,8 @@
+const mongoose = require('mongoose')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const mongoose = require('mongoose')
 const should = chai.should()
+const request = require('supertest')
 const {app, runServer, closeServer} = require('../server')
 const {TEST_DATABASE_URL} = require('../config/config')
 const User = require('../models/user')
@@ -22,14 +23,6 @@ const userLogin = {
   email: 'amanda@test.com',
   password: 'password1'
 }
-
-
-// // clear database
-// function clearDB () {
-//   console.warn('deleting database')
-//   return mongoose.connection.dropDatabase()
-// }
-
 
 // test sessions routes
 // 1. connect to server and database
@@ -124,12 +117,12 @@ describe('sessions routes', function () {
     })
   })
 
-  // need to update to include sessions so after login user is not redirected to login
   describe('POST request to /log-in', () => {
-    it('should redirect to /dresses', done => {
-      chai.request(app)
+    it('should redirect to /dresses/add since user has no dresses', done => {
+      // use agent to maintain cookies
+      chai.request.agent(app)
       .post('/log-in')
-      // change request content-type to form urlencoded so it works with bodyParser
+      // change request content-type to form urlencoded so it works with bodyParser for HTML forms
       .set('content-type', 'application/x-www-form-urlencoded')
       .send(userLogin)
       // wait for response
@@ -138,7 +131,6 @@ describe('sessions routes', function () {
           console.log('errors during log in')
         } else {
           console.log('user logged in!')
-          console.log('logs show the user was redirected to /dresses then redirected to /log-in this is because sessions are not setup yet in this test')
           res.should.have.status(200)
           res.should.redirect
           res.should.be.html
