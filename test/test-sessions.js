@@ -92,6 +92,8 @@ describe('sessions routes', function () {
     it('should log user in then redirect to dresses/add', done => {
        chai.request(app)
       .post('/sign-up')
+      // change request content-type to form urlencoded so it works with bodyParser
+      .set('content-type', 'application/x-www-form-urlencoded')
       // send form data
       .send(userData)
       // .end runs after we get a respnose from the server
@@ -127,6 +129,8 @@ describe('sessions routes', function () {
     it('should redirect to /dresses', done => {
       chai.request(app)
       .post('/log-in')
+      // change request content-type to form urlencoded so it works with bodyParser
+      .set('content-type', 'application/x-www-form-urlencoded')
       .send(userLogin)
       // wait for response
       .end((err, res) => {
