@@ -35,6 +35,8 @@ app.use(morgan('common'))
 app.use(cookieParser())
 // use body parser middleware (urlencoded for form data)
 app.use(bodyParser.urlencoded({extended: true}))
+//use json body parser for testing
+app.use(bodyParser.json())
 
 // setup session, store data in database
 app.use(session({

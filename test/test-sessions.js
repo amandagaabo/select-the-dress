@@ -18,7 +18,7 @@ const userData = {
 }
 
 // user credentials for login
-const userCredentials = {
+const userLogin = {
   email: 'amanda@test.com',
   password: 'password1'
 }
@@ -32,29 +32,28 @@ const userCredentials = {
 
 
 // test sessions routes
-// 1. connect to database
-// 2. clear users
-// 3. go to sign up page (GET /sign-up)
-// 4. submit sign up (POST /sign-up)
-// 5. log out  (sign up auto logs in)
-// 6. go to log in (GET /log-in)
-// 7. log in (POST /log-in)
+// 1. connect to server and database
+// 2. clear User collection in database
+// 3. GET /sign-up page
+// 4. GET /log-in page
+// 5. create account with userData above
+// 6. log user out
+// 7. log user back in with userLogin above (same user as created in step 5, so database is only cleared in the before hook not before each)
 
 describe('sessions routes', function () {
   // hook functions
 
-  before(function() {
+  before(done => {
     // start the server and connect db
-    return runServer(TEST_DATABASE_URL)
-  })
-
-  beforeEach(done => {
-    // remove all users in database
-    User.remove({}, err => {
-      if (err) {
-        console.log('errors:', err)
-      }
-      done()
+    runServer(TEST_DATABASE_URL)
+    .then(() => {
+      // remove all users in database
+      User.remove({}, err => {
+        if (err) {
+          console.log('errors clearing db Users')
+        }
+        done()
+      })
     })
   })
 
@@ -63,8 +62,8 @@ describe('sessions routes', function () {
     return closeServer()
   })
 
-  describe('GET request to /sign-up', done => {
-    it('should return sign-up page html', function () {
+  describe('GET request to /sign-up', () => {
+    it('should return sign-up page html', done => {
       chai.request(app)
       .get('/sign-up')
       .then(res => {
@@ -76,8 +75,8 @@ describe('sessions routes', function () {
     })
   })
 
-  describe('GET request to /log-in', done => {
-    it('should return log in page html', function () {
+  describe('GET request to /log-in', () => {
+    it('should return log in page html', done => {
       chai.request(app)
       .get('/log-in')
       .then(res => {
@@ -88,55 +87,62 @@ describe('sessions routes', function () {
       })
     })
   })
-  // describe('POST request to /sign-up', function () {
-  //   it('should redirect to add dress after successful submit', function () {
-  //     return chai.request(app)
-  //     .post('/sign-up')
-  //     .type('form')
-  //     .send({
-  //       '_method': 'post',
-  //       'firstName': 'Amanda',
-  //       'lastName': 'H',
-  //       'email': 'amanda@yahoo.com',
-  //       'password': 'password123',
-  //       'passwordConfirm': 'password123'
-  //     })
-  //     .then(res => {
-  //       console.log('form submitted')
-  //       // log it with passport
-  //       res.should.redirect
-  //       res.should.have.status(200)
-  //       res.should.be.html
-  //       res.text.should.include('add')
-  //       return Promise.resolve()
-  //     })
-  //   })
-  // })
-  //
-  // describe('POST request to /log-in', function () {
-  //   it('should redirect to dresses after successful submit', function () {
-  //     return chai.request(app)
-  //     .post('/log-in')
-  //     .then(res => {
-  //       res.should.redirect
-  //       res.should.have.status(200)
-  //       res.should.be.html
-  //       res.text.should.include('dresses')
-  //       return Promise.resolve()
-  //     })
-  //   })
-  // })
-  //
-  // describe('GET request to /log-out', function () {
-  //   it('should redirect to home after successful log out', function () {
-  //     return chai.request(app)
-  //     .get('/log-out')
-  //     .then(res => {
-  //       res.should.have.status(200)
-  //       res.should.be.html
-  //       res.text.should.include('home')
-  //       return Promise.resolve()
-  //     })
-  //   })
-  // })
+
+  describe('POST request to /sign-up', () => {
+    it('should log user in then redirect to dresses/add', done => {
+       chai.request(app)
+      .post('/sign-up')
+      // send form data
+      .send(userData)
+      // .end runs after we get a respnose from the server
+      .end((err, res) => {
+        if (err) {
+          console.log('errors during submit account sign up')
+        } else {
+          res.should.have.status(200)
+          res.should.redirect
+          res.should.be.html
+          res.text.should.include('log-in')
+        }
+        done()
+      })
+    })
+  })
+
+  describe('GET request to /log-out', () => {
+    it('should redirect to home', done => {
+      chai.request(app)
+      .get('/log-out')
+      .then(res => {
+        res.should.have.status(200)
+        res.should.be.html
+        res.text.should.include('home')
+        done()
+      })
+    })
+  })
+
+  // need to update to include sessions so after login user is not redirected to login
+  describe('POST request to /log-in', () => {
+    it('should redirect to /dresses', done => {
+      chai.request(app)
+      .post('/log-in')
+      .send(userLogin)
+      // wait for response
+      .end((err, res) => {
+        if (err) {
+          console.log('errors during log in')
+        } else {
+          console.log('user logged in!')
+          console.log('logs show the user was redirected to /dresses then redirected to /log-in this is because sessions are not setup yet in this test')
+          res.should.have.status(200)
+          res.should.redirect
+          res.should.be.html
+          res.text.should.include('dresses')
+          done()
+        }
+      })
+    })
+  })
+
 })
