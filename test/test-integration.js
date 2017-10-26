@@ -31,6 +31,16 @@ const updateData = {
   lastName: 'G'
 }
 
+// new dress to add
+const newDress = {
+  rating: 3,
+  designer: 'maggie sottero',
+  style: 'amara',
+  price: '$1700',
+  store: 'boulder bridal',
+  notes: 'love the neckline, lots of lace, beautiful dress'
+}
+
 // clear database
 function clearDB () {
   console.log('clearing database')
@@ -47,7 +57,9 @@ function clearDB () {
 // 7. log user out
 // 8. log user back in with userLogin above (same user as created in step 5, so database is only cleared in the before hook not before each)
 // 9. GET /account page
-// 10. POST /account page
+// 10. POST /account - update account info
+// 11. GET /add dress page
+// 12. POST /add dress page
 
 let authenticatedUser
 
@@ -200,6 +212,38 @@ describe('integration http request tests', function () {
         res.should.be.html
         res.text.should.include('account')
         res.text.should.include(updateData.firstName, updateData.lastName, updateData.email)
+        done()
+      })
+    })
+  })
+
+  describe('GET request to /dresses/add', function()  {
+    it('should return the add dress page html', (done) => {
+      authenticatedUser
+      .get('/dresses/add')
+      .end((err, res) => {
+        res.should.have.status(200)
+        res.should.be.html
+        res.text.should.include('add-dress')
+        done()
+      })
+    })
+  })
+
+  describe('POST request to /dresses/add', function () {
+    it('should redirect to /dresses if dress add was successful', (done) => {
+      authenticatedUser
+      .post('/dresses/add')
+      // change request content-type to form urlencoded
+      .set('content-type', 'application/x-www-form-urlencoded')
+      .send(newDress)
+      // .attach('imgFront', '/Users/amandaherschleb/Desktop/cat.jpeg')
+      .end((err, res) => {
+        res.should.redirect
+        res.should.have.status(200)
+        res.should.be.html
+        res.text.should.include('dresses')
+        res.text.should.include(newDress.designer, newDress.style, newDress.store)
         done()
       })
     })
