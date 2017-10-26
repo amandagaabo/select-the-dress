@@ -4,7 +4,7 @@
   "description": "app to help user select the perfect dress for an occasion",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --recursive",
     "start": "node server.js"
   },
   "author": "",
@@ -30,7 +30,9 @@
     "numeral": "^2.0.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "proxyquire": "^1.8.0",
     "pug": "^2.0.0-rc.4",
+    "sinon": "^4.0.2",
     "validator": "^9.0.0"
   },
   "devDependencies": {

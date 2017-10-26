@@ -13,7 +13,7 @@ exports.loadDress = function (req, res, next) {
         req.dress = dress
         next()
       }
-  })
+  }).catch(err => next(err))
 }
 
 exports.listPage = function (req, res) {
