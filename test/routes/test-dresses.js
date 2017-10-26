@@ -1,16 +1,28 @@
 const chai = require('chai')
 const should = chai.should()
-const proxyquire = require('proxyquire');
-const sinon = require('sinon');
+const proxyquire = require('proxyquire')
+const sinon = require('sinon')
+const Dress = require('../../models/dress')
 
-const mock = {};
-
-const dresses = proxyquire('../../routes/dresses', {
-  '../models/dress': mock
-});
-
+let dresses
+let findStub
+let findOneStub
 
 describe('The dresses route', function () {
+  before(function () {
+    findStub = sinon.stub(Dress, 'find')
+    findOneStub = sinon.stub(Dress, 'findOne')
+
+    dresses = proxyquire('../../routes/dresses', { '../models/dress': {
+      find: findStub,
+      findOne: findOneStub
+    }});
+  })
+
+  after(function () {
+    Dress.find.restore();
+    Dress.findOne.restore();
+  });
 
   it('should export all the required functions', function () {
     dresses.should.respondTo('loadDress')
@@ -28,10 +40,10 @@ describe('The dresses route', function () {
     const req = {
       user: { _id: '123' },
       params: { dress: 'abc' }
-    };
+    }
 
     it('with no dress found', function (done) {
-      mock.findOne = sinon.stub().resolves(null);
+      findOneStub.resolves(null);
 
       const res = {
         send: function (msg) {
@@ -44,7 +56,7 @@ describe('The dresses route', function () {
     })
 
     it('with a model error', function (done) {
-      mock.findOne = sinon.stub().rejects(new Error('Yikes!'));
+      findOneStub.rejects(new Error('Yikes!'));
 
       const next = function (err) {
         err.should.exist
@@ -57,7 +69,7 @@ describe('The dresses route', function () {
     it('with a dress found', function (done) {
       const dress = { _id: '123', price: 1400 }
 
-      mock.findOne = sinon.stub().resolves(dress);
+      findOneStub.resolves(dress);
 
       const next = function (err) {
         should.not.exist(err)
@@ -76,11 +88,9 @@ describe('The dresses route', function () {
     }
 
     it('with no dresses', function (done) {
-      mock.find = function () {
-        return {
-          sort: sinon.stub().resolves([])
-        }
-      }
+      findStub.returns({
+        sort: sinon.stub().resolves([])
+      })
 
       const res = {
         locals: {},
@@ -100,15 +110,13 @@ describe('The dresses route', function () {
       ]
 
       it('and no sort specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: function (sort) {
-              sort.should.have.property('rating')
-              sort.rating.should.equal(-1)
-              return Promise.resolve(result)
-            }
+        findStub.returns({
+          sort: function (sort) {
+            sort.should.have.property('rating')
+            sort.rating.should.equal(-1)
+            return Promise.resolve(result)
           }
-        }
+        })
 
         const res = {
           locals: {},
@@ -126,15 +134,13 @@ describe('The dresses route', function () {
       })
 
       it('and sort by price specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: function (sort) {
-              sort.should.have.property('price')
-              sort.price.should.equal(1)
-              return Promise.resolve(result)
-            }
+        findStub.returns({
+          sort: function (sort) {
+            sort.should.have.property('price')
+            sort.price.should.equal(1)
+            return Promise.resolve(result)
           }
-        }
+        })
 
         req.query = { sort: 'price' }
 
@@ -154,15 +160,13 @@ describe('The dresses route', function () {
       })
 
       it('and sort by designer specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: function (sort) {
-              sort.should.have.property('designer')
-              sort.designer.should.equal(1)
-              return Promise.resolve(result)
-            }
+        findStub.returns({
+          sort: function (sort) {
+            sort.should.have.property('designer')
+            sort.designer.should.equal(1)
+            return Promise.resolve(result)
           }
-        }
+        })
 
         req.query = { sort: 'designer' }
 
@@ -182,15 +186,13 @@ describe('The dresses route', function () {
       })
 
       it('and an invalid sort specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: function (sort) {
-              sort.should.have.property('rating')
-              sort.rating.should.equal(-1)
-              return Promise.resolve(result)
-            }
+        findStub.returns({
+          sort: function (sort) {
+            sort.should.have.property('rating')
+            sort.rating.should.equal(-1)
+            return Promise.resolve(result)
           }
-        }
+        })
 
         req.query = { sort: 'skin to fabric ratio' }
 
@@ -210,11 +212,9 @@ describe('The dresses route', function () {
       })
 
       it('and view back specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: sinon.stub().resolves(result)
-          }
-        }
+        findStub.returns({
+          sort: sinon.stub().resolves(result)
+        })
 
         req.query = { view: 'back' }
 
@@ -233,11 +233,9 @@ describe('The dresses route', function () {
       })
 
       it('and view side specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: sinon.stub().resolves(result)
-          }
-        }
+        findStub.returns({
+          sort: sinon.stub().resolves(result)
+        })
 
         req.query = { view: 'side' }
 
@@ -256,11 +254,9 @@ describe('The dresses route', function () {
       })
 
       it('and an invalid view specified', function (done) {
-        mock.find = function () {
-          return {
-            sort: sinon.stub().resolves(result)
-          }
-        }
+        findStub.returns({
+          sort: sinon.stub().resolves(result)
+        })
 
         req.query = { view: 'all the things' }
 

@@ -42,6 +42,7 @@ exports.listPage = function (req, res) {
   Dress.find({user:req.user._id})
     .sort(sort)
     .then(dresses => {
+      // console.log('dresses (if 0 then redirect to add)', dresses)
       if(dresses.length === 0) {
         res.redirect('/dresses/add')
       } else {
@@ -61,6 +62,7 @@ exports.addPage = function (req, res) {
 }
 
 exports.create = function (req, res) {
+  // console.log('running CREATE')
   // get data from request
   const data = {
     user: req.user._id,
@@ -77,13 +79,15 @@ exports.create = function (req, res) {
   // save data to res.locals so info can be prefilled if there are errors
   res.locals.data = req.body
 
+  // console.log('about to create:', Dress)
   // add dress to the database
   Dress.create(data)
   .then(() => {
+    // console.log('dress created')
     req.flash('success', 'Dress added successfully')
     res.redirect('/dresses')
   }).catch(err => {
-    console.log(err)
+    console.log('err:', err)
     const errors = []
     const fields = []
 
@@ -116,6 +120,7 @@ exports.editPage = function (req, res) {
   res.render('dress-edit', res.locals)
 }
 
+// skip test for now
 exports.update = function (req, res) {
   // update with new parameters
   req.dress.rating = req.body.rating
@@ -151,10 +156,13 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
   req.dress.remove()
   .then(() => {
+    res.locals.message.success = 'Dress deleted'
     res.send('OK')
   })
 }
 
+
+//test this one first after the simple pages
 exports.comparePage = function (req, res) {
   // get ids of both dresses and find dress data
   let idA = req.query.dressA

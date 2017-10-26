@@ -24,6 +24,7 @@ module.exports = function (passport) {
 
   // middleware to check if user is logged in
   function isLoggedIn(req, res, next) {
+    // console.log('USER:', req.user)
     // if user is authenticated in the session then req.user exists
     if (req.user) {
       return next()

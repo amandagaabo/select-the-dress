@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const should = chai.should()
@@ -6,6 +5,7 @@ const request = require('supertest')
 const {app, runServer, closeServer} = require('../server')
 const {TEST_DATABASE_URL} = require('../config/config')
 const User = require('../models/user')
+const Dress = require('../models/dress')
 
 chai.use(chaiHttp)
 
@@ -24,7 +24,7 @@ const userLogin = {
   password: 'password1'
 }
 
-// new user data for account update
+// user data for account update
 const updateData = {
   email: 'ashley@test.com',
   firstName: 'Ashley',
@@ -41,29 +41,47 @@ const newDress = {
   notes: 'love the neckline, lots of lace, beautiful dress'
 }
 
-// clear database
+// dress data for dress update
+const updateDress = {
+  rating: 4,
+  designer: 'vera wang',
+  style: 'amara',
+  price: '$1400',
+  store: 'botique b',
+  notes: 'great dress!'
+}
+
+// clear database users and dresses
 function clearDB () {
-  console.log('clearing database')
-  return mongoose.connection.dropDatabase()
+  return User.remove({}).then(() => {
+    return Dress.remove({})
+  })
 }
 
 // test sessions routes
 // 1. connect to server and database
-// 2. clear User collection in database
-// 3. GET / page
-// 4. GET /sign-up page
-// 5. GET /log-in page
-// 6. create account with userData above
-// 7. log user out
-// 8. log user back in with userLogin above (same user as created in step 5, so database is only cleared in the before hook not before each)
+// 2. clear User and Dress collections in database
+// 3. create account with userData above
+// 4. GET / page
+// 5. log user out
+// 6. GET /sign-up page
+// 7. GET /log-in page
+// 8. log user back in with userLogin above (same user as created in step 3, so database is only cleared in the before hook not before each)
 // 9. GET /account page
 // 10. POST /account - update account info
 // 11. GET /add dress page
 // 12. POST /add dress page
+// 13. GET /dresses/dress page
+// 14. GET /dresses/dress edit page
+// 15. POST /dress/dress  - update dress info
+// 16. POST /dress/delete
 
 let authenticatedUser
 
 describe('integration http request tests', function () {
+  // increase timeout limit for account create
+  this.timeout(5000)
+
   // hook functions using promises
   before((done) => {
     console.log('sessions before hook start')
@@ -74,19 +92,38 @@ describe('integration http request tests', function () {
     runServer(TEST_DATABASE_URL)
     .then(() => {
       // clear database (returns a promise)
-      clearDB()
+      return clearDB()
     })
     .then(() => {
-      console.log('sessions before hook end')
-      done()
+      // create a new user
+      authenticatedUser
+        .post('/sign-up')
+        // change request content-type to form urlencoded so it works with bodyParser
+        .set('content-type', 'application/x-www-form-urlencoded')
+        // send form data
+        .send(userData)
+        // .end runs after we get a respnose from the server
+        .end((err, res) => {
+          if (err) {
+            console.log('errors during submit account sign up')
+          }
+
+          console.log('account sign up successful')
+          res.should.have.status(200)
+          res.should.redirect
+          res.should.be.html
+          res.text.should.include('add-dress')
+          done()
+        })
     })
   })
 
-  after(() => {
+  after(function () {
     // stop the server and disconnect db
     return closeServer()
   })
 
+  // example returing a promise rather than using done
   describe('GET request to / ', function () {
     it('should return home page html', function () {
       return chai.request(app)
@@ -96,6 +133,20 @@ describe('integration http request tests', function () {
         res.should.be.html
         res.text.should.include('home')
         return Promise.resolve()
+      })
+    })
+  })
+
+  // user was auto logged in, so we can test the log out
+  describe('GET request to /log-out', () => {
+    it('should redirect to home', (done) => {
+      authenticatedUser
+      .get('/log-out')
+      .end((err, res) => {
+        res.should.have.status(200)
+        res.should.be.html
+        res.text.should.include('home')
+        done()
       })
     })
   })
@@ -121,42 +172,6 @@ describe('integration http request tests', function () {
         res.should.have.status(200)
         res.should.be.html
         res.text.should.include('log-in')
-        done()
-      })
-    })
-  })
-
-  describe('POST request to /sign-up', () => {
-    it('should log user in then redirect to dresses/add', (done) => {
-      authenticatedUser
-      .post('/sign-up')
-      // change request content-type to form urlencoded so it works with bodyParser
-      .set('content-type', 'application/x-www-form-urlencoded')
-      // send form data
-      .send(userData)
-      // .end runs after we get a respnose from the server
-      .end((err, res) => {
-        if (err) {
-          console.log('errors during submit account sign up')
-        }
-        // console.log('account sign up successful')
-        res.should.have.status(200)
-        res.should.redirect
-        res.should.be.html
-        res.text.should.include('add-dress')
-        done()
-      })
-    })
-  })
-
-  describe('GET request to /log-out', () => {
-    it('should redirect to home', (done) => {
-      authenticatedUser
-      .get('/log-out')
-      .end((err, res) => {
-        res.should.have.status(200)
-        res.should.be.html
-        res.text.should.include('home')
         done()
       })
     })
@@ -210,7 +225,7 @@ describe('integration http request tests', function () {
         res.should.redirect
         res.should.have.status(200)
         res.should.be.html
-        res.text.should.include('account')
+        res.text.should.include('account', 'success')
         res.text.should.include(updateData.firstName, updateData.lastName, updateData.email)
         done()
       })
@@ -233,18 +248,91 @@ describe('integration http request tests', function () {
   describe('POST request to /dresses/add', function () {
     it('should redirect to /dresses if dress add was successful', (done) => {
       authenticatedUser
-      .post('/dresses/add')
-      // change request content-type to form urlencoded
-      .set('content-type', 'application/x-www-form-urlencoded')
-      .send(newDress)
-      // .attach('imgFront', '/Users/amandaherschleb/Desktop/cat.jpeg')
-      .end((err, res) => {
-        res.should.redirect
-        res.should.have.status(200)
-        res.should.be.html
-        res.text.should.include('dresses')
-        res.text.should.include(newDress.designer, newDress.style, newDress.store)
-        done()
+        .post('/dresses/add')
+        // change request content-type to form urlencoded
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .send(newDress)
+        .end((err, res) => {
+          res.should.redirect
+          res.should.have.status(200)
+          res.should.be.html
+          res.text.should.include('dresses', 'success')
+          res.text.should.include(newDress.designer, newDress.style, newDress.store)
+          done()
+        })
+    })
+  })
+
+  describe('GET request to /dresses/:dress', function()  {
+    it('should return the dress page html', (done) => {
+      // find one dress to use the id
+      Dress.findOne()
+      .then((dress) => {
+        authenticatedUser
+        .get(`/dresses/${dress._id}`)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.should.be.html
+          res.text.should.include('dress')
+          res.text.should.include(newDress.designer, newDress.style, newDress.store)
+          done()
+        })
+      })
+    })
+  })
+
+  describe('GET request to /dresses/:dress/edit', function()  {
+    it('should return the edit dress page html', (done) => {
+      // find one dress to use the id
+      Dress.findOne()
+      .then((dress) => {
+        authenticatedUser
+        .get(`/dresses/${dress._id}/edit`)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.should.be.html
+          res.text.should.include('dress-edit')
+          res.text.should.include(newDress.designer, newDress.style, newDress.store)
+          done()
+        })
+      })
+    })
+  })
+
+  describe('POST request to /dresses/:dress/edit', function () {
+    it('should redirect to /dresses/:dress if dress update was successful', (done) => {
+      // find one dress to use the id
+      Dress.findOne()
+      .then((dress) => {
+        authenticatedUser
+        .post(`/dresses/${dress._id}/edit`)
+        // change request content-type to form urlencoded
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .send(updateDress)
+        .end((err, res) => {
+          res.should.redirect
+          res.should.have.status(200)
+          res.should.be.html
+          res.text.should.include('dress', 'success')
+          res.text.should.include(updateDress.designer, updateDress.style, updateDress.store, updateDress.notes)
+          done()
+        })
+      })
+    })
+  })
+
+  describe('POST request to /dresses/:dress/delete ', function () {
+    it('should respond with ok if successful', function () {
+      // find one dress to use the id
+      Dress.findOne()
+      .then((dress) => {
+        authenticatedUser
+        .post(`/dresses/${dress._id}/delete`)
+        .then(res => {
+          res.should.have.status(200)
+          res.text.should.include('OK')
+          return Promise.resolve()
+        })
       })
     })
   })

@@ -3,12 +3,12 @@
 //
 //
 //
-// GET request to /account
-xit('should redirect to the log-in page if user is not logged in', function() {
-  return chai.request(app)
-  .get('/account')
-  .then(res => {
-    console.log('should redirect')
-    res.should.redirectTo('/log-in')
-  })
-})
+// // GET request to /account
+// xit('should redirect to the log-in page if user is not logged in', function() {
+//   return chai.request(app)
+//   .get('/account')
+//   .then(res => {
+//     console.log('should redirect')
+//     res.should.redirectTo('/log-in')
+//   })
+// })
