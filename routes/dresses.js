@@ -62,7 +62,6 @@ exports.addPage = function (req, res) {
 }
 
 exports.create = function (req, res) {
-  // console.log('running CREATE')
   // get data from request
   const data = {
     user: req.user._id,
@@ -79,7 +78,6 @@ exports.create = function (req, res) {
   // save data to res.locals so info can be prefilled if there are errors
   res.locals.data = req.body
 
-  // console.log('about to create:', Dress)
   // add dress to the database
   Dress.create(data)
   .then(() => {
@@ -105,7 +103,6 @@ exports.create = function (req, res) {
   })
 }
 
-
 exports.readPage = function (req, res) {
   // set locals.dress to dress data
   res.locals.dress = req.dress
@@ -120,7 +117,6 @@ exports.editPage = function (req, res) {
   res.render('dress-edit', res.locals)
 }
 
-// skip test for now
 exports.update = function (req, res) {
   // update with new parameters
   req.dress.rating = req.body.rating
@@ -161,14 +157,13 @@ exports.delete = function (req, res) {
   })
 }
 
-
-//test this one first after the simple pages
 exports.comparePage = function (req, res) {
   // get ids of both dresses and find dress data
   let idA = req.query.dressA
   let idB = req.query.dressB
   // find the two dresses
   Dress.find({user:req.user._id, _id: {$in: [idA, idB]}})
+
     .then(dresses => {
       if(dresses.length === 0) {
         res.send('dresses not found')
@@ -179,5 +174,6 @@ exports.comparePage = function (req, res) {
         // show the comare page
         res.render('compare', res.locals)
       }
-    })
+      //added this .catch, not sure if its right
+    }).catch(err => next(err))
 }

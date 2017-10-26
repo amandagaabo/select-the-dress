@@ -10,7 +10,7 @@ exports.loadUser = function (req, res, next) {
         req.account = user
         next()
       }
-    })
+    }).catch(err => next(err))
 }
 
 //WITH MIDDLEWARE

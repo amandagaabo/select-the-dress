@@ -7,22 +7,28 @@ const Dress = require('../../models/dress')
 let dresses
 let findStub
 let findOneStub
+let removeStub
 
 describe('The dresses route', function () {
   before(function () {
     findStub = sinon.stub(Dress, 'find')
     findOneStub = sinon.stub(Dress, 'findOne')
+    //removeStub = sinon.stub(Dress.prototype, 'remove')
 
     dresses = proxyquire('../../routes/dresses', { '../models/dress': {
       find: findStub,
       findOne: findOneStub
-    }});
+      // prototype: {
+      //   remove: removeStub
+      // }
+    }})
   })
 
   after(function () {
-    Dress.find.restore();
-    Dress.findOne.restore();
-  });
+    Dress.find.restore()
+    Dress.findOne.restore()
+    //Dress.prototype.remove.restore()
+  })
 
   it('should export all the required functions', function () {
     dresses.should.respondTo('loadDress')
@@ -34,7 +40,7 @@ describe('The dresses route', function () {
     dresses.should.respondTo('update')
     dresses.should.respondTo('delete')
     dresses.should.respondTo('comparePage')
-  });
+  })
 
   describe('should handle loadDress', function () {
     const req = {
@@ -43,20 +49,20 @@ describe('The dresses route', function () {
     }
 
     it('with no dress found', function (done) {
-      findOneStub.resolves(null);
+      findOneStub.resolves(null)
 
       const res = {
         send: function (msg) {
-          msg.should.equal('error, no dress found');
-          done();
+          msg.should.equal('error, no dress found')
+          done()
         }
       }
 
-      dresses.loadDress(req, res);
+      dresses.loadDress(req, res)
     })
 
     it('with a model error', function (done) {
-      findOneStub.rejects(new Error('Yikes!'));
+      findOneStub.rejects(new Error('Yikes!'))
 
       const next = function (err) {
         err.should.exist
@@ -69,7 +75,7 @@ describe('The dresses route', function () {
     it('with a dress found', function (done) {
       const dress = { _id: '123', price: 1400 }
 
-      findOneStub.resolves(dress);
+      findOneStub.resolves(dress)
 
       const next = function (err) {
         should.not.exist(err)
@@ -288,4 +294,109 @@ describe('The dresses route', function () {
     dresses.addPage({}, res)
   })
 
-});
+  it('should handle the readPage', function (done) {
+    const req = {
+      dress: {
+        _id: '123',
+        designer: 'a',
+        style: 'b',
+        price: 1200
+      }
+    }
+
+    const res = {
+      locals: {},
+      render: function (template, data) {
+        template.should.equal('dress')
+        data.dress.should.equal(req.dress)
+        done()
+      }
+    }
+    dresses.readPage(req, res)
+  })
+
+  xit('should handle the delete function', function (done) {
+    const req = {
+      dress: {
+        _id: '123',
+        designer: 'a',
+        style: 'b',
+        price: 1200
+      }
+    }
+
+    req.dress.removeStub.resolves(null)
+
+    const res = {
+      locals: {},
+      send: function (message) {
+        message.should.equal('OK')
+        done()
+      }
+    }
+    dresses.delete(req, res)
+  })
+
+  xit('should handle the update function', function (done) {
+
+  })
+
+  describe('should handle the comparePage', function (done) {
+    const req = {
+      query: {
+        dressA: '123',
+        dressB: '456'
+      },
+      user: {
+        _id: '789'
+      }
+    }
+
+    it('with no dresses found', function (done) {
+      const result = []
+      findStub.resolves(result)
+
+      const res = {
+        send: function (message) {
+          message.should.equal('dresses not found')
+          done()
+        }
+      }
+
+      dresses.comparePage(req, res)
+    })
+
+    // // not sure how to test for a model error..
+    // it('with a model error', function (done) {
+    //   findStub.rejects(new Error('Yikes!'))
+    //
+    //   const next = function (err) {
+    //     err.should.exist
+    //     done()
+    //   }
+    //
+    //   dresses.comparePage(req, null, next)
+    // })
+
+    it('with dresses found', function (done) {
+      const result = [
+        { _id: '123', price: 1400 },
+        {_id: '456', price: 1100 }
+      ]
+
+      findStub.resolves(result)
+
+      const res = {
+        locals: {},
+        render: function (template, data) {
+          template.should.equal('compare')
+          data.dressA.should.equal(result[0])
+          data.dressB.should.equal(result[1])
+          done()
+        }
+      }
+      dresses.comparePage(req, res)
+    })
+  })
+
+})
