@@ -51,7 +51,7 @@ const updateDress = {
   notes: 'great dress!'
 }
 
-// clear database users and dresses
+// function to clear database users and dresses
 function clearDB () {
   return User.remove({}).then(() => {
     return Dress.remove({})
@@ -78,13 +78,12 @@ function clearDB () {
 
 let authenticatedUser
 
-describe('integration http request tests', function () {
+xdescribe('integration http request tests', function () {
   // increase timeout limit for account create
   this.timeout(5000)
 
   // hook functions using promises
   before((done) => {
-    console.log('sessions before hook start')
     // setup authenticated user
     authenticatedUser = chai.request.agent(app)
 
