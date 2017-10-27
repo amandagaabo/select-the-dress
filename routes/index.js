@@ -30,7 +30,7 @@ module.exports = function (passport) {
       return next()
     }
     // if user is not authenticated then redirect to login
-    req.flash('error', 'you need to be logged in to access this page')
+    req.flash('error', 'You need to be logged in to access this page.')
     res.redirect('/log-in')
   }
 

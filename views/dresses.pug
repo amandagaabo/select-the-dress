@@ -4,8 +4,8 @@ block content
   section#dresses.row.content(role="region")
     .col-12
       h2 Dresses
-
-      .sort
+      
+      .col-6.sort#sort-select
         label(for="sort-by") sort by
         select#sort-by.select-dropdown
           if sort === "rating"
@@ -21,7 +21,7 @@ block content
             option(value="price") price low to high
             option(value="designer", selected="true") designer a to z
       
-      .sort
+      .col-6.sort#view-select
         label(for="view") view
         select#view.select-dropdown
           if view === "front"
@@ -36,47 +36,55 @@ block content
             option(value="front") front
             option(value="back") back
             option(value="side", selected="true") side
-      
-      .buttons
-        a.button#add-btn(href="/dresses/add") add dress
-        a.button#compare-btn(href="") compare
 
       each dress in dresses
         .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
         data-store=dress.store, data-rating=dress.rating)
-          if view === 'front'
-            img.dress-img.front(src=dress.imgFront, alt='dress front')
+          .photo-box(data-dress-id=dress.id)
+            if view === 'front'
+              img.dress-img.front(src=dress.imgFront, alt='dress front')
 
-          if view === 'back'
-            img.dress-img(src=dress.imgBack, alt='dress back')
+            if view === 'back'
+              img.dress-img(src=dress.imgBack, alt='dress back')
 
-          if view === 'side'
-            img.dress-img(src=dress.imgSide, alt='dress side')
+            if view === 'side'
+              img.dress-img(src=dress.imgSide, alt='dress side')
 
-          .heart-rating
-            if dress.rating === 4
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-            else if dress.rating === 3
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
-            else if dress.rating === 2
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
-            else if dress.rating === 1
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
+            .heart-rating.rating-tag
+              if dress.rating === 4
+                span.rating.fa.fa-heart.checked.one-heart
+                span.rating.fa.fa-heart.checked.two-heart
+                span.rating.fa.fa-heart.checked.three-heart
+                span.rating.fa.fa-heart.checked.four-heart
+              else if dress.rating === 3
+                span.rating.fa.fa-heart.checked.one-heart
+                span.rating.fa.fa-heart.checked.two-heart
+                span.rating.fa.fa-heart.checked.three-heart
+                span.rating.fa.fa-heart.four-heart
+              else if dress.rating === 2
+                span.rating.fa.fa-heart.checked.one-heart
+                span.rating.fa.fa-heart.checked.two-heart
+                span.rating.fa.fa-heart.three-heart
+                span.rating.fa.fa-heart.four-heart
+              else if dress.rating === 1
+                span.rating.fa.fa-heart.checked.one-heart
+                span.rating.fa.fa-heart.two-heart
+                span.rating.fa.fa-heart.three-heart
+                span.rating.fa.fa-heart.four-heart
+            
+            p.info-tag
+              span.designer-tag= dress.designer
+              span.price-tag= dress.price
           
-          p= dress.price
-          p= dress.designer
-          
-          a.add-compare.link(href="") add to compare
-          a.remove-compare.link.hidden(href="") remove from compare
+          .compare-options
+          a.add-compare.link(href="") 
+            i.compare-square.fa.fa-square-o(aria-hidden="true") 
+            | compare
+          a.remove-compare.link.hidden(href="") 
+            i.compare-square.fa.fa-check-square-o(aria-hidden="true") 
+            | added to compare
+        
+      .buttons
+        a.button#add-btn(href="/dresses/add") add dress
+        a.button#compare-btn(href="") compare
+            

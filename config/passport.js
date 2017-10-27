@@ -28,17 +28,14 @@ module.exports = function(app, passport) {
         User.findOne({ email: email.toLowerCase() })
           .then(user => {
             if (!user) {
-              console.log('LOGIN FAILED 1')
               return done(null, false, { message: 'incorrect username or password' })
             }
 
             user.matchPassword(password)
               .then(success => {
                 if (!success) {
-                  console.log('LOGIN FAILED 2')
                   return done(null, false, { message: 'incorrect username or password' })
                 } else {
-                  console.log('LOGIN SUCCESS')
                   return done(null, user)
                 }
               })

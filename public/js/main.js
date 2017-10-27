@@ -2,17 +2,11 @@ function app () {
   // add dress page
   // disable add dress button click after form is submitted
   $('#dress-form').submit(function() {
-    $(this).find("button[type='submit']").prop('disabled', 'disabled')
+    $(this).find("button[type='submit']").prop('disabled', true)
   })
 
 
   // dresses grid page
-  // handle dress photo click - go to dress page using dress id
-  $('.dress-img').click(function () {
-    let dressID = $(this).parent().attr('data-dress-id')
-    window.location.href = `/dresses/${dressID}`
-  })
-
   // sort and view event handler
   function selectHandler(type, value) {
     let query = $.deserialize(window.location.search.substr(1))
@@ -32,6 +26,17 @@ function app () {
     let value = $(this).val()
     selectHandler('view', value)
   })
+
+  // handle dress photo click - go to dress page using dress id
+  $('.dress-img').click(function () {
+    let dressID = $(this).parent().attr('data-dress-id')
+    window.location.href = `/dresses/${dressID}`
+  })
+
+  // handle rating heart click - ajax request to update rating
+  // $('.rating').click(funcion() {
+  //   console.log('heart clicked')
+  // })
 
   // setup initial compare variables
   let selectedDresses = 0
