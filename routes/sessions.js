@@ -34,7 +34,7 @@ exports.signUpSubmit = function (req, res) {
     // password: check that password and passwordConfirm match
     // no access to passwordConfrim in user model so it needs to be checked here
     if (req.body.password !== req.body.passwordConfirm) {
-      errors.push(`Your passwords didn't match`)
+      errors.push(`Your passwords didn't match.`)
       fields.push('password')
     }
 
@@ -62,7 +62,7 @@ exports.signUpSubmit = function (req, res) {
         res.locals.messages.errors = errors
         res.locals.messages.errorFields = fields
       } else {
-        res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+        res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
       }
       res.render('sign-up', res.locals)
     })

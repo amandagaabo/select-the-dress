@@ -89,11 +89,12 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
   ]
 
 // save to database
-  // empty User & Dress collections
-  User.remove({})
-    .then(() => {
-      return Dress.remove({})
-    })
+  // empty database
+    mongoose.connection.dropDatabase()
+  // User.remove({})
+  //   .then(() => {
+  //     return Dress.remove({})
+  //   })
     .then(() => {
       // add new user
       return User.create(users)

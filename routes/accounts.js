@@ -10,7 +10,7 @@ exports.loadUser = function (req, res, next) {
         req.account = user
         next()
       }
-    })
+    }).catch(err => next(err))
 }
 
 //WITH MIDDLEWARE
@@ -31,7 +31,7 @@ exports.update = function (req, res) {
   req.account.save()
   .then(() => {
     // send a success flash message
-    req.flash('success', 'account updated')
+    req.flash('success', 'Account updated')
     res.redirect('/account')
   }).catch(err => {
     const errors = []
@@ -46,7 +46,7 @@ exports.update = function (req, res) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
     } else {
-      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+      res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
 
     // save values to req.account so they can be displayed to the user

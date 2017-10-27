@@ -22,7 +22,6 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 
-
 // setup pug for html templates
 app.set('view engine', 'pug')
 
@@ -105,7 +104,7 @@ function runServer (databaseUrl = DATABASE_URL, port = PORT) {
 function closeServer () {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
-      // console.log('closing server')
+      console.log('closing server')
       server.close(err => {
         if (err) {
           return reject(err)

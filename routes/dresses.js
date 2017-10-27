@@ -13,7 +13,7 @@ exports.loadDress = function (req, res, next) {
         req.dress = dress
         next()
       }
-  })
+  }).catch(err => next(err))
 }
 
 exports.listPage = function (req, res) {
@@ -42,6 +42,7 @@ exports.listPage = function (req, res) {
   Dress.find({user:req.user._id})
     .sort(sort)
     .then(dresses => {
+      // console.log('dresses (if 0 then redirect to add)', dresses)
       if(dresses.length === 0) {
         res.redirect('/dresses/add')
       } else {
@@ -80,10 +81,10 @@ exports.create = function (req, res) {
   // add dress to the database
   Dress.create(data)
   .then(() => {
+    // console.log('dress created')
     req.flash('success', 'Dress added successfully')
     res.redirect('/dresses')
   }).catch(err => {
-    console.log(err)
     const errors = []
     const fields = []
 
@@ -95,12 +96,11 @@ exports.create = function (req, res) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
     } else {
-      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+      res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
     res.render('add-dress', res.locals)
   })
 }
-
 
 exports.readPage = function (req, res) {
   // set locals.dress to dress data
@@ -128,7 +128,7 @@ exports.update = function (req, res) {
   req.dress.save()
   .then(() => {
     // redirect to dress page
-    req.flash('success', 'dress details saved')
+    req.flash('success', 'Dress details saved')
     res.redirect(`/dresses/${req.dress._id}`)
   }).catch(err => {
     const errors = []
@@ -142,7 +142,7 @@ exports.update = function (req, res) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
     } else {
-      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+      res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
     res.render('add-dress', res.locals)
   })
@@ -150,9 +150,10 @@ exports.update = function (req, res) {
 
 exports.delete = function (req, res) {
   req.dress.remove()
-  .then(() => {
-    res.send('OK')
-  })
+    .then(() => {
+      req.flash('success', 'Dress deleted.')
+      res.send('OK')
+    })
 }
 
 exports.comparePage = function (req, res) {
@@ -161,6 +162,7 @@ exports.comparePage = function (req, res) {
   let idB = req.query.dressB
   // find the two dresses
   Dress.find({user:req.user._id, _id: {$in: [idA, idB]}})
+
     .then(dresses => {
       if(dresses.length === 0) {
         res.send('dresses not found')
@@ -171,5 +173,6 @@ exports.comparePage = function (req, res) {
         // show the comare page
         res.render('compare', res.locals)
       }
-    })
+      //added this .catch, not sure if its right
+    }).catch(err => next(err))
 }
