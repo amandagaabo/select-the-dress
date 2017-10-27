@@ -316,8 +316,10 @@ describe('The dresses route', function () {
 
       const flashSpy = sinon.spy()
 
+      const body = {}
+
       const req = {
-        body: {},
+        body,
         files: {},
         user: {},
         flash: flashSpy
@@ -382,9 +384,9 @@ describe('The dresses route', function () {
       }
 
       createStub.rejects(error)
-
+      const body = {}
       const req = {
-        body: {},
+        body,
         files: {},
         user: {}
       }
@@ -396,7 +398,7 @@ describe('The dresses route', function () {
         render: function (template, locals) {
           locals.messages.errors.should.have.length(1)
           should.not.exist(locals.messages.errorFields)
-          locals.data.should.equal(req.body)
+          locals.data.should.equal(body)
           template.should.equal('add-dress')
           done()
         }
@@ -427,7 +429,7 @@ describe('The dresses route', function () {
         done()
       }
     }
-    
+
     dresses.delete(req, res)
   })
 
@@ -495,7 +497,7 @@ describe('The dresses route', function () {
 
     it('and fail with a non-validation error', function (done) {
       const error = {
-        name: 'someOtherError'
+        name: 'SomeOtherError'
       }
 
       const req = {

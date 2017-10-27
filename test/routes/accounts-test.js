@@ -153,7 +153,7 @@ describe('The accounts route', function () {
 
     it('and fail with a non-validation error', function (done) {
       const error = {
-        name: 'someOtherError',
+        name: 'SomeOtherError',
       }
 
       const req = {
