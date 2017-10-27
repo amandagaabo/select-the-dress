@@ -1,14 +1,16 @@
 const chai = require('chai')
-const should = chai.should()
-const proxyquire = require('proxyquire')
 const sinon = require('sinon')
+const sinonChai = require('sinon-chai')
+const should = chai.should()
+chai.use(sinonChai)
+const proxyquire = require('proxyquire')
 const User = require('../../models/user')
 
 let accounts
 let findStub
 let findOneStub
 
-describe('The account route', function () {
+describe('The accounts route', function () {
   before(function () {
     findStub = sinon.stub(User, 'find')
     findOneStub = sinon.stub(User, 'findOne')
@@ -76,11 +78,7 @@ describe('The account route', function () {
 
   it('should handle the readPage', function (done) {
     const req = {
-      account: {
-        _id: '123',
-        firstName: 'Sally',
-        lastName: 'B'
-      }
+      account: {}
     }
 
     const res = {
@@ -94,22 +92,24 @@ describe('The account route', function () {
     accounts.readPage(req, res)
   })
 
-///// need help with this one
-  xdescribe('should handle the update function', function (done) {
-    const req = {
-      body: {
-        firstName: 'Sally',
-        lastName: 'B',
-        email: 'sally@test.com'
-      },
-      flash: {}
-    }
+  describe('should handle the update function', function (done) {
 
     it('with successful save', function (done) {
-      // .save() to database
+      const flashSpy = sinon.spy()
+
+      const req = {
+        body: {},
+        account: {
+          save: sinon.stub().resolves()
+        },
+        flash: flashSpy
+      }
+
       const res = {
         redirect: function (path) {
           path.should.equal('/account')
+          flashSpy.should.have.been.calledOnce
+          flashSpy.should.have.been.calledWith('success', 'Account updated')
           done()
         }
       }
@@ -117,11 +117,32 @@ describe('The account route', function () {
       accounts.update(req, res)
     })
 
-    it('with a model error', function (done) {
-      // .catch(err)
+    it('and fail with validation errors', function (done) {
+      const error = {
+        name: 'ValidationError',
+        errors: {
+          firstName: {
+            message: 'First name is required'
+          }
+        }
+      }
+
+      const req = {
+        body: {},
+        account: {
+          save: sinon.stub().rejects(error)
+        },
+      }
+
       const res = {
-        locals: {},
-        render: function (template, data) {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.messages.errors.should.have.length(1)
+          locals.messages.errors[0].should.exist
+          locals.messages.errorFields.should.have.length(1)
+          locals.messages.errorFields[0].should.equal('firstName')
           template.should.equal('account')
           done()
         }
@@ -130,9 +151,32 @@ describe('The account route', function () {
       accounts.update(req, res)
     })
 
+    it('and fail with a non-validation error', function (done) {
+      const error = {
+        name: 'someOtherError',
+      }
 
+      const req = {
+        body: {},
+        account: {
+          save: sinon.stub().rejects(error)
+        },
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.messages.errors.should.have.length(1)
+          locals.messages.errors[0].should.exist
+          should.not.exist(locals.messages.errorFields)
+          template.should.equal('account')
+          done()
+        }
+      }
+
+      accounts.update(req, res)
+    })
   })
-
-
-
 })

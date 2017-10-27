@@ -311,6 +311,32 @@ describe('The dresses route', function () {
 
 
   describe('should handle the create function', function () {
+    it('and succeed with valid data', function (done) {
+      createStub.resolves()
+
+      const flashSpy = sinon.spy()
+
+      const req = {
+        body: {},
+        files: {},
+        user: {},
+        flash: flashSpy
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        redirect: function (path) {
+          path.should.equal('/dresses')
+          flashSpy.should.have.been.calledOnce
+          flashSpy.should.have.been.calledWith('success', 'Dress added successfully')
+          done()
+        }
+      }
+
+      dresses.create(req, res)
+    })
 
     it('and fail with validation errors', function (done) {
       const error = {
@@ -378,33 +404,6 @@ describe('The dresses route', function () {
 
       dresses.create(req, res)
     })
-
-    it('and succeed with valid data', function (done) {
-      createStub.resolves()
-
-      const flashSpy = sinon.spy()
-
-      const req = {
-        body: {},
-        files: {},
-        user: {},
-        flash: flashSpy
-      }
-
-      const res = {
-        locals: {
-          messages: {}
-        },
-        redirect: function (path) {
-          path.should.equal('/dresses')
-          flashSpy.should.have.been.calledOnce
-          flashSpy.should.have.been.calledWith('success', 'Dress added successfully')
-          done()
-        }
-      }
-
-      dresses.create(req, res)
-    })
   })
 
 
@@ -428,11 +427,37 @@ describe('The dresses route', function () {
         done()
       }
     }
+    
     dresses.delete(req, res)
   })
 
 
   describe('should handle the update function', function (done) {
+    it('and succeed with valid data', function (done) {
+      // use a spy to make sure flash function runs
+      const flashSpy = sinon.spy()
+
+      const req = {
+        body: {},
+        user: {},
+        dress: {
+          save: sinon.stub().resolves()
+        },
+        flash: flashSpy
+      }
+
+      const res = {
+        redirect: function (path) {
+          path.should.equal(`/dresses/${req.dress._id}`)
+          flashSpy.should.have.been.calledOnce
+          flashSpy.should.have.been.calledWith('success', 'Dress details saved')
+          done()
+        }
+      }
+
+      dresses.update(req, res)
+    })
+
     it('and fail with validation errors', function (done) {
       const error = {
         name: 'ValidationError',
@@ -496,38 +521,9 @@ describe('The dresses route', function () {
 
       dresses.update(req, res)
     })
-
-    it('and succeed with valid data', function (done) {
-      // use a spy to make sure flash function runs
-      const flashSpy = sinon.spy()
-
-      const req = {
-        body: {},
-        user: {},
-        dress: {
-          save: sinon.stub().resolves()
-        },
-        flash: flashSpy
-      }
-
-      const res = {
-        locals: {
-          messages: {}
-        },
-        redirect: function (path) {
-          path.should.equal(`/dresses/${req.dress._id}`)
-          flashSpy.should.have.been.calledOnce
-          flashSpy.should.have.been.calledWith('success', 'Dress details saved')
-          done()
-        }
-      }
-
-      dresses.update(req, res)
-    })
-
   })
 
-  describe('should handle the comparePage', function (done) {
+  describe('should handle comparePage', function (done) {
     const req = {
       query: {},
       user: {}
@@ -564,6 +560,7 @@ describe('The dresses route', function () {
           done()
         }
       }
+
       dresses.comparePage(req, res)
     })
   })
