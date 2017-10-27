@@ -17,7 +17,7 @@ function clearDB () {
 }
 let unauthenticatedUser
 
-xdescribe('http requests to protected routes without login', () => {
+describe('http requests to protected routes without login', () => {
   // hook functions using promises
   before((done) => {
     // setup user

@@ -1,7 +1,10 @@
 const chai = require('chai')
-const should = chai.should()
-const proxyquire = require('proxyquire')
 const sinon = require('sinon')
+const sinonChai = require('sinon-chai')
+const should = chai.should()
+chai.use(sinonChai)
+const proxyquire = require('proxyquire')
+
 const Dress = require('../../models/dress')
 
 let dresses
@@ -11,23 +14,21 @@ let removeStub
 
 describe('The dresses route', function () {
   before(function () {
-    findStub = sinon.stub(Dress, 'find')
+    createStub = sinon.stub(Dress, 'create')
     findOneStub = sinon.stub(Dress, 'findOne')
-    //removeStub = sinon.stub(Dress.prototype, 'remove')
+    findStub = sinon.stub(Dress, 'find')
 
     dresses = proxyquire('../../routes/dresses', { '../models/dress': {
-      find: findStub,
-      findOne: findOneStub
-      // prototype: {
-      //   remove: removeStub
-      // }
+      create: createStub,
+      findOne: findOneStub,
+      find: findStub
     }})
   })
 
   after(function () {
-    Dress.find.restore()
+    Dress.create.restore()
     Dress.findOne.restore()
-    //Dress.prototype.remove.restore()
+    Dress.find.restore()
   })
 
   it('should export all the required functions', function () {
@@ -78,7 +79,7 @@ describe('The dresses route', function () {
       findOneStub.resolves(dress)
 
       const next = function (err) {
-        should.not.exist(err)
+        should.equal(err, undefined);
         req.dress.should.equal(dress)
         done()
       }
@@ -315,28 +316,134 @@ describe('The dresses route', function () {
     dresses.readPage(req, res)
   })
 
-  xit('should handle the delete function', function (done) {
+
+  describe('should handle the create function', function () {
+
+    it('and fail with validation errors', function (done) {
+      const error = {
+        name: 'ValidationError',
+        errors: {
+          password: {
+            message: 'Your password sucks'
+          }
+        }
+      }
+
+      createStub.rejects(error)
+
+      const body = {}
+
+      const req = {
+        body,
+        files: {},
+        user: {}
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.data.should.equal(body)
+          locals.messages.errors.should.have.length(1)
+          locals.messages.errors[0].should.exist
+          locals.messages.errorFields.should.have.length(1)
+          locals.messages.errorFields[0].should.equal('password')
+          template.should.equal('add-dress')
+          done()
+        }
+      }
+
+      dresses.create(req, res)
+    })
+
+    it('and fail with a non-validation error', function (done) {
+      const error = {
+        name: 'SomeOtherError'
+      }
+
+      createStub.rejects(error)
+
+      const body = {};
+
+      const req = {
+        body,
+        files: {},
+        user: {}
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.messages.errors.should.exist
+          should.not.exist(locals.messages.errorFields)
+          locals.data.should.equal(body)
+          template.should.equal('add-dress')
+          done()
+        }
+      }
+
+      dresses.create(req, res)
+    })
+
+    it('and succeed!', function (done) {
+      createStub.resolves()
+
+      const flashSpy = sinon.spy()
+
+      const req = {
+        body: {},
+        files: {},
+        user: {},
+        flash: flashSpy
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        redirect: function (path) {
+          path.should.equal('/dresses')
+          flashSpy.should.have.been.calledOnce
+          flashSpy.should.have.been.calledWith('success', 'Dress added successfully')
+          done()
+        }
+      }
+
+      dresses.create(req, res)
+    })
+  })
+
+
+  it('should handle the delete function', function (done) {
+    const flashSpy = sinon.spy()
+
     const req = {
       dress: {
         _id: '123',
         designer: 'a',
         style: 'b',
-        price: 1200
-      }
+        price: 1200,
+        remove: sinon.stub().resolves()
+      },
+      flash: flashSpy
     }
-
-    req.dress.removeStub.resolves(null)
 
     const res = {
       locals: {},
       send: function (message) {
         message.should.equal('OK')
+        flashSpy.should.have.been.calledOnce
+        flashSpy.should.have.been.calledWith('success', 'Dress deleted.')
         done()
       }
     }
     dresses.delete(req, res)
   })
 
+/////// need help with this one
   xit('should handle the update function', function (done) {
 
   })
@@ -398,5 +505,4 @@ describe('The dresses route', function () {
       dresses.comparePage(req, res)
     })
   })
-
 })

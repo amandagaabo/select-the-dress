@@ -79,7 +79,7 @@ describe('The account route', function () {
       account: {
         _id: '123',
         firstName: 'Sally',
-        lastName: 'b'
+        lastName: 'B'
       }
     }
 
@@ -94,10 +94,43 @@ describe('The account route', function () {
     accounts.readPage(req, res)
   })
 
-  xit('should handle the update function', function (done) {
+///// need help with this one
+  xdescribe('should handle the update function', function (done) {
+    const req = {
+      body: {
+        firstName: 'Sally',
+        lastName: 'B',
+        email: 'sally@test.com'
+      },
+      flash: {}
+    }
+
+    it('with successful save', function (done) {
+      // .save() to database
+      const res = {
+        redirect: function (path) {
+          path.should.equal('/account')
+          done()
+        }
+      }
+
+      accounts.update(req, res)
+    })
+
+    it('with a model error', function (done) {
+      // .catch(err)
+      const res = {
+        locals: {},
+        render: function (template, data) {
+          template.should.equal('account')
+          done()
+        }
+      }
+
+      accounts.update(req, res)
+    })
 
 
-    accounts.update(req, res)
   })
 
 

@@ -78,7 +78,7 @@ function clearDB () {
 
 let authenticatedUser
 
-xdescribe('integration http request tests', function () {
+describe('integration http request tests', function () {
   // increase timeout limit for account create
   this.timeout(5000)
 

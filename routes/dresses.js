@@ -85,7 +85,6 @@ exports.create = function (req, res) {
     req.flash('success', 'Dress added successfully')
     res.redirect('/dresses')
   }).catch(err => {
-    console.log('err:', err)
     const errors = []
     const fields = []
 
@@ -151,10 +150,10 @@ exports.update = function (req, res) {
 
 exports.delete = function (req, res) {
   req.dress.remove()
-  .then(() => {
-    res.locals.message.success = 'Dress deleted'
-    res.send('OK')
-  })
+    .then(() => {
+      req.flash('success', 'Dress deleted.')
+      res.send('OK')
+    })
 }
 
 exports.comparePage = function (req, res) {

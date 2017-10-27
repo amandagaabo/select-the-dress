@@ -1,5 +1,7 @@
 const chai = require('chai')
+const sinonChai = require('sinon-chai')
 const should = chai.should()
+chai.use(sinonChai)
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
 const User = require('../../models/user')
@@ -85,13 +87,19 @@ describe('The sessions route', function () {
       sessions.signUpSubmit(req, res)
     })
 
-    it('with model error', function (done) {
+    it('with a model validation error', function (done) {
       //User.create() error -- validation errors
 
 
       sessions.signUpSubmit(req, res)
     })
 
+    it('with a non-validation model error', function (done) {
+      //User.create() error -- validation errors
+
+
+      sessions.signUpSubmit(req, res)
+    })
 
   })
 
@@ -108,13 +116,19 @@ describe('The sessions route', function () {
   })
 
   it('should handle the logOut function', function (done) {
+    const flashSpy = sinon.spy()
+    const logoutSpy = sinon.spy()
+
     const req = {
-      logout: function() {},
-      flash: function() {}
+      logout: logoutSpy,
+      flash: flashSpy
     }
 
     const res = {
       redirect: function (path) {
+        logoutSpy.should.have.been.calledOnce
+        flashSpy.should.have.been.calledOnce
+        flashSpy.should.have.been.calledWith('success', 'You have been logged out.')
         path.should.equal('/')
         done()
       }
