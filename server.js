@@ -22,7 +22,6 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 
-
 // setup pug for html templates
 app.set('view engine', 'pug')
 
@@ -75,11 +74,6 @@ app.use('/', router(passport))
 app.use('*', function (req, res) {
   res.status(404).json({message: 'Not Found'})
 })
-
-
-
-// require('./models/user')
-// require('./models/dress')
 
 // closeServer needs access to a server object, but that only
 // gets created when `runServer` runs, so we declare `server` here

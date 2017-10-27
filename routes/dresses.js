@@ -96,7 +96,7 @@ exports.create = function (req, res) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
     } else {
-      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+      res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
     res.render('add-dress', res.locals)
   })
@@ -128,7 +128,7 @@ exports.update = function (req, res) {
   req.dress.save()
   .then(() => {
     // redirect to dress page
-    req.flash('success', 'dress details saved')
+    req.flash('success', 'Dress details saved')
     res.redirect(`/dresses/${req.dress._id}`)
   }).catch(err => {
     const errors = []
@@ -142,7 +142,7 @@ exports.update = function (req, res) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
     } else {
-      res.locals.messages.errors = 'Some other error happened. You should tell Amanda.'
+      res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
     res.render('add-dress', res.locals)
   })

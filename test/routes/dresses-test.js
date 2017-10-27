@@ -4,13 +4,11 @@ const sinonChai = require('sinon-chai')
 const should = chai.should()
 chai.use(sinonChai)
 const proxyquire = require('proxyquire')
-
 const Dress = require('../../models/dress')
 
 let dresses
 let findStub
 let findOneStub
-let removeStub
 
 describe('The dresses route', function () {
   before(function () {
@@ -53,8 +51,8 @@ describe('The dresses route', function () {
       findOneStub.resolves(null)
 
       const res = {
-        send: function (msg) {
-          msg.should.equal('error, no dress found')
+        send: function (message) {
+          message.should.equal('error, no dress found')
           done()
         }
       }
@@ -79,7 +77,7 @@ describe('The dresses route', function () {
       findOneStub.resolves(dress)
 
       const next = function (err) {
-        should.equal(err, undefined);
+        should.equal(err, undefined)
         req.dress.should.equal(dress)
         done()
       }
@@ -127,11 +125,10 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.sort.should.equal('rating')
-            data.view.should.equal('front')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.sort.should.equal('rating')
+            locals.view.should.equal('front')
             template.should.equal('dresses')
             done()
           }
@@ -153,11 +150,10 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.sort.should.equal('price')
-            data.view.should.equal('front')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.sort.should.equal('price')
+            locals.view.should.equal('front')
             template.should.equal('dresses')
             done()
           }
@@ -179,11 +175,10 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.sort.should.equal('designer')
-            data.view.should.equal('front')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.sort.should.equal('designer')
+            locals.view.should.equal('front')
             template.should.equal('dresses')
             done()
           }
@@ -205,11 +200,10 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.sort.should.equal('rating')
-            data.view.should.equal('front')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.sort.should.equal('rating')
+            locals.view.should.equal('front')
             template.should.equal('dresses')
             done()
           }
@@ -227,10 +221,9 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.view.should.equal('back')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.view.should.equal('back')
             template.should.equal('dresses')
             done()
           }
@@ -248,10 +241,9 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.view.should.equal('side')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.view.should.equal('side')
             template.should.equal('dresses')
             done()
           }
@@ -269,10 +261,9 @@ describe('The dresses route', function () {
 
         const res = {
           locals: {},
-
-          render: function (template, data) {
-            data.dresses.should.equal(result)
-            data.view.should.equal('front')
+          render: function (template, locals) {
+            locals.dresses.should.equal(result)
+            locals.view.should.equal('front')
             template.should.equal('dresses')
             done()
           }
@@ -286,12 +277,13 @@ describe('The dresses route', function () {
   it('should handle the addPage', function (done) {
     const res = {
       locals: {},
-      render: function (template, data) {
+      render: function (template, locals) {
         template.should.equal('add-dress')
-        data.data.should.deep.equal({})
+        locals.data.should.deep.equal({})
         done()
       }
     }
+
     dresses.addPage({}, res)
   })
 
@@ -307,12 +299,13 @@ describe('The dresses route', function () {
 
     const res = {
       locals: {},
-      render: function (template, data) {
+      render: function (template, locals) {
         template.should.equal('dress')
-        data.dress.should.equal(req.dress)
+        locals.dress.should.equal(req.dress)
         done()
       }
     }
+
     dresses.readPage(req, res)
   })
 
@@ -364,10 +357,8 @@ describe('The dresses route', function () {
 
       createStub.rejects(error)
 
-      const body = {};
-
       const req = {
-        body,
+        body: {},
         files: {},
         user: {}
       }
@@ -377,9 +368,9 @@ describe('The dresses route', function () {
           messages: {}
         },
         render: function (template, locals) {
-          locals.messages.errors.should.exist
+          locals.messages.errors.should.have.length(1)
           should.not.exist(locals.messages.errorFields)
-          locals.data.should.equal(body)
+          locals.data.should.equal(req.body)
           template.should.equal('add-dress')
           done()
         }
@@ -388,7 +379,7 @@ describe('The dresses route', function () {
       dresses.create(req, res)
     })
 
-    it('and succeed!', function (done) {
+    it('and succeed with valid data', function (done) {
       createStub.resolves()
 
       const flashSpy = sinon.spy()
@@ -418,14 +409,11 @@ describe('The dresses route', function () {
 
 
   it('should handle the delete function', function (done) {
+    // use spy to make sure flash function runs
     const flashSpy = sinon.spy()
 
     const req = {
       dress: {
-        _id: '123',
-        designer: 'a',
-        style: 'b',
-        price: 1200,
         remove: sinon.stub().resolves()
       },
       flash: flashSpy
@@ -443,20 +431,106 @@ describe('The dresses route', function () {
     dresses.delete(req, res)
   })
 
-/////// need help with this one
-  xit('should handle the update function', function (done) {
+
+  describe('should handle the update function', function (done) {
+    it('and fail with validation errors', function (done) {
+      const error = {
+        name: 'ValidationError',
+        errors: {
+          price: {
+            message: 'invalid price'
+          }
+        }
+      }
+
+      const req = {
+        body: {},
+        user: {},
+        dress: {
+          save: sinon.stub().rejects(error)
+        }
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.messages.errors.should.have.length(1)
+          locals.messages.errors[0].should.exist
+          locals.messages.errorFields.should.have.length(1)
+          locals.messages.errorFields[0].should.equal('price')
+          template.should.equal('add-dress')
+          done()
+        }
+      }
+
+      dresses.update(req, res)
+    })
+
+    it('and fail with a non-validation error', function (done) {
+      const error = {
+        name: 'someOtherError'
+      }
+
+      const req = {
+        body: {},
+        user: {},
+        dress: {
+          save: sinon.stub().rejects(error)
+        }
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        render: function (template, locals) {
+          locals.messages.errors.should.have.length(1)
+          locals.messages.errors[0].should.exist
+          should.not.exist(locals.messages.errorFields)
+          template.should.equal('add-dress')
+          done()
+        }
+      }
+
+      dresses.update(req, res)
+    })
+
+    it('and succeed with valid data', function (done) {
+      // use a spy to make sure flash function runs
+      const flashSpy = sinon.spy()
+
+      const req = {
+        body: {},
+        user: {},
+        dress: {
+          save: sinon.stub().resolves()
+        },
+        flash: flashSpy
+      }
+
+      const res = {
+        locals: {
+          messages: {}
+        },
+        redirect: function (path) {
+          path.should.equal(`/dresses/${req.dress._id}`)
+          flashSpy.should.have.been.calledOnce
+          flashSpy.should.have.been.calledWith('success', 'Dress details saved')
+          done()
+        }
+      }
+
+      dresses.update(req, res)
+    })
 
   })
 
   describe('should handle the comparePage', function (done) {
     const req = {
-      query: {
-        dressA: '123',
-        dressB: '456'
-      },
-      user: {
-        _id: '789'
-      }
+      query: {},
+      user: {}
     }
 
     it('with no dresses found', function (done) {
@@ -473,32 +547,20 @@ describe('The dresses route', function () {
       dresses.comparePage(req, res)
     })
 
-    // // not sure how to test for a model error..
-    // it('with a model error', function (done) {
-    //   findStub.rejects(new Error('Yikes!'))
-    //
-    //   const next = function (err) {
-    //     err.should.exist
-    //     done()
-    //   }
-    //
-    //   dresses.comparePage(req, null, next)
-    // })
-
     it('with dresses found', function (done) {
       const result = [
         { _id: '123', price: 1400 },
-        {_id: '456', price: 1100 }
+        { _id: '456', price: 1100 }
       ]
 
       findStub.resolves(result)
 
       const res = {
         locals: {},
-        render: function (template, data) {
+        render: function (template, locals) {
           template.should.equal('compare')
-          data.dressA.should.equal(result[0])
-          data.dressB.should.equal(result[1])
+          locals.dressA.should.equal(result[0])
+          locals.dressB.should.equal(result[1])
           done()
         }
       }
