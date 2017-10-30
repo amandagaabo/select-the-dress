@@ -4,7 +4,7 @@ body {
   text-align: center;
   margin: 0 auto;
   padding: 0;
-  /*background-image: url(../img/pink-church.png)*/
+  /*background-image: url(../img/white-sand.png)*/
 }
 
 h2 {
@@ -49,6 +49,10 @@ img {
   padding: 5px;
 }
 
+footer {
+  height: 50px;
+}
+
 /* home */
 header {
   margin: 20px 0 0 0;
@@ -89,7 +93,7 @@ header {
 
 #welcome-img {
   position: relative;
-  height: 550px;
+  height: 490px;
   background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509324060/dresses/shopping2.jpg);
   background-repeat: no-repeat;
   /*background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509322546/dresses/shopping.jpg);*/
@@ -104,6 +108,11 @@ header {
 #welcome-text p {
   font-size: 45px;
   margin: 0 0 10px 0;
+}
+
+.demo-img {
+  width: 75%;
+  margin-bottom: 20px;
 }
 
 /* forms */
@@ -159,7 +168,7 @@ textarea {
 }
 
 .form-input {
-  padding-left: 15px;
+  padding: 10px;
   font-family: 'Josefin Slab', serif;
   font-size: 20px;
   color: #202020;
