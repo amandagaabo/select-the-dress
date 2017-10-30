@@ -42,7 +42,7 @@ exports.signUpSubmit = function (req, res) {
     if (errors.length > 0) {
       res.locals.messages.errors = errors
       res.locals.messages.errorFields = fields
-      return res.render('sign-up', res.locals)
+      return res.status(422).render('sign-up', res.locals)
     }
 
     // if no errors, add user to database
@@ -64,7 +64,7 @@ exports.signUpSubmit = function (req, res) {
       } else {
         res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
       }
-      res.render('sign-up', res.locals)
+      res.status(422).render('sign-up', res.locals)
     })
   })
 }

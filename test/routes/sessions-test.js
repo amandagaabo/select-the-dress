@@ -69,14 +69,20 @@ describe('The sessions route', function () {
         locals: {
           messages: {}
         },
-        render: function(template, locals) {
-          locals.data.should.equal(body)
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('email')
-          template.should.equal('sign-up')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.data.should.equal(body)
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('email')
+              template.should.equal('sign-up')
+              done()
+            }
+          }
         }
       }
 
@@ -100,14 +106,20 @@ describe('The sessions route', function () {
         locals: {
           messages: {}
         },
-        render: function(template, locals) {
-          locals.data.should.equal(body)
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('password')
-          template.should.equal('sign-up')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.data.should.equal(body)
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('password')
+              template.should.equal('sign-up')
+              done()
+            }
+          }
         }
       }
 
@@ -184,13 +196,19 @@ describe('The sessions route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('password')
-          template.should.equal('sign-up')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('password')
+              template.should.equal('sign-up')
+              done()
+            }
+          }
         }
       }
 
@@ -220,12 +238,18 @@ describe('The sessions route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          should.not.exist(locals.messages.errorFields)
-          template.should.equal('sign-up')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              should.not.exist(locals.messages.errorFields)
+              template.should.equal('sign-up')
+              done()
+            }
+          }
         }
       }
 

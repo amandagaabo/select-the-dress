@@ -51,7 +51,7 @@ exports.update = function (req, res) {
 
     // save values to req.account so they can be displayed to the user
     res.locals.account = req.account
-    res.render('account', res.locals)
+    res.status(422).render('account', res.locals)
   })
 }
 
