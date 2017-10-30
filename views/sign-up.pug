@@ -21,7 +21,8 @@ block content
         input#password-confirm.form-input(type="password", name="passwordConfirm", placeholder="password", class=messages.errorFields.includes('password') && 'error')
         
         input(type="submit", value="sign up")
-      p.error-message
-      p
-        | already have an account:
-        a.link.underline(href="/log-in") log in
+      
+      .col-12
+        p
+          | already have an account: 
+          a.link.underline(href="/log-in") log in

@@ -2,8 +2,9 @@ extends layout.pug
 
 block content
   section#add-dress.row.content(role="region")
-    .col-12
+    .col-12.page-title
       h2 Add Dress
+      a.button.back-btn(href='/dresses') back
 
       form#dress-form(role="form", action="/dresses/add", method="post", enctype='multipart/form-data')
         label(for="imgFront") front of dress:
@@ -41,4 +42,5 @@ block content
         
         label.top-label(for="notes") notes:
         textarea#notes.form-input(type="text", name="notes", value=data.notes placeholder="notes")
-        input(type="submit", value="add")
+        
+        input#add-submit(type="submit", value="add")

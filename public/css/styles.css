@@ -4,11 +4,21 @@ body {
   text-align: center;
   margin: 0 auto;
   padding: 0;
-  background-image: url(../img/pink-church.png)
+  /*background-image: url(../img/pink-church.png)*/
 }
 
 h2 {
-  margin: 0 0 10px 0;
+  margin: 20px 0;
+}
+
+.page-title {
+  position: relative;
+}
+
+.back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 a {
@@ -19,10 +29,16 @@ a {
 img {
   border: 1px solid #202020;
   border-radius: 3px;
+  width: 100%
 }
 
 .hidden {
   display: none;
+}
+
+/* hide but keep space */
+.invisible {
+  visibility: hidden;
 }
 
 .error-text {
@@ -44,13 +60,21 @@ img {
 }
 
 /* home */
+header {
+  margin: 20px 0 0 0;
+}
+
 #logo {
   font-size: 45px;
   font-weight: bold;
 }
 
-header {
-  margin: 10px 0;
+#logo-box, #link-box {
+  border-bottom: 1px solid #202020;
+}
+
+#link-box {
+  margin-top: 5px;
 }
 
 .header-links {
@@ -75,7 +99,7 @@ header {
 
 /* forms */
 form {
-  max-width: 500px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
@@ -99,15 +123,19 @@ form label, input[type=text], input[type=email], input[type=password], input[typ
   height: 35px;
 }
 
-input[type=submit], .button {
+input[type=submit], .button, .disabled-btn {
   display: inline-block;
-  margin: 10px auto;
+  margin: 5px auto;
   padding: 5px 20px;
   border: 1px solid #202020;
   border-radius: 3px;
   background-color: white;
   font-family: 'Josefin Slab', serif;
   font-size: 18px;
+}
+
+input[type=submit] {
+  float: right;
 }
 
 input[type=submit]:hover, .button:hover {
@@ -117,19 +145,20 @@ input[type=submit]:hover, .button:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.form-input-disabled, .form-input {
+.form-input {
   padding-left: 15px;
   font-family: 'Josefin Slab', serif;
   font-size: 20px;
   color: #202020;
+  border: 1px solid #202020;
+  border-radius: 3px;
 }
 
-.form-input-disabled {
-  border-style: none;
-}
-
-input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
-    background: #dddddd;
+input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hover {
+  background: #CCCCCC;
+  color: #666666;
+  cursor: default;
+  box-shadow: none;
 }
 
 .form-dropdown {
@@ -137,6 +166,11 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
 }
 
 /* dresses */
+#add-btn, #compare-btn {
+  width: 200px;
+  text-align: center;
+}
+
 .select-dropdown {
   font-family: 'Josefin Slab', serif;
   background-color: white;
@@ -144,28 +178,17 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
   border: 1px solid #202020;
   border-radius: 3px;
   height: 30px;
+  margin: 10px 0;
   /*background-image: url(../img/pink-church.png);*/
 }
 
-.sort {
-  margin-bottom: 15px;
-}
-
-#sort-select {
-  text-align: left;
-}
-
-#view-select {
-  text-align: right;
+.select-dropdown:hover {
+  cursor: pointer;
 }
 
 .sort label {
   margin-right: 15px;
-}
-
-#add-btn, #compare-btn {
   display: inline-block;
-  margin: 10px;
 }
 
 .dress-box {
@@ -178,12 +201,9 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
   position: relative;
 }
 
-.dress-img:hover {
+.dress-link:hover, #thumbs img:hover {
+  opacity: .7;
   cursor: pointer;
-}
-
-.dress-img {
-  width: 100%;
 }
 
 .rating-tag {
@@ -192,22 +212,26 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
   top: 10px;
 }
 
+.rating:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
 .info-tag {
   position: absolute;
   margin: 0;
   padding: 5px 0;
-  bottom: 10px;
-  left: 20px;
-  color: #ff6a80;
+  bottom: 11px;
+  width: 100%;
+  border: 1px solid #202020;
+  background-color: white;
+  opacity: .8;
+  color: #202020;
   font-size: 16px;
 }
 
-.designer-tag {
-  padding-right: 10px;
-}
-
-.price-tag {
-  padding-left: 10px;
+.designer-tag, price-tag {
+  padding: 0 10px;
 }
 
 .compare-options {
@@ -226,23 +250,48 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
   margin-right: 5px;
 }
 
-/* dress */
-.main-dress {
-  width: 300px;
+.align-right {
+  text-align: right;
 }
 
-#large-img {
-  width: 100%;
+.align-left {
+  text-align: left;
+}
+
+/* dress */
+#dress-info {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.info-label {
+  text-decoration: underline;
+  margin-top: 0;
+}
+
+.info-data {
+  min-height: 20px;
+  margin-top: 0;
+  padding-left: 15px;
 }
 
 #thumbs img {
-  width: 100px;
   margin: 0 3px;
+  width: 125px;
+}
+
+#edit-submit, #delete-btn {
+  width: 90px;
 }
 
 #delete-btn {
   display: block;
-  width: 80px;
+  clear: right;
+}
+
+/* dress edit */
+#edit-dress {
+  padding-top: 25px;
 }
 
 /* compare */
@@ -251,9 +300,9 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
 }
 
 .fixed-height {
-  height: 50px;
+  min-height: 30px;
 }
 
-form>select {
-  background-color: white;
+.compare-row {
+  margin-bottom: 15px;
 }

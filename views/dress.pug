@@ -2,53 +2,57 @@ extends layout.pug
 
 block content
   section#dress.row.content(role="region")
-    .col-12
+    .col-12.page-title
       h2 Dress Details
+      a.button.back-btn(href='/dresses') back
+      
       #dress-details
         .col-2#thumbs
           img(src=dress.imgFront, alt='dress front')
           img(src=dress.imgBack, alt='dress back')
           img(src=dress.imgSide, alt='dress side')
-        .col-6#panel
+        
+        .col-7#panel
           img#large-img(src=dress.imgFront, alt='dress front')
 
-        .col-4#dress-info
-          .heart-rating
+        .col-3#dress-info
+          p.info-label rating:
+          p.info-data.heart-rating(data-dress-id=dress.id)
             if dress.rating === 4
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
+              span.rating.fa.fa-heart.checked(data-rating=1)
+              span.rating.fa.fa-heart.checked(data-rating=2)
+              span.rating.fa.fa-heart.checked(data-rating=3)
+              span.rating.fa.fa-heart.checked(data-rating=4)
             else if dress.rating === 3
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart.checked(data-rating=1)
+              span.rating.fa.fa-heart.checked(data-rating=2)
+              span.rating.fa.fa-heart.checked(data-rating=3)
+              span.rating.fa.fa-heart(data-rating=4)
             else if dress.rating === 2
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart.checked(data-rating=1)
+              span.rating.fa.fa-heart.checked(data-rating=2)
+              span.rating.fa.fa-heart(data-rating=3)
+              span.rating.fa.fa-heart(data-rating=4)
             else if dress.rating === 1
-              span.rating.fa.fa-heart.checked
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
-              span.rating.fa.fa-heart
+              span.rating.fa.fa-heart.checked(data-rating=1)
+              span.rating.fa.fa-heart(data-rating=2)
+              span.rating.fa.fa-heart(data-rating=3)
+              span.rating.fa.fa-heart(data-rating=4)
 
-            form#dress-form(role="form")
-              label(for="designer") designer:
-              input#designer.form-input-disabled(type="text", name="designer", value=dress.designer, disabled="true")
+          p.info-label designer:
+          p.info-data= dress.designer
+            
+          p.info-label style:
+          p.info-data= dress.style
               
-              label(for='style') style:
-              input#style.form-input-disabled(type="text", name="style", value=dress.style, disabled="true")
+          p.info-label price:
+          p.info-data= dress.price
               
-              label(for="price") price:
-              input#price.form-input-disabled(type="text", name="price", value=dress.price, disabled="true")
+          p.info-label store:
+          p.info-data= dress.store
               
-              label(for="store") store:
-              input#store.form-input-disabled(type="text", name="store", value=dress.store, disabled="true")
+          p.info-label notes:
+          p.info-data= dress.notes
               
-              label.top-label(for="notes") notes:
-              textarea#notes.form-input-disabled(type="text", name="notes", disabled="true")= dress.notes
-              
-              a.button(href=`/dresses/${dress.id}/edit`) edit
+          p 
+            a.button(href=`/dresses/${dress.id}/edit`) edit

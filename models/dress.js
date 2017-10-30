@@ -40,12 +40,22 @@ function toNumber (price) {
   let cleanedPrice = price.replace(/[^\d.-]/g, '')
   // convert to integer with 2 decimal places
   let priceFloat = parseFloat(cleanedPrice)
-  // move decimal and return if not a number return undefined
-  return priceFloat || undefined
+  // save the price as the integer or undefined if NaN
+  let savePrice = priceFloat
+  if (isNaN(priceFloat)) {
+    savePrice = undefined
+  }
+
+  // return price as a number
+  return savePrice
 }
 
 // price: convert number to price $1,111
 function toPrice(price) {
+  // if no price, return undefined
+  if(!price) {
+    return undefined
+  }
   return numeral(price).format('$ 0,0[.]00')
 }
 

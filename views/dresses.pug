@@ -5,23 +5,15 @@ block content
     .col-12
       h2 Dresses
       
-      .col-6.sort#sort-select
-        label(for="sort-by") sort by
-        select#sort-by.select-dropdown
-          if sort === "rating"
-            option(value="rating", selected="true") rating high to low
-            option(value="price") price low to high
-            option(value="designer") designer a to z
-          if sort === "price"
-            option(value="rating") rating high to low
-            option(value="price", selected="true") price low to high
-            option(value="designer") designer a to z
-          if sort === "designer"
-            option(value="rating") rating high to low
-            option(value="price") price low to high
-            option(value="designer", selected="true") designer a to z
+      .col-6.align-right
+        a.button#add-btn(href="/dresses/add") add dress
       
-      .col-6.sort#view-select
+      .col-6.align-left.hidden
+        a.button#compare-btn(href="") compare
+      .col-6.align-left#compare-description
+        p.disabled-btn select two to compare      
+    
+      .col-6.sort.align-left
         label(for="view") view
         select#view.select-dropdown
           if view === "front"
@@ -36,47 +28,65 @@ block content
             option(value="front") front
             option(value="back") back
             option(value="side", selected="true") side
-
+              
+      .col-6.sort.align-right
+        label(for="sort-by") sort by
+        select#sort-by.select-dropdown
+          if sort === "rating"
+            option(value="rating", selected="true") rating high to low
+            option(value="price") price low to high
+            option(value="designer") designer a to z
+          if sort === "price"
+            option(value="rating") rating high to low
+            option(value="price", selected="true") price low to high
+            option(value="designer") designer a to z
+          if sort === "designer"
+            option(value="rating") rating high to low
+            option(value="price") price low to high
+            option(value="designer", selected="true") designer a to z
+            
       each dress in dresses
         .col-4.dress-box(data-dress-id=dress.id, data-price=dress.price, data-designer=dress.designer,
         data-store=dress.store, data-rating=dress.rating)
           .photo-box(data-dress-id=dress.id)
             if view === 'front'
-              img.dress-img.front(src=dress.imgFront, alt='dress front')
+              img.dress-link(src=dress.imgFront, alt='dress front')
 
             if view === 'back'
-              img.dress-img(src=dress.imgBack, alt='dress back')
+              img.dress-link(src=dress.imgBack, alt='dress back')
 
             if view === 'side'
-              img.dress-img(src=dress.imgSide, alt='dress side')
+              img.dress-link(src=dress.imgSide, alt='dress side')
 
-            .heart-rating.rating-tag
+            .heart-rating.rating-tag(data-dress-id=dress.id)
               if dress.rating === 4
-                span.rating.fa.fa-heart.checked.one-heart
-                span.rating.fa.fa-heart.checked.two-heart
-                span.rating.fa.fa-heart.checked.three-heart
-                span.rating.fa.fa-heart.checked.four-heart
+                span.rating.fa.fa-heart.checked(data-rating=1)
+                span.rating.fa.fa-heart.checked(data-rating=2)
+                span.rating.fa.fa-heart.checked(data-rating=3)
+                span.rating.fa.fa-heart.checked(data-rating=4)
               else if dress.rating === 3
-                span.rating.fa.fa-heart.checked.one-heart
-                span.rating.fa.fa-heart.checked.two-heart
-                span.rating.fa.fa-heart.checked.three-heart
-                span.rating.fa.fa-heart.four-heart
+                span.rating.fa.fa-heart.checked(data-rating=1)
+                span.rating.fa.fa-heart.checked(data-rating=2)
+                span.rating.fa.fa-heart.checked(data-rating=3)
+                span.rating.fa.fa-heart(data-rating=4)
               else if dress.rating === 2
-                span.rating.fa.fa-heart.checked.one-heart
-                span.rating.fa.fa-heart.checked.two-heart
-                span.rating.fa.fa-heart.three-heart
-                span.rating.fa.fa-heart.four-heart
+                span.rating.fa.fa-heart.checked(data-rating=1)
+                span.rating.fa.fa-heart.checked(data-rating=2)
+                span.rating.fa.fa-heart(data-rating=3)
+                span.rating.fa.fa-heart(data-rating=4)
               else if dress.rating === 1
-                span.rating.fa.fa-heart.checked.one-heart
-                span.rating.fa.fa-heart.two-heart
-                span.rating.fa.fa-heart.three-heart
-                span.rating.fa.fa-heart.four-heart
+                span.rating.fa.fa-heart.checked(data-rating=1)
+                span.rating.fa.fa-heart(data-rating=2)
+                span.rating.fa.fa-heart(data-rating=3)
+                span.rating.fa.fa-heart(data-rating=4)
             
-            p.info-tag
-              span.designer-tag= dress.designer
-              span.price-tag= dress.price
+            if(dress.designer || dress.price)
+              p.info-tag
+                if(dress.designer)
+                  span.designer-tag= dress.designer
+                if(dress.price)
+                  span.price-tag= dress.price
           
-          .compare-options
           a.add-compare.link(href="") 
             i.compare-square.fa.fa-square-o(aria-hidden="true") 
             | compare
@@ -84,7 +94,3 @@ block content
             i.compare-square.fa.fa-check-square-o(aria-hidden="true") 
             | added to compare
         
-      .buttons
-        a.button#add-btn(href="/dresses/add") add dress
-        a.button#compare-btn(href="") compare
-            

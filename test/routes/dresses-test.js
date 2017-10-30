@@ -37,6 +37,7 @@ describe('The dresses route', function () {
     dresses.should.respondTo('readPage')
     dresses.should.respondTo('editPage')
     dresses.should.respondTo('update')
+    dresses.should.respondTo('updateRating')
     dresses.should.respondTo('delete')
     dresses.should.respondTo('comparePage')
   })
@@ -408,6 +409,23 @@ describe('The dresses route', function () {
     })
   })
 
+  it('should handle the updateRating function', function (done) {
+    const req = {
+      body: {},
+      dress: {
+        save: sinon.stub().resolves()
+      }
+    }
+
+    const res = {
+      send: function (message) {
+        message.should.equal('OK')
+        done()
+      }
+    }
+
+    dresses.updateRating(req, res)
+  })
 
   it('should handle the delete function', function (done) {
     // use spy to make sure flash function runs

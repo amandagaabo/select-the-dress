@@ -2,32 +2,37 @@ extends layout.pug
 
 block content
   section#dress-edit.row.content(role="region")
-    .col-12
+    .col-12.page-title
       h2 Edit Dress Details
-      img#large-img(src=dress.imgFront, alt='dress front')
-      -let editURL = `/dresses/${dress._id}/edit`
-      form#dress-form(role="form", action=editURL, method="post")
-        label(for="rating") rating:
-        select#rating.select-dropdown(name="rating")
-          option(value="4") love it
-          option(value="3") like it
-          option(value="2") it's ok
-          option(value="1") don't like it
-        
-        label(for="designer") designer:
-        input#designer.form-input(type="text", name="designer", value=dress.designer, placeholder="designer")
-        
-        label(for='style') style:
-        input#style.form-input(type="text", name="style", value=dress.style, placeholder="style")
-        
-        label(for="price") price:
-        input#price.form-input(type="text", name="price", value=dress.price, placeholder="price")
-        
-        label(for="store") store:
-        input#store.form-input(type="text", name="store", value=dress.store, placeholder="store")
-        
-        label.top-label(for="notes") notes:
-        textarea#notes.form-input(type="text", name="notes", placeholder="notes")= dress.notes
-        
-        input(type="submit", value="save")
-        input#delete-btn(type="submit", value="delete", data-dress-id=dress.id)
+      a.button.back-btn(href=`/dresses/${dress._id}`) back
+      
+      .col-6
+        img#edit-img(src=dress.imgFront, alt='dress front')
+        -let editURL = `/dresses/${dress._id}/edit`
+  
+      .col-6#edit-dress
+        form#dress-form(role="form", action=editURL, method="post")
+          label(for="rating") rating:
+          select#rating.select-dropdown(name="rating")
+            option(value="4") love it
+            option(value="3") like it
+            option(value="2") it's ok
+            option(value="1") don't like it
+          
+          label(for="designer") designer:
+          input#designer.form-input(type="text", name="designer", value=dress.designer, placeholder="designer")
+          
+          label(for='style') style:
+          input#style.form-input(type="text", name="style", value=dress.style, placeholder="style")
+          
+          label(for="price") price:
+          input#price.form-input(type="text", name="price", value=dress.price, placeholder="price")
+          
+          label(for="store") store:
+          input#store.form-input(type="text", name="store", value=dress.store, placeholder="store")
+          
+          label.top-label(for="notes") notes:
+          textarea#notes.form-input(type="text", name="notes", placeholder="notes")= dress.notes
+          
+          input#edit-submit(type="submit", value="save")
+          input#delete-btn(type="submit", value="delete", data-dress-id=dress.id)
