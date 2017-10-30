@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const numeral = require('numeral')
 // add the Currency type to the Mongoose Schema types
 require('mongoose-currency').loadType(mongoose);
 const Currency = mongoose.Types.Currency;
@@ -26,7 +27,8 @@ const dressSchema = mongoose.Schema({
     style: String,
     price: {
       type: Number,
-      set: toNumber
+      set: toNumber,
+      get: toPrice
     },
     store: String,
     notes: String
@@ -38,8 +40,19 @@ function toNumber (price) {
   let cleanedPrice = price.replace(/[^\d.-]/g, '')
   // convert to integer with 2 decimal places
   let priceFloat = parseFloat(cleanedPrice)
-  // move decimal and return if not a number return undefined
-  return priceFloat || undefined
+  // save the price as the integer or undefined if NaN
+
+  // return price as a number
+  return isNaN(priceFloat) ? undefined : priceFloat
+}
+
+// price: convert number to price $1,111
+function toPrice(price) {
+  // if no price, return undefined
+  if(!price) {
+    return undefined
+  }
+  return numeral(price).format('$ 0,0[.]00')
 }
 
 // mongoose model for Dress

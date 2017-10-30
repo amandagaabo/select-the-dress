@@ -42,7 +42,6 @@ exports.listPage = function (req, res) {
   Dress.find({user:req.user._id})
     .sort(sort)
     .then(dresses => {
-      // console.log('dresses (if 0 then redirect to add)', dresses)
       if(dresses.length === 0) {
         res.redirect('/dresses/add')
       } else {
@@ -55,7 +54,7 @@ exports.listPage = function (req, res) {
 }
 
 exports.addPage = function (req, res) {
-  // set res.locals.data to empty on page render
+  // set res.locals.data to empty on page render, will be used if there are errors submitting the form
   res.locals.data = {}
   // show the add dress form
   res.render('add-dress', res.locals)
@@ -65,7 +64,7 @@ exports.create = function (req, res) {
   // get data from request
   const data = {
     user: req.user._id,
-    imgFront: _.get(req.files, 'imgFront[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=front+of+dress+not+uploaded']) ,
+    imgFront: _.get(req.files, 'imgFront[0].secure_url', undefined),
     imgBack: _.get(req.files, 'imgBack[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=back+of+dress+not+uploaded']),
     imgSide: _.get(req.files, 'imgSide[0].secure_url', ['https://dummyimage.com/400x600/a38ea3/ffffff.jpg&text=side+of+dress+not+uploaded']),
     rating: req.body.rating,
@@ -81,7 +80,6 @@ exports.create = function (req, res) {
   // add dress to the database
   Dress.create(data)
   .then(() => {
-    // console.log('dress created')
     req.flash('success', 'Dress added successfully')
     res.redirect('/dresses')
   }).catch(err => {
@@ -98,7 +96,7 @@ exports.create = function (req, res) {
     } else {
       res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
-    res.render('add-dress', res.locals)
+    res.status(422).render('add-dress', res.locals)
   })
 }
 
@@ -144,16 +142,25 @@ exports.update = function (req, res) {
     } else {
       res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
-    res.render('add-dress', res.locals)
+    res.status(422).render('add-dress', res.locals)
+  })
+}
+
+exports.updateRating = function (req, res) {
+  req.dress.rating = req.body.rating
+
+  req.dress.save()
+  .then(() => {
+    res.send('OK')
   })
 }
 
 exports.delete = function (req, res) {
   req.dress.remove()
-    .then(() => {
-      req.flash('success', 'Dress deleted.')
-      res.send('OK')
-    })
+  .then(() => {
+    req.flash('success', 'Dress deleted.')
+    res.send('OK')
+  })
 }
 
 exports.comparePage = function (req, res) {

@@ -24,13 +24,12 @@ module.exports = function (passport) {
 
   // middleware to check if user is logged in
   function isLoggedIn(req, res, next) {
-    // console.log('USER:', req.user)
     // if user is authenticated in the session then req.user exists
     if (req.user) {
       return next()
     }
     // if user is not authenticated then redirect to login
-    req.flash('error', 'you need to be logged in to access this page')
+    req.flash('error', 'You need to be logged in to access this page.')
     res.redirect('/log-in')
   }
 
@@ -60,6 +59,7 @@ module.exports = function (passport) {
   router.get('/dresses/:dress/edit', isLoggedIn, dresses.loadDress, dresses.editPage)
   // form submit can only handle get and post so setup update and delete like this:
   router.post('/dresses/:dress/edit', isLoggedIn, dresses.loadDress, dresses.update)
+  router.post('/dresses/:dress/update-rating', isLoggedIn, dresses.loadDress, dresses.updateRating)
   router.post('/dresses/:dress/delete', isLoggedIn, dresses.loadDress, dresses.delete)
 
   // not using these, alternate way to request update and delete requests, would require AJAX requests

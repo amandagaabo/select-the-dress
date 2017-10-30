@@ -1,24 +1,20 @@
 function app () {
   // add dress page
-  // disable add dress button click after form is submitted
-  $('#dress-form').submit(function() {
-    $(this).find("button[type='submit']").prop('disabled', 'disabled')
+  // disable add dress button click after form submit button is clicked
+  $('#add-submit').click(function(event) {
+    $(this).attr("disabled", true)
+    $('#dress-form').submit()
   })
-
 
   // dresses grid page
-  // handle dress photo click - go to dress page using dress id
-  $('.dress-img').click(function () {
-    let dressID = $(this).parent().attr('data-dress-id')
-    window.location.href = `/dresses/${dressID}`
-  })
-
   // sort and view event handler
   function selectHandler(type, value) {
-    let query = $.deserialize(window.location.search.substr(1))
+    //const query = $.deserialize(window.location.search.substr(1))
+    const search = window.location.search.substr(1)
+    const query = search ? $.deserialize(search) : {}
     query[type] = value
-    let urlQuery = $.param(query)
-    let pathname = window.location.pathname
+    const urlQuery = $.param(query)
+    const pathname = window.location.pathname
     window.location.href = `${pathname}?${urlQuery}`
   }
   // sort - set value and run function
@@ -31,6 +27,32 @@ function app () {
   $('#view').change(function() {
     let value = $(this).val()
     selectHandler('view', value)
+  })
+
+  // handle dress photo click - go to dress page using dress id
+  $('.dress-link').click(function () {
+    let dressID = $(this).parent().attr('data-dress-id')
+    window.location.href = `/dresses/${dressID}`
+  })
+
+  // handle rating heart click - ajax request to update rating
+  $('.rating').click(function() {
+    const dressID = $(this).parent().attr('data-dress-id')
+    const rating = $(this).attr('data-rating')
+    console.log('heart clicked')
+
+    $.ajax({
+      url: `/dresses/${dressID}/update-rating`,
+      type: 'POST',
+      data: {rating: `${rating}`},
+      success: function(res) {
+        location.reload()
+      },
+      error: function(res, err) {
+        console.log(err)
+      }
+    })
+
   })
 
   // setup initial compare variables
@@ -53,15 +75,19 @@ function app () {
   // handle add to compare clicks
   $('.add-compare').click( function(event) {
     event.preventDefault()
+
     if (selectedDresses >= 2) {
       alert('only two dresses can be compared at one time')
-    }
-    else {
+    } else {
       selectedDresses += 1
       const dressID = $(this).parent().attr('data-dress-id')
       compareIDs.push(dressID)
       $(this).next().removeClass('hidden')
       $(this).addClass('hidden')
+      if (selectedDresses === 2) {
+        $('#compare-btn').parent().removeClass('hidden')
+        $('#compare-description').addClass('hidden')
+      }
     }
   })
 
@@ -75,6 +101,10 @@ function app () {
       compareIDs.splice(index, 1)
       $(this).addClass('hidden')
       $(this).prev().removeClass('hidden')
+      if (selectedDresses < 2) {
+        $('#compare-btn').parent().addClass('hidden')
+        $('#compare-description').removeClass('hidden')
+      }
     }
   })
 

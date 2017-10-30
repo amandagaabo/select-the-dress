@@ -1,3 +1,4 @@
+'use strict'
 // setup environment variables, looks for .env file and loads the env variables
 require('dotenv').config()
 

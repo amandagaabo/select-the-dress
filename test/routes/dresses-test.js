@@ -37,6 +37,7 @@ describe('The dresses route', function () {
     dresses.should.respondTo('readPage')
     dresses.should.respondTo('editPage')
     dresses.should.respondTo('update')
+    dresses.should.respondTo('updateRating')
     dresses.should.respondTo('delete')
     dresses.should.respondTo('comparePage')
   })
@@ -364,14 +365,20 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.data.should.equal(body)
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('password')
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.data.should.equal(body)
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('password')
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -395,12 +402,18 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          should.not.exist(locals.messages.errorFields)
-          locals.data.should.equal(body)
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              should.not.exist(locals.messages.errorFields)
+              locals.data.should.equal(body)
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -408,6 +421,23 @@ describe('The dresses route', function () {
     })
   })
 
+  it('should handle the updateRating function', function (done) {
+    const req = {
+      body: {},
+      dress: {
+        save: sinon.stub().resolves()
+      }
+    }
+
+    const res = {
+      send: function (message) {
+        message.should.equal('OK')
+        done()
+      }
+    }
+
+    dresses.updateRating(req, res)
+  })
 
   it('should handle the delete function', function (done) {
     // use spy to make sure flash function runs
@@ -482,13 +512,19 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('price')
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('price')
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -512,13 +548,20 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          should.not.exist(locals.messages.errorFields)
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              should.not.exist(locals.messages.errorFields)
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
+
       }
 
       dresses.update(req, res)

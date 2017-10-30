@@ -25,4 +25,3 @@
         return $.deserialize($(this).serialize(), options);
     };
 })(jQuery);
-

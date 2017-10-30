@@ -4,103 +4,120 @@ block content
   section#compare.row.content(role="region")
     .col-12
       h2 Compare Dresses
-      .col-2.labels
-        p front
-      .col-5.dressA(data-dress-id=dressA._id)
-        img.dress-img(src=dressA.imgFront, alt='dress a front')
-      .col-5.dressB(data-dress-id=dressB._id)
-        img.dress-img(src=dressB.imgFront, alt='dress b front')
+      
+      .col-12.compare-row
+        .col-2.labels
+          p front
+        .col-5.dressA(data-dress-id=dressA._id)
+          img(src=dressA.imgFront, alt='dress a front')
+        .col-5.dressB(data-dress-id=dressB._id)
+          img(src=dressB.imgFront, alt='dress b front')
+      
+      .col-12.compare-row
+        .col-2.labels
+          p back
+        .col-5.dressA(data-dress-id=dressA._id)
+          img(src=dressA.imgBack, alt='dress a back')
+        .col-5.dressB(data-dress-id=dressB._id)
+          img(src=dressB.imgBack, alt='dress b back')
 
-      .col-2.labels
-        p back
-      .col-5.dressA(data-dress-id=dressA._id)
-        img.dress-img(src=dressA.imgBack, alt='dress a back')
-      .col-5.dressB(data-dress-id=dressB._id)
-        img.dress-img(src=dressB.imgBack, alt='dress b back')
+      .col-12.compare-row
+        .col-2.labels
+          p side
+        .col-5.dressA(data-dress-id=dressA._id)
+          img(src=dressA.imgSide, alt='dress a side')
+        .col-5.dressB(data-dress-id=dressB._id)
+          img(src=dressB.imgSide, alt='dress b side')
 
-      .col-2.labels
-        p side
-      .col-5.dressA(data-dress-id=dressA._id)
-        img.dress-img(src=dressA.imgSide, alt='dress a side')
-      .col-5.dressB(data-dress-id=dressB._id)
-        img.dress-img(src=dressB.imgSide, alt='dress b side')
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p rating
+        .col-5.dressA.fixed-height(data-dress-id=dressA.id)
+          if dressA.rating === 4
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart.checked(data-rating=3)
+            span.rating.fa.fa-heart.checked(data-rating=4)
+          else if dressA.rating === 3
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart.checked(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+          else if dressA.rating === 2
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+          else if dressA.rating === 1
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart(data-rating=2)
+            span.rating.fa.fa-heart(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+        .col-5.dressB.fixed-height(data-dress-id=dressB.id)
+          if dressB.rating === 4
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart.checked(data-rating=3)
+            span.rating.fa.fa-heart.checked(data-rating=4)
+          else if dressB.rating === 3
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart.checked(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+          else if dressB.rating === 2
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart.checked(data-rating=2)
+            span.rating.fa.fa-heart(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+          else if dressB.rating === 1
+            span.rating.fa.fa-heart.checked(data-rating=1)
+            span.rating.fa.fa-heart(data-rating=2)
+            span.rating.fa.fa-heart(data-rating=3)
+            span.rating.fa.fa-heart(data-rating=4)
+        
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p designer
+        .col-5.dressA.fixed-height
+          p=dressA.designer
+        .col-5.dressB.fixed-height
+          p=dressB.designer
 
-      .col-2.labels.fixed-height
-        p rating
-      .col-5.dressA.fixed-height
-        if dressA.rating === 4
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-        else if dressA.rating === 3
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-        else if dressA.rating === 2
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-        else if dressA.rating === 1
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-      .col-5.dressB.fixed-height
-        if dressB.rating === 4
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-        else if dressB.rating === 3
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-        else if dressB.rating === 2
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-        else if dressB.rating === 1
-          span.rating.fa.fa-heart.checked
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
-          span.rating.fa.fa-heart
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p style
+        .col-5.dressA.fixed-height
+          p=dressA.style
+        .col-5.dressB.fixed-height
+          p=dressB.style
+          
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p price
+        .col-5.dressA.fixed-height
+          p=dressA.price
+        .col-5.dressB.fixed-height
+          p=dressB.price
 
-      .col-2.labels.fixed-height
-        p designer
-      .col-5.dressA.fixed-height
-        p=dressA.designer
-      .col-5.dressB.fixed-height
-        p=dressB.designer
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p store
+        .col-5.dressA.fixed-height
+          p=dressA.store
+        .col-5.dressB.fixed-height
+          p=dressB.store
 
-      .col-2.labels.fixed-height
-        p style
-      .col-5.dressA.fixed-height
-        p=dressA.style
-      .col-5.dressB.fixed-height
-        p=dressB.style
-
-      .col-2.labels.fixed-height
-        p price
-      .col-5.dressA.fixed-height
-        p=dressA.price
-      .col-5.dressB.fixed-height
-        p=dressB.price
-
-      .col-2.labels.fixed-height
-        p store
-      .col-5.dressA.fixed-height
-        p=dressA.store
-      .col-5.dressB.fixed-height
-        p=dressB.store
-
-      .col-2.labels.fixed-height
-        p notes
-      .col-5.dressA.fixed-height
-        p=dressA.notes
-      .col-5.dressB.fixed-height
-        p=dressB.notes
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+          p notes
+        .col-5.dressA.fixed-height
+          p=dressA.notes
+        .col-5.dressB.fixed-height
+          p=dressB.notes
+        
+      .col-12.compare-row
+        .col-2.labels.fixed-height
+        .col-5.dressA.fixed-height
+          a.button(href=`/dresses/${dressA._id}/edit`) edit
+        .col-5.dressB.fixed-height
+          a.button(href=`/dresses/${dressB._id}/edit`) edit

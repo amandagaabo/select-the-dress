@@ -1,21 +1,34 @@
 body {
   font-family: 'Josefin Slab', serif;
+  color: #202020;
   text-align: center;
   margin: 0 auto;
   padding: 0;
+  /*background-image: url(../img/white-sand.png)*/
 }
 
-h1 {
-  margin-bottom: 0;
+h2 {
+  margin: 20px 0;
 }
 
 a {
   text-decoration: none;
-  color: black;
+  color:#202020;
+}
+
+img {
+  border: 1px solid #202020;
+  border-radius: 3px;
+  width: 100%
 }
 
 .hidden {
   display: none;
+}
+
+/* hide but keep space */
+.invisible {
+  visibility: hidden;
 }
 
 .error-text {
@@ -36,13 +49,26 @@ a {
   padding: 5px;
 }
 
-/* home */
-#logo {
-  font-size: 35px;
+footer {
+  height: 50px;
 }
 
+/* home */
 header {
-  margin-top: 10px;
+  margin: 20px 0 0 0;
+}
+
+#logo {
+  font-size: 45px;
+  font-weight: bold;
+}
+
+#logo-box, #link-box {
+  border-bottom: 1px solid #202020;
+}
+
+#link-box {
+  margin-top: 5px;
 }
 
 .header-links {
@@ -65,10 +91,33 @@ header {
   text-decoration: underline;
 }
 
+#welcome-img {
+  position: relative;
+  height: 490px;
+  background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509324060/dresses/shopping2.jpg);
+  background-repeat: no-repeat;
+  /*background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509322546/dresses/shopping.jpg);*/
+}
+
+#welcome-text {
+  position: absolute;
+  top: 170px;
+  right: 30px;
+}
+
+#welcome-text p {
+  font-size: 45px;
+  margin: 0 0 10px 0;
+}
+
+.demo-img {
+  width: 75%;
+  margin-bottom: 20px;
+}
 
 /* forms */
 form {
-  max-width: 500px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
@@ -92,58 +141,76 @@ form label, input[type=text], input[type=email], input[type=password], input[typ
   height: 35px;
 }
 
-input[type=submit], .button {
+input[type=submit], .button, .disabled-btn {
   display: inline-block;
-  margin: 10px auto;
+  margin: 5px auto;
   padding: 5px 20px;
-  border: 1px solid black;
-  border-radius: 5px;
+  border: 1px solid #202020;
+  border-radius: 3px;
   background-color: white;
   font-family: 'Josefin Slab', serif;
   font-size: 18px;
 }
 
+input[type=submit] {
+  float: right;
+}
+
 input[type=submit]:hover, .button:hover {
-  background-color: #202226;
+  background-color: #202020;
   color: white;
   cursor: pointer;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.form-input-disabled, .form-input {
-  padding-left: 15px;
+textarea {
+  resize: vertical;
+}
+
+.form-input {
+  padding: 10px;
   font-family: 'Josefin Slab', serif;
   font-size: 20px;
-  color: black;
+  color: #202020;
+  border: 1px solid #202020;
+  border-radius: 3px;
 }
 
-.form-input-disabled {
-  border-style: none;
+input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hover {
+  background: #CCCCCC;
+  color: #666666;
+  cursor: default;
+  box-shadow: none;
 }
 
-input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
-    background: #dddddd;
+.form-dropdown {
+  background-color: white;
 }
 
 /* dresses */
+#add-btn, #compare-btn {
+  width: 200px;
+  text-align: center;
+}
+
 .select-dropdown {
   font-family: 'Josefin Slab', serif;
   background-color: white;
   font-size: 18px;
+  border: 1px solid #202020;
+  border-radius: 3px;
+  height: 30px;
+  margin: 10px 0;
+  /*background-image: url(../img/pink-church.png);*/
 }
 
-.sort {
-  text-align: center;
-  margin-bottom: 10px;
+.select-dropdown:hover {
+  cursor: pointer;
 }
 
 .sort label {
   margin-right: 15px;
-}
-
-#add-btn, #compare-btn {
   display: inline-block;
-  margin: 10px;
 }
 
 .dress-box {
@@ -152,38 +219,101 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
   margin-bottom: 15px;
 }
 
-.dress-img {
-  width: 100%
-
+.photo-box {
+  position: relative;
 }
+
+.dress-link:hover, #thumbs img:hover {
+  opacity: .7;
+  cursor: pointer;
+}
+
+.rating-tag {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+
+.rating:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.info-tag {
+  position: absolute;
+  margin: 0;
+  padding: 5px 0;
+  bottom: 11px;
+  width: 100%;
+  border: 1px solid #202020;
+  background-color: white;
+  opacity: .8;
+  color: #202020;
+  font-size: 16px;
+}
+
+.designer-tag, price-tag {
+  padding: 0 10px;
+}
+
+.compare-options {
+  position: absolute;
+}
+
 .rating {
   margin: 0 2px;
 }
+
 .checked {
-  color: red;
+  color: #ff6a80;
 }
 
-.selected-compare {
-  color: green;
+.compare-square {
+  margin-right: 5px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
 }
 
 /* dress */
-.main-dress {
-  width: 300px;
+#dress-info {
+  text-align: left;
+  padding-left: 20px;
 }
 
-#large-img {
-  width: 500px
+.info-label {
+  text-decoration: underline;
+  margin-top: 0;
+}
+
+.info-data {
+  min-height: 20px;
+  margin-top: 0;
+  padding-left: 15px;
 }
 
 #thumbs img {
-  width: 100px;
   margin: 0 3px;
+  width: 125px;
+}
+
+#edit-submit, #delete-btn {
+  width: 90px;
 }
 
 #delete-btn {
   display: block;
-  width: 80px;
+  clear: right;
+}
+
+/* dress edit */
+#edit-dress {
+  padding-top: 25px;
 }
 
 /* compare */
@@ -192,5 +322,9 @@ input[type="submit"]:disabled, input[type="submit"]:disabled:hover {
 }
 
 .fixed-height {
-  height: 50px;
+  min-height: 30px;
+}
+
+.compare-row {
+  margin-bottom: 15px;
 }
