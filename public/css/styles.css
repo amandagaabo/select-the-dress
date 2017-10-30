@@ -58,13 +58,13 @@ header {
   margin: 20px 0 0 0;
 }
 
+.header {
+  border-bottom: 1px solid #202020;
+}
+
 #logo {
   font-size: 45px;
   font-weight: bold;
-}
-
-#logo-box, #link-box {
-  border-bottom: 1px solid #202020;
 }
 
 #link-box {

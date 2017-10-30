@@ -4,7 +4,7 @@ block content
   section#add-dress.row.content(role="region")
     .col-12
       h2 Add Dress
-
+      
       form#dress-form(role="form", action="/dresses/add", method="post", enctype='multipart/form-data')
         label(for="imgFront") front of dress:
         input#imgFront(type="file", name="imgFront", accept="image/*", required="true")
@@ -43,3 +43,7 @@ block content
         textarea#notes.form-input(type="text", name="notes", value=data.notes placeholder="notes", rows="5")
         
         input#add-submit(type="submit", value="add")
+        
+        .col-12
+          p Add as much information as you can to help you compare this dress with others.  
+          p The only fields thar are required are the front of dress image and rating.

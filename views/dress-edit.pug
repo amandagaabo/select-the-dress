@@ -13,10 +13,15 @@ block content
         form#dress-form(role="form", action=editURL, method="post")
           label(for="rating") rating:
           select#rating.select-dropdown(name="rating")
-            option(value="4") love it
-            option(value="3") like it
-            option(value="2") it's ok
-            option(value="1") don't like it
+            mixin rating-option(number, name)
+              if (dress.rating === number)
+                option(value=number, selected="selected")= name
+              else
+                option(value=number)= name
+            +rating-option(4, "love it")
+            +rating-option(3, "like it")
+            +rating-option(2, "it's ok")
+            +rating-option(1, "don't like it")
           
           label(for="designer") designer:
           input#designer.form-input(type="text", name="designer", value=dress.designer, placeholder="designer")
