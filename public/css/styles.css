@@ -260,7 +260,7 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   position: absolute;
 }
 
-.rating {
+.fa-heart {
   margin: 0 2px;
 }
 

@@ -16,7 +16,8 @@ block content
 
         .col-3#dress-info
           p.info-label rating:
-          p.info-data.heart-rating(data-dress-id=dress.id)
+          
+          p.info-data.heart-rating.update-rating(data-dress-id=dress.id)
             if dress.rating === 4
               span.rating.fa.fa-heart.checked(data-rating=1)
               span.rating.fa.fa-heart.checked(data-rating=2)
@@ -52,6 +53,7 @@ block content
               
           p.info-label notes:
           p.info-data= dress.notes
-              
-          p 
-            a.button(href=`/dresses/${dress.id}/edit`) edit
+          
+          if user
+            p 
+              a.button(href=`/dresses/${dress.id}/edit`) edit

@@ -32,14 +32,14 @@ function app () {
   // handle dress photo click - go to dress page using dress id
   $('.dress-link').click(function () {
     let dressID = $(this).parent().attr('data-dress-id')
-    window.location.href = `/dresses/${dressID}`
+    const pathname = window.location.pathname
+    window.location.href = `${pathname}/${dressID}`
   })
 
   // handle rating heart click - ajax request to update rating
   $('.rating').click(function() {
     const dressID = $(this).parent().attr('data-dress-id')
     const rating = $(this).attr('data-rating')
-    console.log('heart clicked')
 
     $.ajax({
       url: `/dresses/${dressID}/update-rating`,
