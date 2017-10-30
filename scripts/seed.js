@@ -1,14 +1,14 @@
 // connect to database
 require('dotenv').config()
 const mongoose = require('mongoose')
-const {TEST_DATABASE_URL} = require('../config/config')
+const {DATABASE_URL} = require('../config/config')
 const User = require('../models/user')
 const Dress = require('../models/dress')
 // Mongoose internally uses a promise-like object,
 // but its better to make Mongoose use built in es6 promises
 mongoose.Promise = global.Promise
 
-mongoose.connect(TEST_DATABASE_URL, {useMongoClient: true}, err => {
+mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
   if (err) {
     throw err
   }

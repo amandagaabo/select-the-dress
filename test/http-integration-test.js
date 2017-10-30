@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http')
 const should = chai.should()
 const request = require('supertest')
 const {app, runServer, closeServer} = require('../server')
-const {TEST_DATABASE_URL} = require('../config/config')
+const {DATABASE_URL} = require('../config/config')
 const User = require('../models/user')
 const Dress = require('../models/dress')
 
@@ -90,7 +90,7 @@ describe('integration http request tests', function () {
     authenticatedUser = chai.request.agent(app)
 
     // start the server and connect to test database (returns a promise)
-    runServer(TEST_DATABASE_URL)
+    runServer(DATABASE_URL)
 
     .then(() => {
       // clear database (returns a promise)
