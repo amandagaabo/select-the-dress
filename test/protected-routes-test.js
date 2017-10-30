@@ -44,7 +44,7 @@ describe('http requests to protected routes without login', () => {
       .get('/account')
       .then ((err, res) => {
         if (err) {
-          err.text.should.include('error', 'log-in')
+          err.text.should.include('log-in')
         }
         done()
       })
@@ -57,7 +57,7 @@ describe('http requests to protected routes without login', () => {
       .get('/dresses')
       .then ((err, res) => {
         if (err) {
-          err.text.should.include('error', 'log-in')
+          err.text.should.include('log-in')
         }
         done()
       })

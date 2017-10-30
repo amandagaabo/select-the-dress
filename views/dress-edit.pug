@@ -2,10 +2,9 @@ extends layout.pug
 
 block content
   section#dress-edit.row.content(role="region")
-    .col-12.page-title
+    .col-12
       h2 Edit Dress Details
-      a.button.back-btn(href=`/dresses/${dress._id}`) back
-      
+
       .col-6
         img#edit-img(src=dress.imgFront, alt='dress front')
         -let editURL = `/dresses/${dress._id}/edit`
@@ -32,7 +31,7 @@ block content
           input#store.form-input(type="text", name="store", value=dress.store, placeholder="store")
           
           label.top-label(for="notes") notes:
-          textarea#notes.form-input(type="text", name="notes", placeholder="notes")= dress.notes
+          textarea#notes.form-input(type="text", name="notes", placeholder="notes", rows="5")= dress.notes
           
           input#edit-submit(type="submit", value="save")
           input#delete-btn(type="submit", value="delete", data-dress-id=dress.id)

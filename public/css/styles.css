@@ -11,16 +11,6 @@ h2 {
   margin: 20px 0;
 }
 
-.page-title {
-  position: relative;
-}
-
-.back-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 a {
   text-decoration: none;
   color:#202020;
@@ -97,6 +87,25 @@ header {
   text-decoration: underline;
 }
 
+#welcome-img {
+  position: relative;
+  height: 550px;
+  background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509324060/dresses/shopping2.jpg);
+  background-repeat: no-repeat;
+  /*background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509322546/dresses/shopping.jpg);*/
+}
+
+#welcome-text {
+  position: absolute;
+  top: 170px;
+  right: 30px;
+}
+
+#welcome-text p {
+  font-size: 45px;
+  margin: 0 0 10px 0;
+}
+
 /* forms */
 form {
   max-width: 520px;
@@ -143,6 +152,10 @@ input[type=submit]:hover, .button:hover {
   color: white;
   cursor: pointer;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+textarea {
+  resize: vertical;
 }
 
 .form-input {

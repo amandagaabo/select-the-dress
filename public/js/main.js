@@ -9,10 +9,12 @@ function app () {
   // dresses grid page
   // sort and view event handler
   function selectHandler(type, value) {
-    let query = $.deserialize(window.location.search.substr(1))
+    //const query = $.deserialize(window.location.search.substr(1))
+    const search = window.location.search.substr(1)
+    const query = search ? $.deserialize(search) : {}
     query[type] = value
-    let urlQuery = $.param(query)
-    let pathname = window.location.pathname
+    const urlQuery = $.param(query)
+    const pathname = window.location.pathname
     window.location.href = `${pathname}?${urlQuery}`
   }
   // sort - set value and run function
@@ -38,7 +40,7 @@ function app () {
     const dressID = $(this).parent().attr('data-dress-id')
     const rating = $(this).attr('data-rating')
     console.log('heart clicked')
-    
+
     $.ajax({
       url: `/dresses/${dressID}/update-rating`,
       type: 'POST',

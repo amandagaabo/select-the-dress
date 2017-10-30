@@ -54,7 +54,7 @@ exports.listPage = function (req, res) {
 }
 
 exports.addPage = function (req, res) {
-  // set res.locals.data to empty on page render
+  // set res.locals.data to empty on page render, will be used if there are errors submitting the form
   res.locals.data = {}
   // show the add dress form
   res.render('add-dress', res.locals)
@@ -96,7 +96,7 @@ exports.create = function (req, res) {
     } else {
       res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
-    res.render('add-dress', res.locals)
+    res.status(422).render('add-dress', res.locals)
   })
 }
 
@@ -142,7 +142,7 @@ exports.update = function (req, res) {
     } else {
       res.locals.messages.errors = ['Some other error happened. You should tell Amanda.']
     }
-    res.render('add-dress', res.locals)
+    res.status(422).render('add-dress', res.locals)
   })
 }
 

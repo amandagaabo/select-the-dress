@@ -365,14 +365,20 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.data.should.equal(body)
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('password')
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.data.should.equal(body)
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('password')
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -396,12 +402,18 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          should.not.exist(locals.messages.errorFields)
-          locals.data.should.equal(body)
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              should.not.exist(locals.messages.errorFields)
+              locals.data.should.equal(body)
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -500,13 +512,19 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          locals.messages.errorFields.should.have.length(1)
-          locals.messages.errorFields[0].should.equal('price')
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              locals.messages.errorFields.should.have.length(1)
+              locals.messages.errorFields[0].should.equal('price')
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
       }
 
@@ -530,13 +548,20 @@ describe('The dresses route', function () {
         locals: {
           messages: {}
         },
-        render: function (template, locals) {
-          locals.messages.errors.should.have.length(1)
-          locals.messages.errors[0].should.exist
-          should.not.exist(locals.messages.errorFields)
-          template.should.equal('add-dress')
-          done()
+        status: function (code) {
+          code.should.equal(422)
+
+          return {
+            render: function (template, locals) {
+              locals.messages.errors.should.have.length(1)
+              locals.messages.errors[0].should.exist
+              should.not.exist(locals.messages.errorFields)
+              template.should.equal('add-dress')
+              done()
+            }
+          }
         }
+
       }
 
       dresses.update(req, res)

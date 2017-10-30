@@ -41,13 +41,9 @@ function toNumber (price) {
   // convert to integer with 2 decimal places
   let priceFloat = parseFloat(cleanedPrice)
   // save the price as the integer or undefined if NaN
-  let savePrice = priceFloat
-  if (isNaN(priceFloat)) {
-    savePrice = undefined
-  }
 
   // return price as a number
-  return savePrice
+  return isNaN(priceFloat) ? undefined : priceFloat
 }
 
 // price: convert number to price $1,111

@@ -1,4 +1,6 @@
 const chai = require('chai')
+const fs = require('fs')
+const path = require('path')
 const chaiHttp = require('chai-http')
 const should = chai.should()
 const request = require('supertest')
@@ -36,7 +38,7 @@ const newDress = {
   rating: 3,
   designer: 'maggie sottero',
   style: 'amara',
-  price: '$1700',
+  price: 1700,
   store: 'boulder bridal',
   notes: 'love the neckline, lots of lace, beautiful dress'
 }
@@ -46,7 +48,7 @@ const updateDress = {
   rating: 4,
   designer: 'vera wang',
   style: 'amara',
-  price: '$1400',
+  price: 1400,
   store: 'botique b',
   notes: 'great dress!'
 }
@@ -89,6 +91,7 @@ describe('integration http request tests', function () {
 
     // start the server and connect to test database (returns a promise)
     runServer(TEST_DATABASE_URL)
+
     .then(() => {
       // clear database (returns a promise)
       return clearDB()
@@ -244,14 +247,18 @@ describe('integration http request tests', function () {
     })
   })
 
-  xdescribe('POST request to /dresses/add', () => {
+  describe('POST request to /dresses/add', () => {
     it('should redirect to /dresses if dress add was successful', (done) => {
       authenticatedUser
         .post('/dresses/add')
         // change request content-type to form urlencoded
         .set('content-type', 'application/x-www-form-urlencoded')
-        .attach('frontImg', 'desktop/cat.jpeg')
-        .send(newDress)
+        .field('rating', newDress.rating)
+        .field('price', newDress.price)
+        .field('designer', newDress.designer)
+        .field('store', newDress.store)
+        .field('style', newDress.style)
+        .attach('imgFront', fs.readFileSync(path.join(__dirname, 'data', 'cat.jpeg')), 'cat.jpeg')
         .end((err, res) => {
           res.should.redirect
           res.should.have.status(200)
@@ -263,7 +270,7 @@ describe('integration http request tests', function () {
     })
   })
 
-  xdescribe('GET request to /dresses/:dress', () => {
+  describe('GET request to /dresses/:dress', () => {
     it('should return the dress page html', (done) => {
       // find one dress to use the id
       Dress.findOne()
@@ -281,7 +288,7 @@ describe('integration http request tests', function () {
     })
   })
 
-  xdescribe('GET request to /dresses/:dress/edit', () => {
+  describe('GET request to /dresses/:dress/edit', () => {
     it('should return the edit dress page html', (done) => {
       // find one dress to use the id
       Dress.findOne()
@@ -299,7 +306,7 @@ describe('integration http request tests', function () {
     })
   })
 
-  xdescribe('POST request to /dresses/:dress/edit', () => {
+  describe('POST request to /dresses/:dress/edit', () => {
     it('should redirect to /dresses/:dress if dress update was successful', (done) => {
       // find one dress to use the id
       Dress.findOne()
@@ -321,7 +328,7 @@ describe('integration http request tests', function () {
     })
   })
 
-  xdescribe('POST request to /dresses/:dress/delete ', () => {
+  describe('POST request to /dresses/:dress/delete ', () => {
     it('should respond with ok if successful', () => {
       // find one dress to use the id
       Dress.findOne()

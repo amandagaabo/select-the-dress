@@ -2,9 +2,8 @@ extends layout.pug
 
 block content
   section#add-dress.row.content(role="region")
-    .col-12.page-title
+    .col-12
       h2 Add Dress
-      a.button.back-btn(href='/dresses') back
 
       form#dress-form(role="form", action="/dresses/add", method="post", enctype='multipart/form-data')
         label(for="imgFront") front of dress:
