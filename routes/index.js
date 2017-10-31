@@ -16,6 +16,7 @@ const upload = multer({storage})
 const sessions = require('./sessions')
 const accounts = require('./accounts')
 const dresses = require('./dresses')
+const share = require('./share')
 
 module.exports = function (passport) {
   router.get('/', function (req, res) {
@@ -61,6 +62,11 @@ module.exports = function (passport) {
   router.post('/dresses/:dress/edit', isLoggedIn, dresses.loadDress, dresses.update)
   router.post('/dresses/:dress/update-rating', isLoggedIn, dresses.loadDress, dresses.updateRating)
   router.post('/dresses/:dress/delete', isLoggedIn, dresses.loadDress, dresses.delete)
+
+  //share links, no login required but user's id needs to be known so it will be in the url
+  router.get('/:userID/dresses', share.listPage)
+  router.get('/:userID/dresses/compare', share.comparePage)
+  router.get('/:userID/dresses/:dress', share.readPage)
 
   // not using these, alternate way to request update and delete requests, would require AJAX requests
   // router.put('/dresses/:dress', dresses.update)

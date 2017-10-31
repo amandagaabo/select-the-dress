@@ -2,42 +2,27 @@ extends layout.pug
 
 block content
   section#dress.row.content(role="region")
-    .col-12
+    .col-12.content
       h2 Dress Details
+      
+      if !user
+        a.button#see-all-btn(href="") All Dresses
       
       #dress-details
         .col-2#thumbs
-          img(src=dress.imgFront, alt='dress front')
-          img(src=dress.imgBack, alt='dress back')
-          img(src=dress.imgSide, alt='dress side')
+          img(src=dress.imgFront, alt="dress front")
+          img(src=dress.imgBack, alt="dress back")
+          img(src=dress.imgSide, alt="dress side")
         
         .col-7#panel
-          img#large-img(src=dress.imgFront, alt='dress front')
+          img#large-img(src=dress.imgFront, alt="dress front")
 
         .col-3#dress-info
           p.info-label rating:
-          p.info-data.heart-rating(data-dress-id=dress.id)
-            if dress.rating === 4
-              span.rating.fa.fa-heart.checked(data-rating=1)
-              span.rating.fa.fa-heart.checked(data-rating=2)
-              span.rating.fa.fa-heart.checked(data-rating=3)
-              span.rating.fa.fa-heart.checked(data-rating=4)
-            else if dress.rating === 3
-              span.rating.fa.fa-heart.checked(data-rating=1)
-              span.rating.fa.fa-heart.checked(data-rating=2)
-              span.rating.fa.fa-heart.checked(data-rating=3)
-              span.rating.fa.fa-heart(data-rating=4)
-            else if dress.rating === 2
-              span.rating.fa.fa-heart.checked(data-rating=1)
-              span.rating.fa.fa-heart.checked(data-rating=2)
-              span.rating.fa.fa-heart(data-rating=3)
-              span.rating.fa.fa-heart(data-rating=4)
-            else if dress.rating === 1
-              span.rating.fa.fa-heart.checked(data-rating=1)
-              span.rating.fa.fa-heart(data-rating=2)
-              span.rating.fa.fa-heart(data-rating=3)
-              span.rating.fa.fa-heart(data-rating=4)
-
+          
+          p.info-data.heart-rating.update-rating(data-dress-id=dress.id)
+            +heartRating(user, dress.rating)
+                
           p.info-label designer:
           p.info-data= dress.designer
             
@@ -52,6 +37,8 @@ block content
               
           p.info-label notes:
           p.info-data= dress.notes
+          
+          if user
+            p 
+              a.button(href=`/dresses/${dress.id}/edit`) edit
               
-          p 
-            a.button(href=`/dresses/${dress.id}/edit`) edit

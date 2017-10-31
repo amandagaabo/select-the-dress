@@ -17,84 +17,84 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
 // setup data
   const users = [
     {
-      email: 'jane.smith@gmail.com',
-      password: 'password1',
-      firstName: 'jane',
-      lastName: 'smith'
-    },
-    {
-      email: 'amanda.herschleb@gmail.com',
+      email: 'amanda@gmail.com',
       password: 'password1',
       firstName: 'amanda',
-      lastName: 'herschleb'
+      lastName: 'h'
+    },
+    {
+      email: 'jane@gmail.com',
+      password: 'password1',
+      firstName: 'jane',
+      lastName: 's'
     }
   ]
 
   const dresses = [
     {
-      imgFront: 'http://via.placeholder.com/200x300?text=dress 1 front',
-      imgBack: 'http://via.placeholder.com/200x300?text=dress 1 back',
-      imgSide: 'http://via.placeholder.com/200x300?text=dress 1 side',
-      rating: 4,
-      designer: 'maggie sottero',
-      style: 'saige',
-      price: '$1700',
-      store: 'boulder bridal',
-      notes: 'love the neckline, lots of lace, beautiful dress'
-    },
-    {
-      imgFront: 'http://via.placeholder.com/200x300?text=dress 2 front',
-      imgBack: 'http://via.placeholder.com/200x300?text=dress 2 back',
-      imgSide: 'http://via.placeholder.com/200x300?text=dress 2 side',
+      imgFront: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386933/dresses/bridal-collection1-front.jpg',
+      imgBack: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386926/dresses/bridal-collection1-back.jpg',
+      imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386936/dresses/bridal-collection1-side.jpg',
       rating: 2,
-      designer: 'sottero and midgley',
-      style: 'elliott',
-      price: '$1900',
-      store: 'boulder bridal',
-      notes: 'the front is too plain, needs more lace and sparkles'
+      designer: 'Justin Alexander',
+      style: '8602',
+      price: '$1525',
+      store: 'The Bridal Collection',
+      notes: 'Love the beading and fit, don’t like the tulle or petals on the bottom.'
     },
     {
-      imgFront: 'http://via.placeholder.com/200x300?text=dress 3 front',
-      imgBack: 'http://via.placeholder.com/200x300?text=dress 3 back',
-      imgSide: 'http://via.placeholder.com/200x300?text=dress 3 side',
-      rating: 1,
-      designer: 'casablanca',
-      style: 'jessica',
-      price: '$1300',
-      store: 'boulder bridal',
-      notes: 'not even close to what i want'
-    },
-    {
-      imgFront: 'http://via.placeholder.com/200x300?text=dress 4 front',
-      imgBack: 'http://via.placeholder.com/200x300?text=dress 4 back',
-      imgSide: 'http://via.placeholder.com/200x300?text=dress 4 side',
+      imgFront: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386927/dresses/bridal-collection2-front.jpg',
+      imgBack: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386940/dresses/bridal-collection2-back.jpg',
+      imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386941/dresses/bridal-collection2-side.jpg',
       rating: 3,
-      designer: 'vera wang',
-      style: 'jenny',
-      price: '$1500',
-      store: 'boulder bridal',
-      notes: 'very close, love the lacy train'
+      designer: '2 Be Bride',
+      style: 'Brielle',
+      price: '$1200',
+      store: 'The Bridal Collection',
+      notes: 'Pretty dress! Little poofy flowers on the bottom can be removed.'
+    },
+    {
+      imgFront: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386946/dresses/bridal-loft-front.jpg',
+      imgBack: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386942/dresses/bridal-loft-back.jpg',
+      imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509386945/dresses/bridal-loft-side.jpg',
+      rating: 4,
+      designer: 'Ella Rosa',
+      style: 'BE130',
+      price: '$1025',
+      store: 'The Bridal Loft',
+      notes: 'Love the beading on the bodice, corset back, crisscross transition and layered bottom! Reg $1200.'
+    },
+    {
+      imgFront: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388251/dresses/blue-bridal-front-belt.jpg',
+      imgBack: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388250/dresses/blue-bridal-back.jpg',
+      //imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388248/dresses/blue-bridal-side.jpg',
+      imgSide: 'http://via.placeholder.com/200x300?text=dress 5 side',
+      rating: 2,
+      designer: 'La Sposa',
+      style: 'Sajonia',
+      price: '$2300',
+      store: 'Blue Bridal Botique',
+      notes: 'Crazy bottom, lots going on, kind of plain without a belt. Can buy sample (size 12) for $1100.'
     },
     {
       imgFront: 'http://via.placeholder.com/200x300?text=dress 5 front',
       imgBack: 'http://via.placeholder.com/200x300?text=dress 5 back',
       imgSide: 'http://via.placeholder.com/200x300?text=dress 5 side',
-      rating: 2,
+      rating: 3,
       designer: 'vera wang',
       style: 'sophia',
       price: '$1000',
       store: 'boulder bridal',
-      notes: 'love it!'
+      notes: 'its close to what I want!'
     }
   ]
 
 // save to database
-  // empty database
-    mongoose.connection.dropDatabase()
-  // User.remove({})
-  //   .then(() => {
-  //     return Dress.remove({})
-  //   })
+  // empty database user and dress collections
+  User.remove({})
+    .then(() => {
+      return Dress.remove({})
+    })
     .then(() => {
       // add new user
       return User.create(users)

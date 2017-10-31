@@ -1,5 +1,6 @@
 const Dress = require('../models/dress')
 const _ = require('lodash')
+const {BASE_URL} = require('../config/config')
 
 // middleware to find one dress
 exports.loadDress = function (req, res, next) {
@@ -47,6 +48,8 @@ exports.listPage = function (req, res) {
       } else {
         // save dresses to res.locals
         res.locals.dresses = dresses
+        // save base url to res.locals
+        res.locals.url = BASE_URL
         // show the list of dresses page
         res.render('dresses', res.locals)
       }

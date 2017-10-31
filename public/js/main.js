@@ -32,14 +32,14 @@ function app () {
   // handle dress photo click - go to dress page using dress id
   $('.dress-link').click(function () {
     let dressID = $(this).parent().attr('data-dress-id')
-    window.location.href = `/dresses/${dressID}`
+    const pathname = window.location.pathname
+    window.location.href = `${pathname}/${dressID}`
   })
 
   // handle rating heart click - ajax request to update rating
-  $('.rating').click(function() {
+  $('.editable').click(function() {
     const dressID = $(this).parent().attr('data-dress-id')
     const rating = $(this).attr('data-rating')
-    console.log('heart clicked')
 
     $.ajax({
       url: `/dresses/${dressID}/update-rating`,
@@ -52,7 +52,6 @@ function app () {
         console.log(err)
       }
     })
-
   })
 
   // setup initial compare variables
@@ -62,6 +61,7 @@ function app () {
   // handle main compare button click
   $('#compare-btn').click(function (event) {
     event.preventDefault()
+
     if (selectedDresses === 2) {
       let idA = compareIDs[0]
       let idB = compareIDs[1]
@@ -108,11 +108,54 @@ function app () {
     }
   })
 
+  // setup tooltip hide and show
+  function showTooltip() {
+    $('.tooltiptext').css('visibility', 'visible')
+    $('.tooltiptext').css('opacity', '1')
+  }
+
+  function hideTooltip() {
+    setTimeout(function() {
+      $('.tooltiptext').css('visibility', 'hidden')
+      $('.tooltiptext').css('opacity', '0')
+    }, 1500)
+  }
+
+  // setup copy to clipboard
+  let clipboard = new Clipboard('.copy-btn')
+
+  clipboard.on('success', function(e) {
+    console.info('Action:', e.action)
+    console.info('Text:', e.text)
+    console.info('Trigger:', e.trigger)
+    showTooltip()
+    hideTooltip()
+    e.clearSelection()
+  })
+
+  clipboard.on('error', function(e) {
+      console.error('Action:', e.action)
+      console.error('Trigger:', e.trigger)
+  })
+
   // dress page
   // handle thumbnail clicks
   $('#thumbs img').click(function () {
     $('#large-img').attr('src', $(this).attr('src').replace('thumb', 'large'))
     $('#large-img').attr('alt', $(this).attr('alt').replace('thumb', 'large'))
+  })
+
+  // handle see all button click
+  $('#see-all-btn').click(function(e){
+    e.preventDefault()
+    let splitURL = window.location.href.split('/')
+    // remove current dress id
+    splitURL.pop()
+    // create path for /dresses
+    let newURL = splitURL.join('/')
+    console.log(newURL)
+
+    window.location.href = `${newURL}`
   })
 
   // edit dress page

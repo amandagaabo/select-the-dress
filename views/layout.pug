@@ -1,3 +1,5 @@
+include ./mixins/heartRating.pug
+
 doctype
 html(lang="en")
   head
@@ -17,7 +19,7 @@ html(lang="en")
 
   body
     header(role="banner")
-      .row
+      .row.header
         .col-6#logo-box
           a#logo(href="/") Select the Dress
         .col-6#link-box
@@ -50,6 +52,7 @@ html(lang="en")
 
     script(src="https://code.jquery.com/jquery-3.2.1.min.js", integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=", crossorigin="anonymous")
     script(src="/js/jquery.deserialize.js")
+    script(src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js")
     script(src="/js/main.js")
     
     footer

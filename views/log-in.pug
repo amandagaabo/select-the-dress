@@ -8,8 +8,10 @@ block content
       form#log-in-form(role="form", action="/log-in", method="post")
         label(for="email") email:
         input#email.form-input(type="email", name="email", placeholder="example@gmail.com")
+        
         label(for='password') password:
         input#password.form-input(type="password", name="password", placeholder="password")
+        
         input(type="submit", value="log in")
       
       .col-12 
