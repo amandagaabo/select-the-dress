@@ -4,7 +4,6 @@ body {
   text-align: center;
   margin: 0 auto;
   padding: 0;
-  /*background-image: url(../img/white-sand.png)*/
 }
 
 h2 {
@@ -50,7 +49,7 @@ img {
 }
 
 footer {
-  height: 50px;
+  height: 100px;
 }
 
 /* home */
@@ -58,17 +57,20 @@ header {
   margin: 20px 0 0 0;
 }
 
-.header {
-  border-bottom: 1px solid #202020;
-}
 
 #logo {
   font-size: 45px;
   font-weight: bold;
 }
 
+#logo-box, #link-box {
+  padding: 0;
+  height: 50px;
+  border-bottom: 1px solid #202020;
+}
+
 #link-box {
-  margin-top: 5px;
+  padding-top: 10px;
 }
 
 .header-links {
@@ -96,7 +98,6 @@ header {
   height: 490px;
   background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509324060/dresses/shopping2.jpg);
   background-repeat: no-repeat;
-  /*background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509322546/dresses/shopping.jpg);*/
 }
 
 #welcome-text {
@@ -201,7 +202,6 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   border-radius: 3px;
   height: 30px;
   margin: 10px 0;
-  /*background-image: url(../img/pink-church.png);*/
 }
 
 .select-dropdown:hover {
@@ -234,8 +234,11 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   top: 10px;
 }
 
-.rating:hover {
+.rating-tag:hover {
   cursor: pointer;
+}
+
+.editable:hover {
   opacity: .7;
 }
 
@@ -272,15 +275,68 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   margin-right: 5px;
 }
 
-.align-right {
-  text-align: right;
+#share-link {
+  width: 325px;
 }
 
-.align-left {
-  text-align: left;
+#share-link, .copy-btn {
+  height: 30px;
+  border: 1px solid #202020;
+}
+
+.copy-btn {
+  background-color: #202020;
+  color: white;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip:focus {
+  outline: none;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
 /* dress */
+.content {
+  position: relative;
+}
+
+#see-all-btn {
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
+
 #dress-info {
   text-align: left;
   padding-left: 20px;

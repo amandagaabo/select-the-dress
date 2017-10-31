@@ -37,12 +37,10 @@ exports.listPage = function (req, res) {
     })
 }
 
-
 exports.readPage = function (req, res) {
   // find dress using userID and dress url params
   Dress.findOne({user:req.params.userID, _id:req.params.dress})
   .then(dress => {
-    console.log(dress)
     if(!dress) {
       res.send('error, no dress found')
     }
@@ -53,25 +51,25 @@ exports.readPage = function (req, res) {
   })
 }
 
+exports.comparePage = function (req, res) {
+  console.log('compare page running')
+  console.log('query', req.query)
+  // get ids of both dresses and find dress data
+  let idA = req.query.dressA
+  let idB = req.query.dressB
+  console.log(idA, idB)
+  // find the two dresses
+  Dress.find({user:req.params.userID, _id: {$in: [idA, idB]}})
 
-//
-// exports.comparePage = function (req, res) {
-//   // get ids of both dresses and find dress data
-//   let idA = req.query.dressA
-//   let idB = req.query.dressB
-//   // find the two dresses
-//   Dress.find({user:req.user._id, _id: {$in: [idA, idB]}})
-//
-//     .then(dresses => {
-//       if(dresses.length === 0) {
-//         res.send('dresses not found')
-//       } else {
-//         // save data in res.locals so it can be accessed
-//         res.locals.dressA = dresses[0]
-//         res.locals.dressB = dresses[1]
-//         // show the comare page
-//         res.render('compare', res.locals)
-//       }
-//       //added this .catch, not sure if its right
-//     }).catch(err => next(err))
-// }
+    .then(dresses => {
+      if(dresses.length === 0) {
+        res.send('dresses not found')
+      } else {
+        // save data in res.locals so it can be accessed
+        res.locals.dressA = dresses[0]
+        res.locals.dressB = dresses[1]
+        // show the comare page
+        res.render('compare', res.locals)
+      }
+    })
+}

@@ -2,8 +2,11 @@ extends layout.pug
 
 block content
   section#compare.row.content(role="region")
-    .col-12
+    .col-12.content
       h2 Compare Dresses
+      
+      if !user
+        a.button#see-all-btn(href="") All Dresses
       
       .col-12.compare-row
         .col-2.labels
@@ -33,47 +36,10 @@ block content
         .col-2.labels.fixed-height
           p rating
         .col-5.dressA.fixed-height(data-dress-id=dressA.id)
-          if dressA.rating === 4
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart.checked(data-rating=3)
-            span.rating.fa.fa-heart.checked(data-rating=4)
-          else if dressA.rating === 3
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart.checked(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
-          else if dressA.rating === 2
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
-          else if dressA.rating === 1
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart(data-rating=2)
-            span.rating.fa.fa-heart(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
+          +heartRating(user, dressA.rating)
+        
         .col-5.dressB.fixed-height(data-dress-id=dressB.id)
-          if dressB.rating === 4
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart.checked(data-rating=3)
-            span.rating.fa.fa-heart.checked(data-rating=4)
-          else if dressB.rating === 3
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart.checked(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
-          else if dressB.rating === 2
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart.checked(data-rating=2)
-            span.rating.fa.fa-heart(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
-          else if dressB.rating === 1
-            span.rating.fa.fa-heart.checked(data-rating=1)
-            span.rating.fa.fa-heart(data-rating=2)
-            span.rating.fa.fa-heart(data-rating=3)
-            span.rating.fa.fa-heart(data-rating=4)
+          +heartRating(user, dressB.rating)
         
       .col-12.compare-row
         .col-2.labels.fixed-height
@@ -115,9 +81,10 @@ block content
         .col-5.dressB.fixed-height
           p=dressB.notes
         
-      .col-12.compare-row
-        .col-2.labels.fixed-height
-        .col-5.dressA.fixed-height
-          a.button(href=`/dresses/${dressA._id}/edit`) edit
-        .col-5.dressB.fixed-height
-          a.button(href=`/dresses/${dressB._id}/edit`) edit
+      if user
+        .col-12.compare-row
+          .col-2.labels.fixed-height
+          .col-5.dressA.fixed-height
+            a.button(href=`/dresses/${dressA._id}/edit`) edit
+          .col-5.dressB.fixed-height
+            a.button(href=`/dresses/${dressB._id}/edit`) edit

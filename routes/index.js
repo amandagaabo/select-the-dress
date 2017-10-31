@@ -65,8 +65,8 @@ module.exports = function (passport) {
 
   //share links, no login required but user's id needs to be known so it will be in the url
   router.get('/:userID/dresses', share.listPage)
+  router.get('/:userID/dresses/compare', share.comparePage)
   router.get('/:userID/dresses/:dress', share.readPage)
-  //router.get('/:userID/dresses/compare', share.comparePage)
 
   // not using these, alternate way to request update and delete requests, would require AJAX requests
   // router.put('/dresses/:dress', dresses.update)
