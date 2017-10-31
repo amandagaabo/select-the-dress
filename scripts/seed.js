@@ -1,4 +1,3 @@
-// connect to database
 require('dotenv').config()
 const mongoose = require('mongoose')
 const {DATABASE_URL} = require('../config/config')
@@ -8,6 +7,7 @@ const Dress = require('../models/dress')
 // but its better to make Mongoose use built in es6 promises
 mongoose.Promise = global.Promise
 
+// connect to database
 mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
   if (err) {
     throw err
@@ -67,7 +67,7 @@ mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
     {
       imgFront: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388251/dresses/blue-bridal-front-belt.jpg',
       imgBack: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388250/dresses/blue-bridal-back.jpg',
-      //imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388248/dresses/blue-bridal-side.jpg',
+      // imgSide: 'http://res.cloudinary.com/amhprojects/image/upload/v1509388248/dresses/blue-bridal-side.jpg',
       imgSide: 'http://via.placeholder.com/200x300?text=dress 5 side',
       rating: 2,
       designer: 'La Sposa',

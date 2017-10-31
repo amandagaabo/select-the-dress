@@ -5,7 +5,7 @@ const SALT_WORK_FACTOR = 10
 const MIN_PASSWORD_LENGTH = 8
 const MAX_PASSWORD_LENGTH = 65
 
-// setup schema for posts
+// setup schema
 const userSchema = mongoose.Schema({
   email: {
     type: String,
@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
     validate: {
       isAsync: false,
       validator: validator.isEmail,
-      message:'invalid email'
+      message: 'invalid email'
     }
   },
   password: {
@@ -46,14 +46,14 @@ userSchema.path('password').validate(password => {
 }, 'password must contain at least 1 letter')
 
 // mongoose middleware that runs before save to salt and hash the password
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   let user = this
 
   // only hash the password if it has been modified or is new
   if (!user.isModified('password')) return next()
 
-  // hash the password with auto-salter
-  bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
+  // hash the password with bcrypt auto-salter
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, function (err, hash) {
     if (err) return next(err)
 
     // override the password with the hashed one
@@ -73,7 +73,7 @@ userSchema.methods.apiRepr = function () {
 }
 
 // check if password if matches password in database for user email
-userSchema.methods.matchPassword = function(password) {
+userSchema.methods.matchPassword = function (password) {
   return bcrypt.compare(password, this.password)
 }
 

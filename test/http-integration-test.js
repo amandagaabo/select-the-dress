@@ -120,7 +120,7 @@ describe('integration http request tests', function () {
     })
   })
 
-  after(function () {
+  after(() => {
     // stop the server and disconnect db
     return closeServer()
   })

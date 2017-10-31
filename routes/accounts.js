@@ -2,32 +2,32 @@ const User = require('../models/user')
 
 // Middleware function used to load one user
 exports.loadUser = function (req, res, next) {
-  User.findOne({_id:req.user._id})
-    .then(user => {
-      if(!user) {
-        res.send('error, no user found')
-      } else {
-        req.account = user
-        next()
-      }
-    }).catch(err => next(err))
+  User.findOne({_id: req.user._id})
+  .then(user => {
+    if (!user) {
+      res.send('error, no user found')
+    } else {
+      req.account = user
+      next()
+    }
+  }).catch(err => next(err))
 }
 
-//WITH MIDDLEWARE
+// WITH MIDDLEWARE
 exports.readPage = function (req, res) {
-  // set locals.account to user data
+  // set locals.account to user data in the request
   res.locals.account = req.account
-  // show the account page
+  // render the account page
   res.render('account', res.locals)
 }
 
 exports.update = function (req, res) {
-  // update parameters in database
+  // update parameters in req.account with req.body values
   req.account.firstName = req.body.firstName
   req.account.lastName = req.body.lastName
   req.account.email = req.body.email
 
-  // save user parameters
+  // save user parameters in database
   req.account.save()
   .then(() => {
     // send a success flash message
@@ -38,8 +38,8 @@ exports.update = function (req, res) {
     const fields = []
 
     // check for validation errors and push to res.locals.messages
-    if (err.name == 'ValidationError') {
-      for (field in err.errors) {
+    if (err.name === 'ValidationError') {
+      for (let field in err.errors) {
         errors.push(err.errors[field].message)
         fields.push(field)
       }
@@ -55,7 +55,7 @@ exports.update = function (req, res) {
   })
 }
 
-//NO MIDDLEWARE
+// NO MIDDLEWARE
 // exports.readPage = function (req, res) {
 //   // find one user in the dabase
 //   User.findOne({_id:req.user._id})

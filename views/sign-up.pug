@@ -4,6 +4,7 @@ block content
   section#sign-up.row.content(role="region")
     .col-12
       h2 Sign Up
+      
       form#sign-up-form(role="form", action="/sign-up", method="post")
         label(for="firstName", class=messages.errorFields.includes('firstName') && 'error-text') first name:
         input#first-name.form-input(type="text", name="firstName", placeholder="first name", value=data.firstName,  class=messages.errorFields.includes('firstName') && 'error')

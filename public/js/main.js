@@ -1,15 +1,16 @@
-function app () {
+function main () {
   // add dress page
   // disable add dress button click after form submit button is clicked
-  $('#add-submit').click(function(event) {
+  $('#add-submit').click(function (event) {
     $(this).attr("disabled", true)
     $('#dress-form').submit()
   })
 
   // dresses grid page
   // sort and view event handler
-  function selectHandler(type, value) {
-    //const query = $.deserialize(window.location.search.substr(1))
+  function selectHandler (type, value) {
+    // origional way did not check if search was empty:
+    // const query = $.deserialize(window.location.search.substr(1))
     const search = window.location.search.substr(1)
     const query = search ? $.deserialize(search) : {}
     query[type] = value
@@ -17,14 +18,15 @@ function app () {
     const pathname = window.location.pathname
     window.location.href = `${pathname}?${urlQuery}`
   }
+
   // sort - set value and run function
-  $('#sort-by').change(function() {
+  $('#sort-by').change(function () {
     let value = $(this).val()
     selectHandler('sort', value)
   })
 
   // view - set value and run function
-  $('#view').change(function() {
+  $('#view').change(function () {
     let value = $(this).val()
     selectHandler('view', value)
   })
@@ -37,7 +39,7 @@ function app () {
   })
 
   // handle rating heart click - ajax request to update rating
-  $('.editable').click(function() {
+  $('.editable').click(function () {
     const dressID = $(this).parent().attr('data-dress-id')
     const rating = $(this).attr('data-rating')
 
@@ -45,7 +47,7 @@ function app () {
       url: `/dresses/${dressID}/update-rating`,
       type: 'POST',
       data: {rating: `${rating}`},
-      success: function(res) {
+      success: function (res) {
         location.reload()
       },
       error: function(res, err) {
@@ -73,7 +75,7 @@ function app () {
   })
 
   // handle add to compare clicks
-  $('.add-compare').click( function(event) {
+  $('.add-compare').click(function (event) {
     event.preventDefault()
 
     if (selectedDresses >= 2) {
@@ -92,7 +94,7 @@ function app () {
   })
 
   // handle remove from compare clicks
-  $('.remove-compare').click( function(event) {
+  $('.remove-compare').click(function (event) {
     event.preventDefault()
     if (selectedDresses > 0) {
       selectedDresses -= 1
@@ -109,13 +111,13 @@ function app () {
   })
 
   // setup tooltip hide and show
-  function showTooltip() {
+  function showTooltip () {
     $('.tooltiptext').css('visibility', 'visible')
     $('.tooltiptext').css('opacity', '1')
   }
 
-  function hideTooltip() {
-    setTimeout(function() {
+  function hideTooltip () {
+    setTimeout(function () {
       $('.tooltiptext').css('visibility', 'hidden')
       $('.tooltiptext').css('opacity', '0')
     }, 1500)
@@ -124,16 +126,17 @@ function app () {
   // setup copy to clipboard
   let clipboard = new Clipboard('.copy-btn')
 
-  clipboard.on('success', function(e) {
-    console.info('Action:', e.action)
-    console.info('Text:', e.text)
-    console.info('Trigger:', e.trigger)
+  clipboard.on('success', function (e) {
+    // // show clipboard event details
+    // console.info('Action:', e.action)
+    // console.info('Text:', e.text)
+    // console.info('Trigger:', e.trigger)
     showTooltip()
     hideTooltip()
     e.clearSelection()
   })
 
-  clipboard.on('error', function(e) {
+  clipboard.on('error', function (e) {
       console.error('Action:', e.action)
       console.error('Trigger:', e.trigger)
   })
@@ -145,16 +148,14 @@ function app () {
     $('#large-img').attr('alt', $(this).attr('alt').replace('thumb', 'large'))
   })
 
-  // handle see all button click
-  $('#see-all-btn').click(function(e){
-    e.preventDefault()
+  // handle see all button click on shared pages
+  $('#see-all-btn').click(function (event) {
+    event.preventDefault()
     let splitURL = window.location.href.split('/')
     // remove current dress id
     splitURL.pop()
-    // create path for /dresses
+    // set path for /userID/dresses and send user there
     let newURL = splitURL.join('/')
-    console.log(newURL)
-
     window.location.href = `${newURL}`
   })
 
@@ -162,23 +163,24 @@ function app () {
   // handle delete dress button click - prevent defalut then ajax post request
   $('#delete-btn').click(function (event) {
     event.preventDefault()
+
     let confirmDelete = confirm('Are you sure you want to delete this dress?')
       if (confirmDelete) {
         let deleteID = $(this).attr('data-dress-id')
         let reqURL = `/dresses/${deleteID}/delete`
+        // send ajax post request to delete dress by id
         $.ajax({
           url: reqURL,
           type: 'POST',
-          success: function(res) {
+          success: function (res) {
            window.location.href = '/dresses'
           },
-          error: function(res, err) {
+          error: function (res, err) {
             console.log(err)
           }
         })
       }
   })
-
 }
 
-$(app)
+$(main)

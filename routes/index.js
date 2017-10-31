@@ -24,12 +24,12 @@ module.exports = function (passport) {
   })
 
   // middleware to check if user is logged in
-  function isLoggedIn(req, res, next) {
+  function isLoggedIn (req, res, next) {
     // if user is authenticated in the session then req.user exists
     if (req.user) {
       return next()
     }
-    // if user is not authenticated then redirect to login
+    // if user is not authenticated then redirect to login and send error message
     req.flash('error', 'You need to be logged in to access this page.')
     res.redirect('/log-in')
   }
@@ -38,7 +38,7 @@ module.exports = function (passport) {
   router.get('/sign-up', sessions.signUpPage)
   router.post('/sign-up', sessions.signUpSubmit)
   router.get('/log-in', sessions.logInPage)
-  router.post('/log-in',  passport.authenticate('local', {
+  router.post('/log-in', passport.authenticate('local', {
     successRedirect: '/dresses',
     failureRedirect: '/log-in',
     failureFlash: true
@@ -63,7 +63,7 @@ module.exports = function (passport) {
   router.post('/dresses/:dress/update-rating', isLoggedIn, dresses.loadDress, dresses.updateRating)
   router.post('/dresses/:dress/delete', isLoggedIn, dresses.loadDress, dresses.delete)
 
-  //share links, no login required but user's id needs to be known so it will be in the url
+  // share link routes, no login required but user's id needs to be known so it will be in the url
   router.get('/:userID/dresses', share.listPage)
   router.get('/:userID/dresses/compare', share.comparePage)
   router.get('/:userID/dresses/:dress', share.readPage)

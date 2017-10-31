@@ -4,6 +4,7 @@ block content
   section#account.row.content(role="region")
     .col-12
       h2 Edit Account Info
+      
       form#account-form(role="form", action="/account", method="post")
         label(for="first-name", class=messages.errorFields.includes('firstName') && 'error-text') first name:
         input#first-name.form-input(type="text", name="firstName", value=account.firstName, placeholder="first name", 

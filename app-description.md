@@ -6,18 +6,6 @@ The following information summarizes what the app is and how it was designed.
 Select the Dress is an app that will allow users to store and compare dresses they have tried on to help choose the perfect one. The user will add dresses that they want to compare. The user will upload a photo of them wearing the dress and add a rating for comparison to other dresses. Additional information such as designer, style number, price, store and notes may be added to each dress. After dresses have been added, the user can view all dresses, sort by rating, select one dress to view the details about that dress or select two dresses and compare the details for both dresses.  The user can have their friends rate the dresses as well by sending them a link.  
 
 
-## Technologies and libraries
-* HTML & CSS
-* Pug
-* JavaScript
-* jQuery
-* Node & Express
-* Mongo & Mongoose
-* Validator
-* Passport
-* Sessions & Flash Messages
-
-
 ## App Layout
 ### Header
 The header will contain:
