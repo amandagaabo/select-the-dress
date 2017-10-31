@@ -50,7 +50,6 @@ exports.listPage = function (req, res) {
         res.locals.dresses = dresses
         // save base url to res.locals
         res.locals.url = BASE_URL
-        console.log(res.locals)
         // show the list of dresses page
         res.render('dresses', res.locals)
       }
