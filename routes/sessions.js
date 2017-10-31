@@ -49,13 +49,13 @@ exports.signUpSubmit = function (req, res) {
     User.create(data)
     .then((user) => {
       // redirect to add dresses since user is new and has no dresses to display
-      req.login(user, function() {
+      req.login(user, function () {
         req.flash('success', 'Welcome! Add a dress to get started.')
         return res.redirect('/dresses/add')
       })
     }).catch(err => {
-      if (err.name == 'ValidationError') {
-        for (field in err.errors) {
+      if (err.name === 'ValidationError') {
+        for (let field in err.errors) {
           errors.push(err.errors[field].message)
           fields.push(field)
         }
@@ -70,14 +70,14 @@ exports.signUpSubmit = function (req, res) {
 }
 
 exports.logInPage = function (req, res) {
-  // show the log in page
+  // render log in page
   res.render('log-in', res.locals)
 }
 
 exports.logOut = function (req, res) {
   // log out
   req.logout()
-  // redirect to home
-  req.flash('success','You have been logged out.')
+  // redirect to home and send message
+  req.flash('success', 'You have been logged out.')
   res.redirect('/')
 }

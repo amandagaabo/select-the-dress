@@ -33,7 +33,7 @@ describe('http requests to protected routes without login', () => {
     })
   })
 
-  after(function () {
+  after(() => {
     // stop the server and disconnect db
     return closeServer()
   })
@@ -42,7 +42,7 @@ describe('http requests to protected routes without login', () => {
     it('should redirect to log in page', (done) => {
       unauthenticatedUser
       .get('/account')
-      .then ((err, res) => {
+      .then((err, res) => {
         if (err) {
           err.text.should.include('log-in')
         }
@@ -55,7 +55,7 @@ describe('http requests to protected routes without login', () => {
     it('should redirect to log in page', (done) => {
       unauthenticatedUser
       .get('/dresses')
-      .then ((err, res) => {
+      .then((err, res) => {
         if (err) {
           err.text.should.include('log-in')
         }
@@ -63,5 +63,4 @@ describe('http requests to protected routes without login', () => {
       })
     })
   })
-
 })

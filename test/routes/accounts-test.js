@@ -131,7 +131,7 @@ describe('The accounts route', function () {
         body: {},
         account: {
           save: sinon.stub().rejects(error)
-        },
+        }
       }
 
       const res = {
@@ -166,7 +166,7 @@ describe('The accounts route', function () {
         body: {},
         account: {
           save: sinon.stub().rejects(error)
-        },
+        }
       }
 
       const res = {

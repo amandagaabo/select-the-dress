@@ -4,11 +4,11 @@ exports.listPage = function (req, res) {
   // setup sort
   let sort = {rating: -1}
   res.locals.sort = 'rating'
-  if(req.query.sort === 'price') {
+  if (req.query.sort === 'price') {
     sort = {price: 1}
     res.locals.sort = 'price'
   }
-  if(req.query.sort === 'designer') {
+  if (req.query.sort === 'designer') {
     sort = {designer: 1}
     res.locals.sort = 'designer'
   }
@@ -22,26 +22,26 @@ exports.listPage = function (req, res) {
     res.locals.view = 'side'
   }
 
-  // get all dresses for the user
-  Dress.find({user:req.params.userID})
-    .sort(sort)
-    .then(dresses => {
-      if(dresses.length === 0) {
-        res.redirect('/dresses/add')
-      } else {
-        // save dresses to res.locals
-        res.locals.dresses = dresses
-        // show the list of dresses page
-        res.render('dresses', res.locals)
-      }
-    })
+  // get all dresses for the user using the user id from the URL
+  Dress.find({user: req.params.userID})
+  .sort(sort)
+  .then(dresses => {
+    if (dresses.length === 0) {
+      res.redirect('/dresses/add')
+    } else {
+      // save dresses to res.locals
+      res.locals.dresses = dresses
+      // render the dresses page
+      res.render('dresses', res.locals)
+    }
+  })
 }
 
 exports.readPage = function (req, res) {
   // find dress using userID and dress url params
-  Dress.findOne({user:req.params.userID, _id:req.params.dress})
+  Dress.findOne({user: req.params.userID, _id: req.params.dress})
   .then(dress => {
-    if(!dress) {
+    if (!dress) {
       res.send('error, no dress found')
     }
     // set locals.dress to dress data
@@ -52,24 +52,21 @@ exports.readPage = function (req, res) {
 }
 
 exports.comparePage = function (req, res) {
-  console.log('compare page running')
-  console.log('query', req.query)
   // get ids of both dresses and find dress data
   let idA = req.query.dressA
   let idB = req.query.dressB
-  console.log(idA, idB)
-  // find the two dresses
-  Dress.find({user:req.params.userID, _id: {$in: [idA, idB]}})
 
-    .then(dresses => {
-      if(dresses.length === 0) {
-        res.send('dresses not found')
-      } else {
-        // save data in res.locals so it can be accessed
-        res.locals.dressA = dresses[0]
-        res.locals.dressB = dresses[1]
-        // show the comare page
-        res.render('compare', res.locals)
-      }
-    })
+  // find the two dresses using the user ID from the url and dress ids
+  Dress.find({user: req.params.userID, _id: {$in: [idA, idB]}})
+  .then(dresses => {
+    if (dresses.length === 0) {
+      res.send('dresses not found')
+    } else {
+      // save data in res.locals so it can be accessed
+      res.locals.dressA = dresses[0]
+      res.locals.dressB = dresses[1]
+      // render comare page
+      res.render('compare', res.locals)
+    }
+  })
 }

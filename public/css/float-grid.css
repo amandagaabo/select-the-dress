@@ -46,7 +46,7 @@
 }
 
 /* Non-mobile, grid and other settings */
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 650px) {
   /* 1 column, 1/12 in % */
   .col-1 {
     width: 8.33333%;
@@ -99,6 +99,10 @@
     float: left;
   }
 
+  #logo-box {
+    border-bottom: 1px solid #202020;
+  }
+  
   .header-links {
     float: right;
   }

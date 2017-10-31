@@ -25,11 +25,6 @@ img {
   display: none;
 }
 
-/* hide but keep space */
-.invisible {
-  visibility: hidden;
-}
-
 .error-text {
   color: #D8000C;
 }
@@ -57,7 +52,6 @@ header {
   margin: 20px 0 0 0;
 }
 
-
 #logo {
   font-size: 45px;
   font-weight: bold;
@@ -66,11 +60,11 @@ header {
 #logo-box, #link-box {
   padding: 0;
   height: 50px;
-  border-bottom: 1px solid #202020;
 }
 
 #link-box {
   padding-top: 10px;
+  border-bottom: 1px solid #202020;
 }
 
 .header-links {
@@ -223,7 +217,7 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   position: relative;
 }
 
-.dress-link:hover, #thumbs img:hover {
+.dress-link:hover, #thumbs img:hover, .copy-btn:hover {
   opacity: .7;
   cursor: pointer;
 }
@@ -255,7 +249,7 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
   font-size: 16px;
 }
 
-.designer-tag, price-tag {
+.designer-tag, .price-tag {
   padding: 0 10px;
 }
 
@@ -276,7 +270,7 @@ input[type="submit"]:disabled, .disabled-btn, input[type="submit"]:disabled:hove
 }
 
 #share-link {
-  width: 325px;
+  width: 340px;
 }
 
 #share-link, .copy-btn {

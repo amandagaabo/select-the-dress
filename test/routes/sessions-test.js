@@ -8,6 +8,7 @@ const User = require('../../models/user')
 
 let sessions
 let findOneStub
+let createStub
 
 describe('The sessions route', function () {
   before(function () {
@@ -157,7 +158,7 @@ describe('The sessions route', function () {
         locals: {
           messages: {}
         },
-        redirect: function(path) {
+        redirect: function (path) {
           path.should.equal('/dresses/add')
           flashSpy.should.have.been.calledOnce
           flashSpy.should.have.been.calledWith('success', 'Welcome! Add a dress to get started.')
@@ -190,7 +191,6 @@ describe('The sessions route', function () {
 
       findOneStub.resolves(null)
       createStub.rejects(error)
-
 
       const res = {
         locals: {
@@ -232,7 +232,6 @@ describe('The sessions route', function () {
 
       findOneStub.resolves(null)
       createStub.rejects(error)
-
 
       const res = {
         locals: {

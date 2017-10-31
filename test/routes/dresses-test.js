@@ -9,6 +9,7 @@ const Dress = require('../../models/dress')
 let dresses
 let findStub
 let findOneStub
+let createStub
 
 describe('The dresses route', function () {
   before(function () {
