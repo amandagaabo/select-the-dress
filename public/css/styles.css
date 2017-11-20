@@ -1,5 +1,6 @@
 body {
   font-family: 'Josefin Slab', serif;
+  font-size: 20px;
   color: #202020;
   text-align: center;
   margin: 0 auto;
@@ -90,14 +91,17 @@ header {
 #welcome-img {
   position: relative;
   height: 490px;
-  background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1509324060/dresses/shopping2.jpg);
+  background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1511195936/dresses/dressrack.jpg);
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #welcome-text {
   position: absolute;
-  top: 170px;
-  right: 30px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: 70px;
 }
 
 #welcome-text p {
@@ -108,6 +112,23 @@ header {
 .demo-img {
   width: 75%;
   margin-bottom: 20px;
+}
+
+.info-text {
+  line-height: 140%;
+}
+/* log in demo */
+.demo-login {
+  width: 50%;
+  margin: 50px auto 10px auto;
+  border: 1px solid #202020;
+  border-radius: 2px;
+  background-color: #48D1CC;
+  padding-bottom: 20px;
+}
+
+.credentials {
+  margin: 0;
 }
 
 /* forms */
