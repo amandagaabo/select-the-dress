@@ -6,6 +6,6 @@ deploy:
   provider: heroku
   api_key:
     secure: ZpZHymBsJir6P3/Rb+Ca3OXOKngK/UwCpW0BKnmka9XaJqdQvPYpfzWWMsPr2/OkgH7QSvj2uXuz705wzLwOPWbZRKh26U4v/t9CQ9kO/BdGsSboJui3iBKJg78VeEZQY3Mc9Fsj1kTuJbAx1Qt95ayZVPcI+DFAg61aH7fl5bg+Y6K3dhZV5BgOD7fi+/ZSueB6rbc9MmopOEsnLzT8znTaDMRzN24XpJPOvEOFTbEAxXDhrgsukwoGfh8RGsf8ODbRvRIARn3+BAcxIly12dn4zqu7fAPJ0KHsspFVvqM4GEDWYutl49mndQ8iyfnJqPGtUBMDEc4rNWqte6YDn1egLPBAXuLHyF/uKZ7xtA6lJsIouNEQ5JRKhMfY3d+aVYM48rMpuhbPUc2TLk61GK837VilCRKxwFdaXlJ4thL9mIkSID8CPVHqGPP1bYnA79MDp5UA6x7HaeEKym5iFIivsWpK6Br1sNlSmi2xi0SVrf4Rg0XnwKEJssvgHKAGzTK6v+KXNNANAio14WedY/kA0qY9/iI4egq1zSiAwzuDEZGk+gAmBQmrUsFiTQmCA5c7rB1qZQbUNxZSGBpvdlxcM6xvNqrUY+frh5IhPBxjVjXrKWxmCBDBgfK0MCB/8KtpXR60pZLXCwFG77pio7XNH7WyeK+wklTWGuUGSSI=
-  app: pure-garden-21936
+  app: select-the-dress
   on:
     repo: amandaherschleb/select-the-dress
