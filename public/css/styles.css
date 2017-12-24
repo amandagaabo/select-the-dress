@@ -91,7 +91,7 @@ header {
 #welcome-img {
   position: relative;
   height: 490px;
-  background-image: url(http://res.cloudinary.com/amhprojects/image/upload/v1511195936/dresses/dressrack.jpg);
+  background-image: url(https://res.cloudinary.com/amhprojects/image/upload/v1511195936/dresses/dressrack.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
