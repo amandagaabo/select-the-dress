@@ -127,8 +127,25 @@ header {
   padding-bottom: 20px;
 }
 
-.credentials {
+.demo-login p {
   margin: 0;
+}
+
+.login-link {
+  text-decoration: underline;
+}
+
+.login-link:hover {
+  font-weight: bold;
+  color: white;
+}
+
+.inline {
+  display: inline;
+}
+
+.credentials {
+  margin-top: 10px;
 }
 
 /* forms */
