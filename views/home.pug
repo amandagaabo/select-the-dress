@@ -1,37 +1,15 @@
 extends layout.pug
 
 block content
-  section#home.row.content(role='region')
-    .col-12#welcome-img
+  section#home(role='region')
+    #welcome-img
       #welcome-text
         p Try on dresses, upload photos,
         p compare and select the one!
-        a.button(href='/sign-up') Get started!
-    
+  
+  section.row(role='region')
     .col-12
       h2 About
       p.info-text Finding the perfect dress can be a challenging task.  There are so many beautiful dresses availabe to choose from! Select the Dress is here to help you compare your options and select the perfect one!
-    
-    .col-12#how-it-works
-      h2 How it works
-      
-      p.info-text Upload front, back and/or side view photos of each dress you want to compare along with any details you want to document
-      img.demo-img(src='https://res.cloudinary.com/amhprojects/image/upload/v1509384352/dresses/add-dress.png', alt='add dress page')
-      
-      p View and edit details about each dress you add
-      img.demo-img(src='https://res.cloudinary.com/amhprojects/image/upload/v1509383349/dresses/dress-page.png', alt='dress details page')
-      
-      p See all dresses you have tried on in one spot
-      img.demo-img(src='https://res.cloudinary.com/amhprojects/image/upload/v1509376727/dresses/dresses-page-side.png', alt='dresses page')
-      
-      p Select two dresses to compare images side by side
-      img.demo-img(src='https://res.cloudinary.com/amhprojects/image/upload/v1509376723/dresses/compare-page.png', alt='compare dress photos')
-      
-      p And compare details side by side
-      img.demo-img(src='https://res.cloudinary.com/amhprojects/image/upload/v1509376720/dresses/compare-details.png', alt='compare dress details')
-      //p Share a link with your friends and family to see what they think
-      
-      p Add, rate and compare until you select the one!
-      
-    .col-12
-      include includes/demo-login.pug
+      p.info-text.inline Learn more about how it works 
+      a.link.underline.inine(href='/how-it-works') here.
