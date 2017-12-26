@@ -51,6 +51,7 @@ footer {
 /* home */
 header {
   margin: 20px 0 0 0;
+  border-bottom: 1px solid #202020;
 }
 
 #logo {
@@ -65,7 +66,6 @@ header {
 
 #link-box {
   padding-top: 10px;
-  border-bottom: 1px solid #202020;
 }
 
 .header-links {
@@ -101,12 +101,16 @@ header {
   left: 0;
   right: 0;
   margin: 0 auto;
-  bottom: 70px;
+  bottom: 40%;
+  background-color: white;
+  opacity: .7;
+  color: black;
+  padding: 5px;
 }
 
 #welcome-text p {
   font-size: 45px;
-  margin: 0 0 10px 0;
+  margin: 10px 0;
 }
 
 .demo-img {
@@ -116,7 +120,9 @@ header {
 
 .info-text {
   line-height: 140%;
+  text-align: justify;
 }
+
 /* log in demo */
 .demo-login {
   width: 50%;
