@@ -65,6 +65,7 @@ function clearDB () {
 // 2. clear User and Dress collections in database
 // 3. create account with userData above
 // 4. GET / page
+// 4.5 GET /how-it-works page
 // 5. log user out
 // 6. GET /sign-up page
 // 7. GET /log-in page
@@ -135,6 +136,20 @@ describe('integration http request tests', function () {
         res.should.be.html
         res.text.should.include('home')
         return Promise.resolve()
+      })
+    })
+  })
+
+  // how it works page
+  describe('GET request to /how-it-works', () => {
+    it('should show how it works page', (done) => {
+      chai.request(app)
+      .get('/how-it-works')
+      .end((err, res) => {
+        res.should.have.status(200)
+        res.should.be.html
+        res.text.should.include('how-it-works')
+        done()
       })
     })
   })
