@@ -82,6 +82,7 @@ header {
 .link:hover {
   text-decoration: underline;
   font-weight: bold;
+  color: black;
 }
 
 .underline {
@@ -120,7 +121,6 @@ header {
 
 .info-text {
   line-height: 140%;
-  text-align: justify;
 }
 
 /* log in demo */

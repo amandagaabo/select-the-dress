@@ -19,8 +19,14 @@ const dresses = require('./dresses')
 const share = require('./share')
 
 module.exports = function (passport) {
+  // home route
   router.get('/', function (req, res) {
     res.render('home', res.locals)
+  })
+
+  // how it works route
+  router.get('/how-it-works', function (req, res) {
+    res.render('how-it-works', res.locals)
   })
 
   // middleware to check if user is logged in

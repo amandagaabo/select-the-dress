@@ -27,12 +27,16 @@ html(lang="en")
           ul.header-links
             if user
               li
+                a.link(href='/how-it-works') How it Works
+              li
                 a.link(href='/dresses') Dresses
               li
                 a.link(href='/account') My Account
               li
                 a.link(href='/log-out') Log Out
             else
+              li
+                a.link(href='/how-it-works') How it Works
               li
                 a.link(href='/sign-up') Sign Up
               li
