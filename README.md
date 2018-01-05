@@ -2,6 +2,10 @@
 ## Description
 Select the Dress is a server rendered app that will allow users to compare dresses they have tried on to help select the perfect one for the occasion.  The user can upload images of each dress along with any additional information they want to use for comparison including designer, style, price, store and notes.  The user can view dresses individually, compare two side by side or see all dresses and sort by rating, price and designer.
 
+## User
+This app is intended for users who are shopping for a dress and want to compare their options and share with family
+and friends.
+
 
 ## Demo Log In
 To see a demo of how the app works with dresses already added to the users account, use the following login info:
